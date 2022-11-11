@@ -463,9 +463,13 @@ class TemplateController extends Controller
     // ------------------ Mẫu 05 (a). BẢN KÊ KHAI THÔNG TIN VỀ NHÀ THẦU---------------------
 
     public function create5(){
-
+        $packages = $this->packageService->all();
         $contractors = $this->contractorService->all();
-        return view('template.create5',compact('contractors'));
+        return view('template.create5',compact('contractors','packages'));
+    }
+
+    public function store5(Request $request){
+        return $request->all();
     }
 
 

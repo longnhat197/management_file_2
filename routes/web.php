@@ -58,5 +58,6 @@ Route::middleware('CheckLogin')->prefix('template')->group(function () {
     Route::post('4_1/ajaxMT41', [\App\Http\Controllers\TemplateController::class, 'ajaxMT41']);
 
     Route::get('5',[\App\Http\Controllers\TemplateController::class, 'create5']);
+    Route::post('5',[\App\Http\Controllers\TemplateController::class, 'store5']);
 
 });
