@@ -22,9 +22,16 @@
         <div class="col-md-12">
             <div class="main-card mb-3 card">
                 <div class="card-body">
-                    <form name="Namheo" onsubmit="return checkform();" action="./template/5" method="post">
+                    <form name="Namheo" onsubmit="return checkform();" action="./home/create" method="post">
                         @csrf
-
+                        <div class="row">
+                            <div class="col-md-3"></div>
+                            <div class="form-group col-md-5">
+                                <label for="nguoi_thuc_hien">Người thực hiện:</label>
+                                <input type="text" class="form-control" value="{{ Auth::user()->email }}"
+                                    id="nguoi_thuc_hien" name="nguoi_thuc_hien" disabled>
+                            </div>
+                        </div>
                         <div class="row">
                             <div class="col-md-3"></div>
                             <div class="form-group col-md-5">
@@ -59,32 +66,76 @@
 
                         <div class="row">
                             <div class="col-md-3"></div>
-                            <div class="form-group col-md-5">
-                                <label for="hinh_thuc_thau">Hình thức thầu:</label>
-                                <div class="btn-actions-pane-right">
-                                    <div class="input-group">
-                                        <select required id="hinh_thuc_thau" name="hinh_thuc_thau" class="form-control">
-                                            <option value="0">HSDT</option>
-                                            <option value="1">E-HSDT</option>
-                                        </select>
+                            <div class="col-md-5">
+                                <label><strong>Hình thức thầu:</strong></label>
+                                <div class="form-group">
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="hinh_thuc_thau" id="hinh_thuc_thau1" checked value="0">
+                                        <label class="form-check-label" for="hinh_thuc_thau1">HSDT</label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="hinh_thuc_thau" id="hinh_thuc_thau2" value="1">
+                                        <label class="form-check-label" for="hinh_thuc_thau2">E-HSDT</label>
                                     </div>
                                 </div>
+
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-3"></div>
+                            <div class="col-md-5">
+                                <label ><strong>Hình thức tham dự:</strong></label>
+                                <div class="form-group">
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="hinh_thuc_tham_du" id="hinh_thuc_tham_du1" checked
+                                            value="0">
+                                        <label class="form-check-label" for="hinh_thuc_tham_du1">Độc lập</label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="hinh_thuc_tham_du" id="hinh_thuc_tham_du2" value="1">
+                                        <label class="form-check-label" for="hinh_thuc_tham_du2">Liên danh</label>
+                                    </div>
+                                </div>
+
+
                             </div>
                         </div>
 
                         <div class="row">
                             <div class="col-md-3"></div>
                             <div class="form-group col-md-5">
-                                <label for="hinh_thuc_tham_du">Hình thức tham dự:</label>
-                                <div class="btn-actions-pane-right">
-                                    <div class="input-group">
-                                        <select required id="hinh_thuc_tham_du" name="hinh_thuc_tham_du"
-                                            class="form-control">
-                                            <option value="0">Độc lập</option>
-                                            <option value="1">Liên danh</option>
-                                        </select>
+                                <label ><strong>Nhà thầu có uỷ quyền:</strong></label>
+                                <div class="form-group">
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="uy_quyen" id="uy_quyen1" checked value="0">
+                                        <label class="form-check-label" for="uy_quyen1">Có</label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="uy_quyen" id="uy_quyen2" value="1">
+                                        <label class="form-check-label" for="uy_quyen2">Không</label>
                                     </div>
                                 </div>
+
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-3"></div>
+                            <div class="col-md-5">
+                                <label><strong>Nhà thầu tham dự:</strong></label>
+                                <div class="form-group">
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="nha_thau_tham_du" id="nha_thau_tham_du1" checked
+                                            value="0">
+                                        <label class="form-check-inline" for="nha_thau_tham_du1">Có</label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="nha_thau_tham_du" id="nha_thau_tham_du2" value="1">
+                                        <label class="form-check-label" for="nha_thau_tham_du2">Không</label>
+                                    </div>
+                                </div>
+
                             </div>
                         </div>
 
@@ -113,28 +164,6 @@
                                     name="time_dong_thau">
                             </div>
                         </div>
-
-
-
-
-
-                        {{-- <div class="row">
-                            <div class="col-md-3"></div>
-                            <div class="form-group col-md-5">
-                                <label for="name_goi_thau_test">Số hiệu và tên gói thầu:</label>
-                                <div class="btn-actions-pane-right">
-                                    <div class="input-group w-50">
-                                        <select required id="name_goi_thau" class="form-control">
-                                            <option value="">--Tên gói thầu--</option>
-                                            @foreach ($packages as $package)
-                                            <option value="{{ $package->name }}">{{ $package->name }}</option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-                                </div>
-                                <input type="text" class="form-control" id="name_goi_thau_test" name="name_goi_thau">
-                            </div>
-                        </div> --}}
 
                         <div class="row">
                             <div class="col-md-3"></div>

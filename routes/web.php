@@ -21,7 +21,10 @@ Route::get('logout', [App\Http\Controllers\HomeController::class, 'logout']);
 
 Route::middleware('CheckLogin')->group(function () {
     Route::get('', [\App\Http\Controllers\HomeController::class, 'index']);
-    Route::get('home', [\App\Http\Controllers\HomeController::class, 'index']);
+    Route::get('home/add', [\App\Http\Controllers\HomeController::class, 'index']);
+    Route::post('home/add', [\App\Http\Controllers\HomeController::class, 'create']);
+    Route::get('home/edit', [\App\Http\Controllers\HomeController::class, 'edit']);
+    Route::post('home/edit', [\App\Http\Controllers\HomeController::class, 'editStore']);
     Route::resource('file', \App\Http\Controllers\FileController::class);
     Route::resource('file/{file_id}/path', \App\Http\Controllers\FilePathController::class);
     Route::resource('contractor', \App\Http\Controllers\ContractorController::class);
@@ -35,6 +38,7 @@ Route::middleware('CheckLogin')->group(function () {
 
 Route::middleware('CheckLogin')->prefix('template')->group(function () {
     Route::get('', [\App\Http\Controllers\TemplateController::class, 'index']);
+    Route::post('', [\App\Http\Controllers\TemplateController::class, 'test']);
 
     Route::get('1', [\App\Http\Controllers\TemplateController::class, 'create1']);
     Route::post('1', [\App\Http\Controllers\TemplateController::class, 'store1']);

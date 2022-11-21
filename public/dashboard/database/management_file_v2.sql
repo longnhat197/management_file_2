@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 07, 2022 at 03:38 AM
+-- Generation Time: Nov 18, 2022 at 02:33 AM
 -- Server version: 10.4.20-MariaDB
 -- PHP Version: 7.4.21
 
@@ -60,16 +60,43 @@ CREATE TABLE `customers` (
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+-- --------------------------------------------------------
+
 --
--- Dumping data for table `customers`
+-- Table structure for table `details`
 --
 
-INSERT INTO `customers` (`id`, `name`, `address`, `created_at`, `updated_at`) VALUES
-(3, 'Cù Đức Hiệp', NULL, '2022-11-02 01:57:46', '2022-11-02 01:57:46'),
-(4, 'Trần Thanh Nga', NULL, '2022-11-02 01:57:59', '2022-11-02 01:57:59'),
-(5, 'Bùi Đức Tiến', NULL, '2022-11-02 02:01:03', '2022-11-02 02:07:39'),
-(6, 'Nguyễn Văn Nhật', NULL, '2022-11-02 02:01:21', '2022-11-02 02:01:21'),
-(7, 'Lê Văn Thành', 'Hà Nội', '2022-11-02 02:01:31', '2022-11-02 08:44:26');
+CREATE TABLE `details` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `name_goi_thau` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `name_du_an` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `so_thong_bao` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `name_moi_thau` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `hinh_thuc_thau` int(11) NOT NULL,
+  `hinh_thuc_tham_du` int(11) NOT NULL,
+  `uy_quyen` int(11) NOT NULL,
+  `time_phat_hanh` date NOT NULL,
+  `time_mo_thau` datetime NOT NULL,
+  `time_dong_thau` datetime NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `detail_temps`
+--
+
+CREATE TABLE `detail_temps` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `detail_id` int(11) NOT NULL,
+  `tem_id` int(11) NOT NULL,
+  `type` int(11) NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -147,14 +174,6 @@ CREATE TABLE `list_users` (
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
---
--- Dumping data for table `list_users`
---
-
-INSERT INTO `list_users` (`id`, `name`, `cmnd`, `title`, `type_user`, `created_at`, `updated_at`) VALUES
-(1, 'Bùi Đức Tiến', '001097025746', 'kỹ sư lập trình', '1', '2022-11-03 09:57:47', '2022-11-04 04:17:51'),
-(2, 'Cù Đức Hiệp', '001097025777', 'kỹ sư hệ thống', '2', '2022-11-03 10:01:10', '2022-11-04 07:14:19');
-
 -- --------------------------------------------------------
 
 --
@@ -179,12 +198,16 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (11, '2022_09_22_031855_create_contractors_table', 3),
 (12, '2022_09_22_031923_create_files_table', 3),
 (13, '2022_09_29_094909_create_file_paths_table', 3),
-(14, '2022_11_01_105314_create_projects_table', 4),
-(15, '2022_11_01_153610_create_customers_table', 5),
-(16, '2022_11_02_151938_add_address_to_customers_table', 6),
-(17, '2022_11_02_152342_create_packages_table', 7),
-(18, '2022_11_03_160122_create_list_users_table', 8),
-(19, '2022_11_03_162640_add_type_to_list_users_table', 9);
+(25, '2022_11_01_105314_create_projects_table', 4),
+(26, '2022_11_01_153610_create_customers_table', 4),
+(27, '2022_11_02_151938_add_address_to_customers_table', 4),
+(28, '2022_11_02_152342_create_packages_table', 4),
+(29, '2022_11_03_160122_create_list_users_table', 4),
+(30, '2022_11_03_162640_add_type_to_list_users_table', 4),
+(31, '2022_11_14_092913_create_details_table', 4),
+(32, '2022_11_16_143521_create_templates0_table', 4),
+(33, '2022_11_16_143653_create_templates1_table', 4),
+(34, '2022_11_17_105453_create_detail_temps_table', 4);
 
 -- --------------------------------------------------------
 
@@ -198,13 +221,6 @@ CREATE TABLE `packages` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Dumping data for table `packages`
---
-
-INSERT INTO `packages` (`id`, `name`, `created_at`, `updated_at`) VALUES
-(1, 'Gói thầu miền Nam', '2022-11-02 09:07:43', '2022-11-02 09:07:43');
 
 -- --------------------------------------------------------
 
@@ -231,14 +247,49 @@ CREATE TABLE `projects` (
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+-- --------------------------------------------------------
+
 --
--- Dumping data for table `projects`
+-- Table structure for table `templates0`
 --
 
-INSERT INTO `projects` (`id`, `name`, `created_at`, `updated_at`) VALUES
-(1, 'Dự án 1', '2022-11-01 07:50:42', '2022-11-01 07:59:42'),
-(2, 'Gia hạn HTKT DWDM miền Nam', '2022-11-01 07:59:51', '2022-11-01 07:59:51'),
-(3, 'Hợp đồng cung cấp Gói bảo hành phần mềm GENESYS BUSINESS CARE 2022-2023', '2022-11-01 08:00:51', '2022-11-01 08:00:51');
+CREATE TABLE `templates0` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `url` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `templates0`
+--
+
+INSERT INTO `templates0` (`id`, `name`, `url`, `created_at`, `updated_at`) VALUES
+(1, 'Mẫu 01. ĐƠN DỰ THẦU (thuộc HSĐXKT)', './template/1', NULL, NULL),
+(2, 'Mẫu 02. GIẤY ỦY QUYỀN', './template/2', NULL, NULL),
+(3, 'Mẫu 04 (a). BẢO LÃNH DỰ THẦU', './template/4', NULL, NULL),
+(4, 'Mẫu 05 (a). BẢN KÊ KHAI THÔNG TIN VỀ NHÀ THẦU', './template/5', NULL, NULL),
+(5, 'Mẫu 06. HỢP ĐỒNG KHÔNG HOÀN THÀNH TRONG QUÁ KHỨ DO LỖI CỦA NHÀ THẦU', './template/6', NULL, NULL),
+(6, 'Mẫu 07. KIỆN TỤNG ĐANG GIẢI QUYẾT', './template/7', NULL, NULL),
+(7, 'Mẫu 08. HỢP ĐỒNG TƯƠNG TỰ DO NHÀ THẦU THỰC HIỆN', './template/8', NULL, NULL),
+(8, 'Mẫu 09. TÌNH HÌNH TÀI CHÍNH CỦA NHÀ THẦU', './template/9', NULL, NULL),
+(9, 'Mẫu 10. NGUỒN LỰC TÀI CHÍNH', './template/10', NULL, NULL),
+(10, 'Mẫu 11. NGUỒN LỰC TÀI CHÍNH HÀNG THÁNG CHO CÁC HỢP ĐỒNG ĐANG THỰC HIỆN', './template/11', NULL, NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `templates1`
+--
+
+CREATE TABLE `templates1` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `url` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -248,7 +299,7 @@ INSERT INTO `projects` (`id`, `name`, `created_at`, `updated_at`) VALUES
 
 CREATE TABLE `users` (
   `id` bigint(20) UNSIGNED NOT NULL,
-  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `email_verified_at` timestamp NULL DEFAULT NULL,
   `password` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -262,7 +313,10 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `name`, `email`, `email_verified_at`, `password`, `remember_token`, `created_at`, `updated_at`) VALUES
-(1, 'Admin', 'admin@gmail.com', NULL, '$2y$10$5uO1Qst3d4tlEWx/BbhTRecdTgLc9DmckHx4zkif1T1FJUHTedXCa', 'pu9P6qLkraQ96tZUfIc5nePkxhLcrKqGd2JqvLZ70VCTqgrg4leqMxvZ2xR3', NULL, NULL);
+(1, 'Admin', 'admin@gmail.com', NULL, '$2y$10$5uO1Qst3d4tlEWx/BbhTRecdTgLc9DmckHx4zkif1T1FJUHTedXCa', 'cMTm24oCt4W9ZkazPTDXf88yhOs3e367jvvjx0nsCQKJWiPOzJrdELM5kBnF', NULL, NULL),
+(2, 'user1', 'buiductien@ansv.vn', NULL, '$2y$10$oPJTc.VaXUlX1/6evpGJp.EGuQdhDxYD5xb0anjdMVJ3cLxx4.8WC', NULL, NULL, '2022-11-15 07:08:15'),
+(5, NULL, 'nguyenvanceo@ansv.vn', NULL, '$2y$10$fQYaU911GdUTS6LUkjUN.ubezL6jtLG9c.1FsKhCzUdJM5mwcVoL2', NULL, '2022-11-15 07:17:21', '2022-11-15 07:17:21'),
+(6, NULL, 'levanthanh@ansv.vn', NULL, '$2y$10$2gsLSXFexVVKxRqMfUTAg.LfayAkY37dXxsjRAqzewnEjtNked/p6', NULL, '2022-11-15 07:44:18', '2022-11-15 07:44:18');
 
 --
 -- Indexes for dumped tables
@@ -278,6 +332,18 @@ ALTER TABLE `contractors`
 -- Indexes for table `customers`
 --
 ALTER TABLE `customers`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `details`
+--
+ALTER TABLE `details`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `detail_temps`
+--
+ALTER TABLE `detail_temps`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -330,6 +396,18 @@ ALTER TABLE `projects`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `templates0`
+--
+ALTER TABLE `templates0`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `templates1`
+--
+ALTER TABLE `templates1`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `users`
 --
 ALTER TABLE `users`
@@ -350,7 +428,19 @@ ALTER TABLE `contractors`
 -- AUTO_INCREMENT for table `customers`
 --
 ALTER TABLE `customers`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `details`
+--
+ALTER TABLE `details`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `detail_temps`
+--
+ALTER TABLE `detail_temps`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `failed_jobs`
@@ -374,31 +464,43 @@ ALTER TABLE `file_paths`
 -- AUTO_INCREMENT for table `list_users`
 --
 ALTER TABLE `list_users`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
 
 --
 -- AUTO_INCREMENT for table `packages`
 --
 ALTER TABLE `packages`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `projects`
 --
 ALTER TABLE `projects`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `templates0`
+--
+ALTER TABLE `templates0`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+
+--
+-- AUTO_INCREMENT for table `templates1`
+--
+ALTER TABLE `templates1`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

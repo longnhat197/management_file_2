@@ -2,16 +2,22 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Detail;
+use App\Models\DetailTemp;
+use App\Models\Template0;
+use App\Services\Detail\DetailServiceInterface;
 use App\Services\Contractor\ContractorServiceInterface;
 use App\Services\Customer\CustomerServiceInterface;
 use App\Services\File\FileServiceInterface;
 use App\Services\ListUser\ListUserServiceInterface;
 use App\Services\Package\PackageServiceInterface;
 use App\Services\Project\ProjectServiceInterface;
+use Illuminate\Support\Facades\Auth;
 use PhpOffice\PhpWord\Template1;
 use DOCXTemplate;
 use Illuminate\Http\Request;
 
+use TheSeer\Tokenizer\Exception;
 use function Psy\debug;
 
 include('docxtemplate.class.php');
@@ -24,13 +30,15 @@ class TemplateController extends Controller
     private $customerService;
     private $packageService;
     private $listUserService;
+    private $detailService;
     public function __construct(
         FileServiceInterface $fileService,
         ContractorServiceInterface $contractorService,
         ProjectServiceInterface $projectService,
         CustomerServiceInterface $customerService,
         PackageServiceInterface $packageService,
-        ListUserServiceInterface $listUserService
+        ListUserServiceInterface $listUserService,
+        DetailServiceInterface $detailService
     ) {
         $this->fileService = $fileService;
         $this->contractorService = $contractorService;
@@ -38,11 +46,37 @@ class TemplateController extends Controller
         $this->customerService = $customerService;
         $this->packageService = $packageService;
         $this->listUserService = $listUserService;
+        $this->detailService = $detailService;
     }
     //
-    public function index()
-    {
-        return view('template.index');
+    // public function index()
+    // {
+    //     $tems = Template0::all();
+    //     return view('template.index',compact('tems'));
+    // }
+
+    public function test(Request $request){
+        try{
+            foreach($request->get('list_tem') as $tem_id){
+                DetailTemp::create([
+                    'detail_id' => $request->get('detail_id'),
+                    'tem_id'=>$tem_id,
+                    'type' =>$request->get('type'),
+                ]);
+            }
+
+        }catch(\Exception $err){
+            return $err->getMessage();
+        }
+        $detail_id = Auth::user()->userDetails[0]->detail_id;
+
+        $type = DetailTemp::where('detail_id', $detail_id)->first()->type;
+        if($type == 0){
+            $link = DetailTemp::where('detail_id', $detail_id)->first()->templates0->url;
+        }else if($type == 1){
+            $link = DetailTemp::where('detail_id', $detail_id)->first()->templates1->url;
+        }
+        return redirect($link);
     }
 
     //------------------Mẫu 01. ĐƠN DỰ THẦU (thuộc HSĐXKT)---------------------
@@ -457,7 +491,7 @@ class TemplateController extends Controller
 
     }
 
-    // ------------------End Mẫu 04 (a). BẢO LÃNH DỰ THẦU---------------------
+    // ------------------End Mẫu 04 (b). BẢO LÃNH DỰ THẦU---------------------
 
 
     // ------------------ Mẫu 05 (a). BẢN KÊ KHAI THÔNG TIN VỀ NHÀ THẦU---------------------

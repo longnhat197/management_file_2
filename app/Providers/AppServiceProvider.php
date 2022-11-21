@@ -34,6 +34,11 @@ use App\Repositories\ListUser\ListUserRepositoryInterface;
 use App\Services\ListUser\ListUserService;
 use App\Services\ListUser\ListUserServiceInterface;
 
+use App\Repositories\Detail\DetailRepository;
+use App\Repositories\Detail\DetailRepositoryInterface;
+use App\Services\Detail\DetailService;
+use App\Services\Detail\DetailServiceInterface;
+
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -108,6 +113,17 @@ class AppServiceProvider extends ServiceProvider
         $this->app->singleton(
             ListUserServiceInterface::class,
             ListUserService::class,
+        );
+
+        //ListUser
+        $this->app->singleton(
+            DetailRepositoryInterface::class,
+            DetailRepository::class,
+        );
+
+        $this->app->singleton(
+            DetailServiceInterface::class,
+            DetailService::class,
         );
     }
 
