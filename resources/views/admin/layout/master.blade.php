@@ -898,18 +898,9 @@
                                                                         Auth::user()->email }}</div>
                                                                 </div>
                                                                 <div class="widget-content-right mr-2">
-                                                                    <a href="./logout"
-                                                                        class="btn-pill btn-shadow btn-shine btn btn-outline-focus">Logout</a>
+                                                                    <a href="./admin/logout"
+                                                                        class="btn-pill btn-shadow btn-shine btn btn-focus">Logout</a>
 
-                                                                </div>
-
-                                                            </div>
-                                                            <div class="widget-content-wrapper">
-                                                                <div class="widget-content-left mr-3">
-
-                                                                </div>
-                                                                <div class="widget-content-right mr-2">
-                                                                    <a href="./user/changePass/{{ Auth::user()->id }}" class="btn-pill btn-shadow btn-shine btn btn-outline-focus ">Đổi mật khẩu</a>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -985,8 +976,11 @@
                                     <div class="widget-heading"> {{ Auth::user()->name }}</div>
                                     <div class="widget-subheading"> {{ Auth::user()->email }} </div>
                                 </div>
-                                <div class="widget-content-right ml-3">
-                                    <a href="./user/edit/{{ Auth::user()->id }}"><i style="font-size: 1.6em" class="fas fa-user-edit"></i></a>
+                                <div class="widget-content-right header-user-info ml-3">
+                                    <button type="button"
+                                        class="btn-shadow p-1 btn btn-primary btn-sm show-toastr-example">
+                                        <i class="fa text-white fa-calendar pr-1 pl-1"></i>
+                                    </button>
                                 </div>
                             </div>
                         </div>
@@ -1473,33 +1467,30 @@
                     <div class="app-sidebar__inner">
                         <ul class="vertical-nav-menu">
                             <li class="app-sidebar__heading">Menu</li>
-                            <li class="{{ request()->segment(1) == 'home' ? 'mm-active' : '' }}">
+                            <li class="{{ request()->segment(2) == 'home' ? 'mm-active' : '' }}">
                                 <a href="#">
-                                    <i class="metismenu-icon pe-7s-plugin"></i>Applications
+                                    <i class="metismenu-icon pe-7s-plugin"></i>Applications - Trang admin
                                     <i class="metismenu-state-icon pe-7s-angle-down caret-left"></i>
                                 </a>
                                 <ul>
-                                    @if (!$isExitUser)
-                                    <li>
-                                        <a href="./home/add"
-                                            class="{{ request()->segment(2) == 'add' ? 'mm-active' : '' }}">Thêm mới dự
-                                            án</a>
-                                    </li>
-                                    @endif
 
                                     <li>
-                                        <a href="./home/edit"
-                                            class="{{ request()->segment(2) == 'edit' ? 'mm-active' : '' }}">Sửa dự án
-                                            hiện tại</a>
+                                        <a href="./admin/home/detail"
+                                            class="{{ request()->segment(3) == 'detail' ? 'mm-active' : '' }}">Danh sách dự án</a>
+                                    </li>
+
+                                    <li>
+                                        <a href="./admin/home/listUsers"
+                                            class="{{ request()->segment(3) == 'listUsers' ? 'mm-active' : '' }}">Danh sách tài khoản</a>
                                     </li>
                                     <li>
                                         <a href="./home/edit"
-                                            class="{{ request()->segment(2) == '1123' ? 'mm-active' : '' }}">Hiệu
+                                            class="{{ request()->segment(2) == '1' ? 'mm-active' : '' }}">Hiệu
                                             chỉnh</a>
                                     </li>
                                     <li>
                                         <a href="./home/edit"
-                                            class="{{ request()->segment(2) == '2214124' ? 'mm-active' : '' }}">Xem lại</a>
+                                            class="{{ request()->segment(2) == '2' ? 'mm-active' : '' }}">Xem lại</a>
                                     </li>
                                 </ul>
                             </li>
@@ -1513,9 +1504,8 @@
                                     @if ($list_temps)
                                         @if ($list_temps->first()->type == 0)
                                             @foreach ($list_temps as $item)
-                                                <li>
-                                                    <a class="{{ preg_replace('/\D/', '', $item->templates0->url) == request()->segment(2) ? 'mm-active' : '' }}"
-                                                    href="{{ $item->templates0->url }}" data-placement="right" data-toggle="tooltip" title="{{ $item->templates0->name }}">
+                                                <li class="{{ preg_replace('/\D/', '', $item->templates0->url) == request()->segment(2) ? 'mm-active' : '' }}">
+                                                    <a  href="{{ $item->templates0->url }}" data-placement="right" data-toggle="tooltip" title="{{ $item->templates0->name }}">
                                                         {{ Str::of($item->templates0->name)->limit(20) }}
                                                     </a>
                                                 </li>
@@ -1523,8 +1513,7 @@
                                         @elseif ($list_temps->first()->type == 1)
                                             @foreach ($list_temps as $item)
                                                 <li>
-                                                    <a  class="{{ preg_replace('/\D/', '', $item->templates1->url) == request()->segment(2) ? 'mm-active' : '' }}"
-                                                    href="{{ $item->templates1->url }}" data-placement="right" data-toggle="tooltip" title="{{ $item->templates1->name }}">
+                                                    <a  href="{{ $item->templates1->url }}" data-placement="right" data-toggle="tooltip" title="{{ $item->templates1->name }}">
                                                         {{ Str::of($item->templates1->name)->limit(20) }}
                                                     </a>
                                                 </li>

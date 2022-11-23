@@ -23,94 +23,150 @@
                 <div class="card-body">
                     <form action="./template/1" method="post">
                         @csrf
-                        <div class="row">
-                            <div class="col-md-3"></div>
-                            <div class="form-group col-md-5">
-                                <label for="date">Ngày tháng năm đăng ký đơn dự thầu:</label>
-                                <input type="date" class="form-control" id="date_test" name="date">
-                            </div>
+                        <div class="nav nav-tabs nav-fill" id="nav-tab" role="tablist">
+                            <a class="nav-item nav-link active p-2" id="nav-home-tab" data-toggle="tab" href="#nav-home"
+                                role="tab" aria-controls="nav-home" aria-selected="true">
+                                <i class="fas fa-clipboard p-2"></i>
+                                Thông tin chung
+                            </a>
+                            {{-- <a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-profile"
+                                role="tab" aria-controls="nav-profile" aria-selected="false">Project Tab 2</a> --}}
+                            <a class="nav-item nav-link" id="nav-contact-tab" data-toggle="tab" href="#nav-contact"
+                                role="tab" aria-controls="nav-contact" aria-selected="false">
+                                <i class="fas fa-calendar-day p-2"></i>
+                                Thời gian
+                            </a>
                         </div>
-                        <div class="row">
-                            <div class="col-md-3"></div>
-                            <div class="form-group col-md-5">
-                                <label for="name_goi_thau">Tên gói thầu theo thông báo mời thầu:</label>
-                                <div class="btn-actions-pane-right">
-                                    <div class="input-group w-50">
-                                        <select required id="name_goi_thau" class="form-control">
-                                            <option value="">--Tên gói thầu--</option>
-                                            @foreach ($packages as $package)
-                                            <option value="{{ $package->name }}">{{ $package->name }}</option>
-                                            @endforeach
-                                        </select>
+                        <div class="tab-content" id="nav-tabContent">
+                            <div class="tab-pane fade show active" id="nav-home" role="tabpanel"
+                                aria-labelledby="nav-home-tab">
+                                <div class="row">
+                                    <div class="col-md-3"></div>
+                                    <div class="form-group col-md-5">
+                                        <label for="date">Ngày tháng năm đăng ký đơn dự thầu:</label>
+                                        <input type="date" class="form-control" id="date_test" name="date">
                                     </div>
                                 </div>
-                                <input type="text" class="form-control" id="name_goi_thau_test" name="name_goi_thau">
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-3"></div>
-                            <div class="form-group col-md-5">
-                                <label for="name_du_an">Tên dự án:</label>
-                                <div class="btn-actions-pane-right">
-                                    <div class="input-group w-50">
-                                        <select required id="name_du_an" class="form-control">
-                                            <option value="">--Tên dự án--</option>
-                                            @foreach ($projects as $project)
-                                            <option value="{{ $project->name }}">{{ $project->name }}</option>
-                                            @endforeach
-                                        </select>
+                                <div class="row">
+                                    <div class="col-md-3"></div>
+                                    <div class="form-group col-md-5">
+                                        <label for="name_goi_thau">Tên gói thầu theo thông báo mời thầu:</label>
+                                        {{-- <div class="btn-actions-pane-right">
+                                            <div class="input-group w-50">
+                                                <select required id="name_goi_thau" class="form-control">
+                                                    <option value="">--Tên gói thầu--</option>
+                                                    @foreach ($packages as $package)
+                                                    <option value="{{ $package->name }}">{{ $package->name }}</option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+                                        </div> --}}
+                                        <input type="text" class="form-control" id="name_goi_thau_test" value="{{ $detail->name_goi_thau }}" name="name_goi_thau">
                                     </div>
                                 </div>
-                                <input type="text" class="form-control" id="name_du_an_test" name="name_du_an">
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-3"></div>
-                            <div class="form-group col-md-5">
-                                <label for="so_trich_yeu_test">Số trích yếu của Thư mời thầu đối với đấu thầu hạn
-                                    chế:</label>
-                                <input type="text" class="form-control" id="so_trich_yeu_test" name="so_trich_yeu">
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-3"></div>
-                            <div class="form-group col-md-5">
-                                <label for="name_moi_thau_test">Tên của Bên mời thầu:</label>
-                                <div class="btn-actions-pane-right">
-                                    <div class="input-group w-50">
-                                        <select required id="name_moi_thau" class="form-control">
-                                            <option value="">--Tên bên mời thầu--</option>
-                                            @foreach ($customers as $customer)
-                                            <option value="{{ $customer->name }}">{{ $customer->name }}</option>
-                                            @endforeach
-                                        </select>
+                                <div class="row">
+                                    <div class="col-md-3"></div>
+                                    <div class="form-group col-md-5">
+                                        <label for="name_du_an">Tên dự án:</label>
+                                        {{-- <div class="btn-actions-pane-right">
+                                            <div class="input-group w-50">
+                                                <select required id="name_du_an" class="form-control">
+                                                    <option value="">--Tên dự án--</option>
+                                                    @foreach ($projects as $project)
+                                                    <option value="{{ $project->name }}">{{ $project->name }}</option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+                                        </div> --}}
+                                        <input type="text" class="form-control" id="name_du_an_test" value="{{ $detail->name_du_an }}" name="name_du_an">
                                     </div>
                                 </div>
-                                <input type="text" class="form-control" id="name_moi_thau_test" name="name_moi_thau">
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-3"></div>
-                            <div class="form-group col-md-5">
-                                <label for="so_sua_doi_test">Số của văn bản sửa đổi (nếu có):</label>
-                                <input type="text" class="form-control" id="so_sua_doi_test" name="so_sua_doi">
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-3"></div>
-                            <div class="form-group col-md-5">
-                                <label for="name_nha_thau_test">Tên nhà thầu:</label>
-                                <div class="btn-actions-pane-right">
-                                    <div class="input-group w-50">
-                                        <select required id="name_nha_thau" class="form-control">
-                                            <option value="">--Tên nhà thầu--</option>
-                                            @foreach ($contractors as $contractor)
-                                            <option value="{{ $contractor->name }}">{{ $contractor->name }}</option>
-                                            @endforeach
-                                        </select>
+                                <div class="row">
+                                    <div class="col-md-3"></div>
+                                    <div class="form-group col-md-5">
+                                        <label for="so_trich_yeu_test">Số trích yếu của Thư mời thầu đối với đấu thầu hạn
+                                            chế:</label>
+                                        <input type="text" class="form-control" id="so_trich_yeu_test" name="so_trich_yeu">
                                     </div>
                                 </div>
-                                <input type="text" class="form-control" id="name_nha_thau_test" name="name_nha_thau">
+                                <div class="row">
+                                    <div class="col-md-3"></div>
+                                    <div class="form-group col-md-5">
+                                        <label for="name_moi_thau_test">Tên của Bên mời thầu:</label>
+                                        {{-- <div class="btn-actions-pane-right">
+                                            <div class="input-group w-50">
+                                                <select required id="name_moi_thau" class="form-control">
+                                                    <option value="">--Tên bên mời thầu--</option>
+                                                    @foreach ($customers as $customer)
+                                                    <option value="{{ $customer->name }}">{{ $customer->name }}</option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+                                        </div> --}}
+                                        <input type="text" class="form-control" id="name_moi_thau_test" value="{{ $detail->name_moi_thau }}" name="name_moi_thau">
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-3"></div>
+                                    <div class="form-group col-md-5">
+                                        <label for="so_sua_doi_test">Số của văn bản sửa đổi (nếu có):</label>
+                                        <input type="text" class="form-control" id="so_sua_doi_test" name="so_sua_doi">
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-3"></div>
+                                    <div class="form-group col-md-5">
+                                        <label for="name_nha_thau_test">Tên nhà thầu:</label>
+                                        {{-- <div class="btn-actions-pane-right">
+                                            <div class="input-group w-50">
+                                                <select required id="name_nha_thau" class="form-control">
+                                                    <option value="">--Tên nhà thầu--</option>
+                                                    @foreach ($contractors as $contractor)
+                                                    <option value="{{ $contractor->name }}">{{ $contractor->name }}</option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+                                        </div> --}}
+                                        <input type="text" class="form-control" id="name_nha_thau_test" name="name_nha_thau">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="tab-pane fade" id="nav-contact" role="tabpanel"
+                                aria-labelledby="nav-contact-tab">
+                                <div class="row">
+                                    <div class="col-md-3"></div>
+                                    <div class="form-group col-md-5">
+                                        <label for="date_thuc_hien_test">Thời gian thực hiện tất cả các công việc theo yêu cầu
+                                            của
+                                            gói thầu:</label>
+                                        <input type="text" class="form-control" id="date_thuc_hien_test" name="date_thuc_hien">
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-3"></div>
+                                    <div class="form-group col-md-3">
+                                        <label for="time_test">Có hiệu lực trong thời gian:</label>
+                                        <input type="text" class="form-control" id="time_test" name="time">
+                                    </div>
+                                    <div class="form-group col-md-2">
+                                        <label for="d_test">Kể từ ngày:</label>
+                                        <input type="date" class="form-control" id="d_test" name="d">
+                                    </div>
+
+
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-3"></div>
+                                    <div class="form-group col-md-5">
+                                        <label for="ten_chuc_danh_test">Ghi tên, chức danh:</label>
+                                        {{-- <input type="text" class="form-control" id="ten_chuc_danh_test"
+                                            name="ten_chuc_danh"> --}}
+                                        <textarea name="ten_chuc_danh" class="form-control" id="ten_chuc_danh_test" cols="90"
+                                            rows="5"></textarea>
+                                    </div>
+                                </div>
                             </div>
                         </div>
 
@@ -124,43 +180,13 @@
 
                         <div class="row">
                             <div class="col-md-3"></div>
-                            <div class="form-group col-md-5">
-                                <label for="date_thuc_hien_test">Thời gian thực hiện tất cả các công việc theo yêu cầu
-                                    của
-                                    gói thầu:</label>
-                                <input type="text" class="form-control" id="date_thuc_hien_test" name="date_thuc_hien">
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-3"></div>
                             <div class="form-group col-md-3">
-                                <label for="time_test">Có hiệu lực trong thời gian:</label>
-                                <input type="text" class="form-control" id="time_test" name="time">
+                                {{-- <button type="submit" class="btn btn-primary">Export Word</button> --}}
+                                <a href="javascript:void(0)" class="btn btn-outline-primary">Export word</a>
                             </div>
                             <div class="form-group col-md-2">
-                                <label for="d_test">Kể từ ngày:</label>
-                                <input type="date" class="form-control" id="d_test" name="d">
-                            </div>
-
-
-                        </div>
-
-                        <div class="row">
-                            <div class="col-md-3"></div>
-                            <div class="form-group col-md-5">
-                                <label for="ten_chuc_danh_test">Ghi tên, chức danh:</label>
-                                {{-- <input type="text" class="form-control" id="ten_chuc_danh_test"
-                                    name="ten_chuc_danh"> --}}
-                                <textarea name="ten_chuc_danh" class="form-control" id="ten_chuc_danh_test" cols="90"
-                                    rows="5"></textarea>
-                            </div>
-                        </div>
-
-                        <div class="row">
-                            <div class="col-md-3"></div>
-                            <div class="form-group col-md-5">
                                 {{-- <button type="submit" class="btn btn-primary">Export Word</button> --}}
-                                <a href="javascript:void(0)" class="btn btn-primary">Export word</a>
+                                <a href="javascript:void(0)" id="save" class="btn btn-outline-primary">Lưu</a>
                             </div>
                         </div>
 

@@ -88,7 +88,12 @@ class TemplateController extends Controller
         $customers = $this->contractorService->all();
         $contractors = $this->contractorService->all();
 
-        return view('template.create1', compact('projects', 'packages', 'customers', 'contractors'));
+        $detail_id = Auth::user()->userDetails[0]->detail_id;
+        $detail = $this->detailService->find($detail_id);
+
+
+
+        return view('template.create1', compact('projects', 'packages', 'customers', 'contractors','detail'));
     }
     public function store1(Request $request)
     {

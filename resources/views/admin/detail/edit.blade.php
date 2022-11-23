@@ -1,5 +1,5 @@
-@extends('layout.master')
-@section('title','Home')
+@extends('admin.layout.master')
+@section('title','Edit details')
 @section('body')
 <!-- Main -->
 <div class="app-main__inner">
@@ -29,22 +29,22 @@
         <div class="col-md-12">
             <div class="main-card mb-3 card">
                 <div class="card-body">
-                    <form onsubmit="return checkform();" action="./home/edit" method="post">
+                    <form onsubmit="return checkform();" action="./admin/home/detail/edit" method="post">
                         @csrf
                         <nav>
                             <div class="nav nav-tabs nav-fill" id="nav-tab" role="tablist">
                                 <a class="nav-item nav-link active p-2" id="nav-home-tab" data-toggle="tab" href="#nav-home"
-                                role="tab" aria-controls="nav-home" aria-selected="true">
-                                <i class="fas fa-clipboard p-2"></i>
-                                Thông tin chung
-                            </a>
-                            {{-- <a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-profile"
-                                role="tab" aria-controls="nav-profile" aria-selected="false">Project Tab 2</a> --}}
-                            <a class="nav-item nav-link" id="nav-contact-tab" data-toggle="tab" href="#nav-contact"
-                                role="tab" aria-controls="nav-contact" aria-selected="false">
-                                <i class="fas fa-calendar-day p-2"></i>
-                                Thời gian
-                            </a>
+                                    role="tab" aria-controls="nav-home" aria-selected="true">
+                                    <i class="fas fa-clipboard p-2"></i>
+                                    Thông tin chung
+                                </a>
+                                {{-- <a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-profile"
+                                    role="tab" aria-controls="nav-profile" aria-selected="false">Project Tab 2</a> --}}
+                                <a class="nav-item nav-link" id="nav-contact-tab" data-toggle="tab" href="#nav-contact"
+                                    role="tab" aria-controls="nav-contact" aria-selected="false">
+                                    <i class="fas fa-calendar-day p-2"></i>
+                                    Thời gian
+                                </a>
                             </div>
                         </nav>
                         <div class="tab-content" id="nav-tabContent">
@@ -54,9 +54,9 @@
                                     <div class="col-md-3"></div>
                                     <div class="form-group col-md-5">
                                         <label for="nguoi_thuc_hien">Người thực hiện:</label>
-                                        <input type="text" class="form-control" value="{{ Auth::user()->email }}"
+                                        <input type="text" class="form-control" value="{{ $detail->userDetails[0]->user->email }}"
                                             id="nguoi_thuc_hien" disabled>
-                                        <input type="hidden" name="user_id" value="{{ Auth::user()->id }}">
+
                                     </div>
                                 </div>
                                 <div class="row">

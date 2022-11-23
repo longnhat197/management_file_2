@@ -17,7 +17,22 @@ Route::get('login', [App\Http\Controllers\HomeController::class, 'getLogin']);
 Route::post('login', [App\Http\Controllers\HomeController::class, 'postLogin']);
 Route::get('logout', [App\Http\Controllers\HomeController::class, 'logout']);
 
+Route::prefix('admin')->middleware('CheckAdminLogin')->group(function (){
+    Route::get('',[\App\Http\Controllers\Admin\HomeController::class,'index']);
+    Route::get('home/add',[\App\Http\Controllers\Admin\HomeController::class,'index']);
+    Route::get('home/detail',[\App\Http\Controllers\Admin\DetailController::class,'index']);
+    Route::get('home/listUsers',[App\Http\Controllers\Admin\UserController::class,'index']);
+    Route::get('user/active/{user}',[App\Http\Controllers\Admin\UserController::class,'active']);
+    Route::get('home/detail/{id}/edit',[App\Http\Controllers\Admin\DetailController::class,'edit']);
+    Route::post('home/detail/edit',[\App\Http\Controllers\Admin\DetailController::class,'editStore']);
 
+    Route::prefix('login')->group(function(){
+        Route::get('',[\App\Http\Controllers\Admin\HomeController::class,'getLogin'])->withoutMiddleware('CheckAdminLogin');
+        Route::post('',[\App\Http\Controllers\Admin\HomeController::class,'postLogin'])->withoutMiddleware('CheckAdminLogin');
+    });
+
+    Route::get('logout',[\App\Http\Controllers\Admin\HomeController::class,'logout']);
+});
 
 Route::middleware('CheckLogin')->group(function () {
     Route::get('', [\App\Http\Controllers\HomeController::class, 'index']);
@@ -31,7 +46,11 @@ Route::middleware('CheckLogin')->group(function () {
     Route::resource('project', \App\Http\Controllers\ProjectController::class);
     Route::resource('customer', \App\Http\Controllers\CustomerController::class);
     Route::resource('package', \App\Http\Controllers\PackageController::class);
-    Route::resource('user', \App\Http\Controllers\ListUserController::class);
+    // Route::resource('user', \App\Http\Controllers\ListUserController::class);
+    Route::get('user/edit/{id}',[\App\Http\Controllers\UserController::class,'edit']);
+    Route::post('user/edit/{id}',[\App\Http\Controllers\UserController::class,'editStore']);
+
+
 
 
 });

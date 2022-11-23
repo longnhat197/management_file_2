@@ -13,8 +13,8 @@ class Detail extends Model
     protected $primaryKey='id';
     protected $guarded =[];
 
-    public function userDetail(){
-        return $this->hasMany(User::class,'user_id','id');
+    public function userDetails(){
+        return $this->hasMany(UserDetail::class,'detail_id','id');
     }
 
     public function detailTemps(){
