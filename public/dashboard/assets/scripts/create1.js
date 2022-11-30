@@ -57,6 +57,15 @@ $(document).ready(function () {
         document.getElementById('y1').innerText = y;
     }
 
+    soTrichYeu = document.getElementById('so_trich_yeu_test');
+    soSuaDoi = document.getElementById('so_sua_doi_test');
+    nameNhaThau = document.getElementById('name_nha_thau_test');
+    timeThucHien = document.getElementById('date_thuc_hien_test');
+    timeHieuLuc = document.getElementById('time_test');
+    dateStart = document.getElementById('d_test');
+    detail_id = document.getElementById('detail_id');
+    chucDanh = document.getElementById('ten_chuc_danh_test');
+
     date1 = document.getElementById('date_test');
     date1.onchange = function () {
         Str_date = String(date1.value);
@@ -103,8 +112,39 @@ $(document).ready(function () {
     }
     save = document.getElementById('save');
     save.onclick = function () {
-        data = $('form').serialize();
-        console.log(data);
+        url = $('#detail_id').attr("data-url");
+        data = {
+            date1: date1.value,
+            soTrichYeu: soTrichYeu.value,
+            soSuaDoi: soSuaDoi.value,
+            nameNhaThau: nameNhaThau.value,
+            timeThucHien: timeThucHien.value,
+            timeHieuLuc: timeHieuLuc.value,
+            dateStart: dateStart.value,
+            detail_id: detail_id.value,
+            chucDanh: chucDanh.value,
+        }
+
+        $.ajaxSetup({
+            headers: {
+                "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+            },
+        });
+        $.ajax({
+            url: url,
+            method: "POST",
+            data: data,
+            dataType: 'json',
+            success: function (res) {
+                alertify.set('notifier','position', 'top-center');
+                alertify.success(res);
+
+            },
+            error: function (xhr, ajaxOption, throwError) {
+                alert(xhr.status);
+                alert(throwError);
+            }
+        })
     }
 
 });

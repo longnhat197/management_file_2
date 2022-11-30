@@ -1480,13 +1480,12 @@
                                     </li>
 
                                     <li>
-                                        <a href="./admin/home/listUsers"
-                                            class="{{ request()->segment(3) == 'listUsers' ? 'mm-active' : '' }}">Danh sách tài khoản</a>
+                                        <a href="./admin/home/user"
+                                            class="{{ request()->segment(3) == 'user' ? 'mm-active' : '' }}">Danh sách tài khoản</a>
                                     </li>
                                     <li>
-                                        <a href="./home/edit"
-                                            class="{{ request()->segment(2) == '1' ? 'mm-active' : '' }}">Hiệu
-                                            chỉnh</a>
+                                        <a href="./admin/home/userDetail"
+                                            class="{{ request()->segment(3) == 'userDetail' ? 'mm-active' : '' }}">Tình trạng</a>
                                     </li>
                                     <li>
                                         <a href="./home/edit"
@@ -1501,7 +1500,7 @@
                                 </a>
                                 <ul>
                                     {{-- {{ $list_temps->first() }} --}}
-                                    @if ($list_temps)
+                                    {{-- @if ($list_temps)
                                         @if ($list_temps->first()->type == 0)
                                             @foreach ($list_temps as $item)
                                                 <li class="{{ preg_replace('/\D/', '', $item->templates0->url) == request()->segment(2) ? 'mm-active' : '' }}">
@@ -1519,7 +1518,7 @@
                                                 </li>
                                             @endforeach
                                         @endif
-                                    @endif
+                                    @endif --}}
 
                                 </ul>
                                 {{-- <ul>

@@ -44,6 +44,9 @@ use App\Repositories\User\UserRepositoryInterface;
 use App\Services\User\UserService;
 use App\Services\User\UserServiceInterface;
 
+use App\Services\Login\LoginService;
+use App\Services\Login\LoginServiceInterface;
+
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -140,6 +143,12 @@ class AppServiceProvider extends ServiceProvider
         $this->app->singleton(
             UserServiceInterface::class,
             UserService::class,
+        );
+
+        //Login
+        $this->app->singleton(
+            LoginServiceInterface::class,
+            LoginService::class,
         );
     }
 

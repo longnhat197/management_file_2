@@ -10,7 +10,7 @@
                     <i class="pe-7s-ticket icon-gradient bg-mean-fruit"></i>
                 </div>
                 <div>
-                    User
+                    Tình trạng công việc
                     <div class="page-title-subheading">
                         View, create, update, delete and manage.
                     </div>
@@ -18,7 +18,7 @@
             </div>
 
             <div class="page-title-actions">
-                <a href="./admin/user/create" class="btn-shadow btn-hover-shine mr-3 btn btn-primary">
+                <a href="./admin/home/userDetail/create" class="btn-shadow btn-hover-shine mr-3 btn btn-primary">
                     <span class="btn-icon-wrapper pr-2 opacity-7">
                         <i class="fa fa-plus fa-w-20"></i>
                     </span>
@@ -46,7 +46,7 @@
                     <form>
                         <div class="input-group">
                             <input type="search" name="search" id="search" value="{{ request('search') }}"
-                                placeholder="Search everything" class="form-control">
+                                placeholder="Tìm kiếm tài khoản" class="form-control">
                             <span class="input-group-append">
                                 <button type="submit" class="btn btn-primary">
                                     <i class="fa fa-search"></i>&nbsp;
@@ -62,54 +62,33 @@
                         <thead>
                             <tr>
                                 <th class="text-center">ID</th>
-                                <th> Name</th>
-                                <th class="text-center">Email</th>
-                                <th class="text-center">Level</th>
-                                <th class="text-center">Enable</th>
+                                <th class="text-center">Tài khoản</th>
+                                <th class="text-center">Dự án</th>
+                                <th class="text-center">Created</th>
                                 <th class="text-center">Actions</th>
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($users as $user)
+                            @foreach ($userDetails as $item)
                             <tr>
-                                <td class="text-center text-muted">#{{ $user->id }}</td>
-                                <td>
-                                    <div class="widget-content p-0">
-                                        <div class="widget-content-wrapper">
-                                            <div class="widget-content-left mr-3">
-                                                <div class="widget-content-left">
-                                                    <img width="40" class="rounded-circle"
-                                                        data-toggle="tooltip" title="Image"
-                                                        data-placement="bottom"
-                                                        src="img/user/{{ $user->avatar ?? '_default-user.png' }}" alt="">
-                                                </div>
-                                            </div>
-                                            <div class="widget-content-left flex2">
-                                                <div class="widget-heading">{{ $user->name }}</div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </td>
-                                <td class="text-center">{{ $user->email }}</td>
+                                <td class="text-center text-muted">#{{ $item->id }}</td>
                                 <td class="text-center">
-                                    {{ \App\Utilities\Constant::$user_level[$user->level] }}
+                                    {{ $item->user->email }}
+                                </td>
+                                <td class="text-center">{{ $item->detail->name_goi_thau }}</td>
+                                <td class="text-center">
+                                    {{ $item->created_at }}
                                 </td>
                                 <td class="text-center">
-                                    {!! $user->enabled == 0 ? '<a href="./admin/user/active/'. $user->id .'"
-                                        class="btn btn-danger btn-sm"><i class="fas fa-times-circle"></i></a>' : '<a
-                                        href="./admin/user/active/'. $user->id .'" class="btn btn-primary btn-sm"><i
-                                            class="fas fa-check-circle"></i></a>' !!}
-                                </td>
-                                <td class="text-center">
-                                    <a href="./admin/home/user/{{ $user->id }}/edit" data-toggle="tooltip" title="Edit"
+                                    {{-- <a href="./admin/home/userDetail/{{ $item->id }}/edit" data-toggle="tooltip" title="Edit"
                                         data-placement="bottom" class="btn btn-outline-warning border-0 btn-sm">
                                         <span class="btn-icon-wrapper opacity-8">
                                             <i class="fa fa-edit fa-w-20"></i>
                                         </span>
-                                    </a>
-                                    <form class="d-inline" action="./admin/user/{{ $user->id }}" method="post">
+                                    </a> --}}
+                                    <form class="d-inline" action="./admin/home/userDetail/{{ $item->id }}" method="post">
                                         @csrf
-                                        @method('DELETE')
+
                                         <button class="btn btn-hover-shine btn-outline-danger border-0 btn-sm"
                                             type="submit" data-toggle="tooltip" title="Delete" data-placement="bottom"
                                             onclick="return confirm('Do you really want to delete this item?')">
@@ -128,7 +107,7 @@
                 </div>
 
                 <div class="d-block card-footer">
-                    {{ $users->links() }}
+                    {{ $userDetails->links() }}
                 </div>
 
             </div>

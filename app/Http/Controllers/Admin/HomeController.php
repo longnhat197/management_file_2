@@ -3,31 +3,25 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\User;
+use App\Services\Login\LoginServiceInterface;
 use App\Utilities\Constant;
 use Illuminate\Http\Request;
+use LdapRecord\Connection;
 use Illuminate\Support\Facades\Auth;
 
 class HomeController extends Controller
 {
+    private $loginService;
+    public function __construct(LoginServiceInterface $loginService){
+        $this->loginService = $loginService;
+    }
     public function getLogin(){
         return view('admin.login.index');
     }
 
     public function postLogin(Request $request){
-        $credentials = [
-            'email' => $request->email,
-            'password' => $request->password,
-            'level' => [Constant::user_level_admin], //Tài khoản khách hàng cấp độ host hoặc admin
-        ];
-
-        $remember = $request->remember;
-
-        if (Auth::attempt($credentials, $remember)) {
-
-            return redirect()->intended('admin'); // Mặc định là trang chủ
-        } else {
-            return back()->with('notification', 'ERROR: Email or password is incorrect');
-        }
+        return $this->loginService->loginAdmin($request);
     }
 
     public function logout(){

@@ -1,6 +1,7 @@
 <?php
 namespace App\Http\View\Composers;
 
+use App\Models\Detail;
 use App\Models\DetailTemp;
 use App\Models\UserDetail;
 use Illuminate\Support\Facades\Auth;
@@ -20,17 +21,19 @@ class SidebarComposer{
         $isExit = UserDetail::select("*")
         ->where("user_id",Auth::user()->id)->exists();
         if($isExit){
-            $detail_id = Auth::user()->userDetails[0]->detail_id;
-            $list_temps = DetailTemp::where('detail_id',$detail_id)->get() ?? [];
+            $details = Detail::select("details.*")
+                            ->join('user_details','details.id','=','user_details.detail_id')
+                            ->join('users','user_details.user_id','=','users.id')
+                            ->where('users.id','=',Auth::user()->id)->get();
         }else{
-            $list_temps = [];
+            $details = [];
         }
         // $list_temps = [];
 
 
         $view->with([
-            'list_temps'=> $list_temps,
-            'isExitUser' => $isExit
+            'details'=> $details,
+
         ]);
     }
 }

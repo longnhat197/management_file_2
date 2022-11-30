@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\DetailTemp;
+use App\Models\UserDetail;
 use App\Services\Detail\DetailServiceInterface;
 use Illuminate\Http\Request;
 
@@ -42,5 +44,16 @@ class DetailController extends Controller
         } catch (\Exception $err) {
             return back()->with('error', $err->getMessage());
         }
+    }
+
+    public function delete($id){
+        try{
+            UserDetail::where('detail_id',$id)->delete();
+            DetailTemp::where('detail_id',$id)->delete();
+            $this->detailService->delete($id);
+        }catch(\Exception $err){
+            return redirect('admin/home/detail')->with('error', $err->getMessage());
+        }
+        return redirect('admin/home/detail')->with('success', 'Đã xoá thành công');
     }
 }

@@ -37,6 +37,7 @@
                                 Thời gian
                             </a>
                         </div>
+
                         <div class="tab-content" id="nav-tabContent">
                             <div class="tab-pane fade show active" id="nav-home" role="tabpanel"
                                 aria-labelledby="nav-home-tab">
@@ -44,7 +45,8 @@
                                     <div class="col-md-3"></div>
                                     <div class="form-group col-md-5">
                                         <label for="date">Ngày tháng năm đăng ký đơn dự thầu:</label>
-                                        <input type="date" class="form-control" id="date_test" name="date">
+                                        <input type="date" class="form-control" value="{{ $temp != [] ? $temp->date_dang_ky : 0 }}" id="date_test" name="date">
+                                        <input type="hidden" value="{{ $detail_id }}" id="detail_id" data-url="./template/1/save">
                                     </div>
                                 </div>
                                 <div class="row">
@@ -61,7 +63,7 @@
                                                 </select>
                                             </div>
                                         </div> --}}
-                                        <input type="text" class="form-control" id="name_goi_thau_test" value="{{ $detail->name_goi_thau }}" name="name_goi_thau">
+                                        <input type="text" class="form-control" id="name_goi_thau_test" value="{{ $detail->name_goi_thau }}" >
                                     </div>
                                 </div>
                                 <div class="row">
@@ -78,7 +80,7 @@
                                                 </select>
                                             </div>
                                         </div> --}}
-                                        <input type="text" class="form-control" id="name_du_an_test" value="{{ $detail->name_du_an }}" name="name_du_an">
+                                        <input type="text" class="form-control" id="name_du_an_test" value="{{ $detail->name_du_an }}" >
                                     </div>
                                 </div>
                                 <div class="row">
@@ -86,7 +88,7 @@
                                     <div class="form-group col-md-5">
                                         <label for="so_trich_yeu_test">Số trích yếu của Thư mời thầu đối với đấu thầu hạn
                                             chế:</label>
-                                        <input type="text" class="form-control" id="so_trich_yeu_test" name="so_trich_yeu">
+                                        <input type="text" class="form-control" id="so_trich_yeu_test" value="{{ $temp != [] ? $temp->so_trich_yeu : ''  }}" name="so_trich_yeu">
                                     </div>
                                 </div>
                                 <div class="row">
@@ -103,14 +105,14 @@
                                                 </select>
                                             </div>
                                         </div> --}}
-                                        <input type="text" class="form-control" id="name_moi_thau_test" value="{{ $detail->name_moi_thau }}" name="name_moi_thau">
+                                        <input type="text" class="form-control" id="name_moi_thau_test" value="{{ $detail->name_moi_thau }}" >
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="col-md-3"></div>
                                     <div class="form-group col-md-5">
                                         <label for="so_sua_doi_test">Số của văn bản sửa đổi (nếu có):</label>
-                                        <input type="text" class="form-control" id="so_sua_doi_test" name="so_sua_doi">
+                                        <input type="text" class="form-control" value="{{ $temp != [] ? $temp->so_sua_doi : '' }}" id="so_sua_doi_test" name="so_sua_doi">
                                     </div>
                                 </div>
                                 <div class="row">
@@ -127,7 +129,7 @@
                                                 </select>
                                             </div>
                                         </div> --}}
-                                        <input type="text" class="form-control" id="name_nha_thau_test" name="name_nha_thau">
+                                        <input type="text" class="form-control" id="name_nha_thau_test" value="{{ $temp != [] ? $temp->name_nha_thau : '' }}" name="name_nha_thau">
                                     </div>
                                 </div>
                             </div>
@@ -140,18 +142,18 @@
                                         <label for="date_thuc_hien_test">Thời gian thực hiện tất cả các công việc theo yêu cầu
                                             của
                                             gói thầu:</label>
-                                        <input type="text" class="form-control" id="date_thuc_hien_test" name="date_thuc_hien">
+                                        <input type="text" class="form-control" id="date_thuc_hien_test" value="{{ $temp != [] ? $temp->time_thuc_hien : '' }}" name="date_thuc_hien">
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="col-md-3"></div>
                                     <div class="form-group col-md-3">
                                         <label for="time_test">Có hiệu lực trong thời gian:</label>
-                                        <input type="text" class="form-control" id="time_test" name="time">
+                                        <input type="text" class="form-control" value="{{ $temp != [] ? $temp->time_hieu_luc : '' }}" id="time_test" name="time">
                                     </div>
                                     <div class="form-group col-md-2">
                                         <label for="d_test">Kể từ ngày:</label>
-                                        <input type="date" class="form-control" id="d_test" name="d">
+                                        <input type="date" value="{{ $temp != [] ? $temp->date_start : '' }}" class="form-control" id="d_test" name="d">
                                     </div>
 
 
@@ -163,8 +165,8 @@
                                         <label for="ten_chuc_danh_test">Ghi tên, chức danh:</label>
                                         {{-- <input type="text" class="form-control" id="ten_chuc_danh_test"
                                             name="ten_chuc_danh"> --}}
-                                        <textarea name="ten_chuc_danh" class="form-control" id="ten_chuc_danh_test" cols="90"
-                                            rows="5"></textarea>
+                                        <textarea name="ten_chuc_danh"  class="form-control" id="ten_chuc_danh_test" cols="90"
+                                            rows="5">{{ $temp != [] ? $temp->ten_chuc_danh : '' }}</textarea>
                                     </div>
                                 </div>
                             </div>
@@ -202,7 +204,7 @@
                         style="font-size:14pt"><span style="line-height:110%"><span
                                 style="font-family:&quot;Times New Roman&quot;,serif"><span
                                     style="font-weight:bold"><span lang="ES-TRAD" style="line-height:110%">ĐƠN DỰ THẦU
-                                        (1)</span></span></span></span></span></p>
+                                        </span></span></span></span></span></p>
 
                 <p align="center" style="margin-top:8px; margin-bottom:8px; text-align:center"><span
                         style="font-size:12pt"><span style="line-height:110%"><span style="tab-stops:right 6.25in"><span

@@ -1,4 +1,4 @@
-@extends('admin.layout.master')
+@extends('layout.master')
 @section('title','Contractor')
 @section('body')
     <!-- Main -->
@@ -112,20 +112,23 @@
                                             <div class="widget-content p-0">
                                                 <div class="widget-content-wrapper">
                                                     <div class="widget-content-left flex2">
-                                                        <div class="widget-heading">{{ $detail->userDetails[0]->user->email }}</div>
+                                                        <div class="widget-heading">{{ $detail->userDetails[0]->user->name }}</div>
                                                     </div>
                                                 </div>
                                             </div>
                                         </td>
                                         <td class="text-center">
+                                            @if ($detail->user_id == Auth::user()->id || Auth::user()->level == 0)
                                             <a href="./admin/home/detail/{{ $detail->id }}/edit" data-toggle="tooltip" title="Edit"
                                                 data-placement="bottom" class="btn btn-outline-warning border-0 btn-sm">
                                                 <span class="btn-icon-wrapper opacity-8">
                                                     <i class="fa fa-edit fa-w-20"></i>
                                                 </span>
                                             </a>
+
                                             <form class="d-inline" action="./admin/home/detail/{{ $detail->id }}/delete" method="post">
                                                 @csrf
+                                                @method('DELETE')
                                                 <button class="btn btn-hover-shine btn-outline-danger border-0 btn-sm"
                                                     type="submit" data-toggle="tooltip" title="Delete"
                                                     data-placement="bottom"
@@ -135,6 +138,8 @@
                                                     </span>
                                                 </button>
                                             </form>
+                                            @endif
+
                                         </td>
                                     </tr>
                                 @endforeach

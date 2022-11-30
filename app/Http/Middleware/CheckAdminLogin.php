@@ -24,7 +24,6 @@ class CheckAdminLogin
 
         if(Auth::user()->level != Constant::user_level_admin){
             Auth::logout();
-
             return redirect()->guest('admin/login');
         }
 

@@ -1,4 +1,4 @@
-@extends('layout.master')
+@extends('admin.layout.master')
 @section('title','User Edit')
 @section('body')
 <!-- Main -->
@@ -32,17 +32,16 @@
         <div class="col-md-12">
             <div class="main-card mb-3 card">
                 <div class="card-body">
-                    <form method="post" action="user/edit/{{ $user->id }}" enctype="multipart/form-data">
+                    <form method="post" onsubmit="return checkform();" action="admin/home/user/{{ $user->id }}/edit" enctype="multipart/form-data">
                         @csrf
                         <div class="position-relative row form-group">
                             <label for="image" class="col-md-3 text-md-right col-form-label">Avatar</label>
                             <div class="col-md-9 col-xl-8">
-                                <img style="height: 200px; cursor: pointer;" class="thumbnail rounded-circle"
-                                    data-toggle="tooltip" title="Click to change the image" data-placement="bottom"
+                                <img style="height: 200px;" class="thumbnail rounded-circle"
                                     src="img/user/{{ $user->avatar ?? '_default-user.png' }}" alt="Avatar">
-                                <input name="image" type="file" onchange="changeImg(this)"
+                                <input disabled type="file" onchange="changeImg(this)"
                                     class="image form-control-file" style="display: none;" value="">
-                                <input type="hidden" name="image_old" value="{{ $user->avatar }}">
+                                <input type="hidden" value="{{ $user->avatar }}">
                                 <small class="form-text text-muted">
                                     Click on the image to change (required)
                                 </small>
@@ -51,7 +50,7 @@
                         <div class="position-relative row form-group">
                             <label for="name" class="col-md-3 text-md-right col-form-label">Tên hiển thị</label>
                             <div class="col-md-9 col-xl-8">
-                                <input required name="name" id="name" placeholder="Name" type="text"
+                                <input disabled id="name" placeholder="Name" type="text"
                                     class="form-control" value="{{ $user->name }}">
                                 {{-- <input type="hidden" name="id" value="{{ $user->id }}"> --}}
                             </div>
@@ -66,10 +65,18 @@
                         </div>
 
                         <div class="position-relative row form-group">
-                            <label for="address" class="col-md-3 text-md-right col-form-label">Email</label>
+                            <label for="level"
+                                class="col-md-3 text-md-right col-form-label">Level</label>
                             <div class="col-md-9 col-xl-8">
-                                <input readonly id="address" type="text" class="form-control"
-                                    value="{{ \App\Utilities\Constant::$user_level[$user->level]}}">
+                                <select name="level" id="level" class="form-control">
+                                    <option value="">-- Level --</option>
+                                    @foreach (\App\Utilities\Constant::$user_level as $key => $value)
+                                        <option value={{ $key }} {{ $user->level == $key ? 'selected' : '' }}>
+                                            {{ strtoupper($value)  }}
+                                        </option>
+                                    @endforeach
+
+                                </select>
                             </div>
                         </div>
 
@@ -112,12 +119,19 @@
         reader.readAsDataURL(input.files[0]);
     }
 }
+level = document.getElementById('level')
 //Khi click #thumbnail thì cũng gọi sự kiện click #image
 // $(document).ready(function () {
 //     $('.thumbnail').click(function () {
 //         $(this).siblings('.image').click();
 //     });
 // });
+function checkform(){
+    if(!level.value){
+        alertify.error('Không được để trống level')
+            return false
+    }
+}
 </script>
 
 @endsection

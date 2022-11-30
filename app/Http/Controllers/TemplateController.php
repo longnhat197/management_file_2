@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Detail;
 use App\Models\DetailTemp;
+use App\Models\Mau1;
 use App\Models\Template0;
 use App\Services\Detail\DetailServiceInterface;
 use App\Services\Contractor\ContractorServiceInterface;
@@ -55,32 +56,32 @@ class TemplateController extends Controller
     //     return view('template.index',compact('tems'));
     // }
 
-    public function test(Request $request){
-        try{
-            foreach($request->get('list_tem') as $tem_id){
+    public function test(Request $request)
+    {
+        try {
+            foreach ($request->get('list_tem') as $tem_id) {
                 DetailTemp::create([
                     'detail_id' => $request->get('detail_id'),
-                    'tem_id'=>$tem_id,
-                    'type' =>$request->get('type'),
+                    'tem_id' => $tem_id,
+                    'type' => $request->get('type'),
                 ]);
             }
-
-        }catch(\Exception $err){
+        } catch (\Exception $err) {
             return $err->getMessage();
         }
         $detail_id = Auth::user()->userDetails[0]->detail_id;
 
         $type = DetailTemp::where('detail_id', $detail_id)->first()->type;
-        if($type == 0){
-            $link = DetailTemp::where('detail_id', $detail_id)->first()->templates0->url;
-        }else if($type == 1){
-            $link = DetailTemp::where('detail_id', $detail_id)->first()->templates1->url;
+        if ($type == 0) {
+            $link = DetailTemp::where('detail_id', $detail_id)->first()->templates0->url . '/' . $detail_id;
+        } else if ($type == 1) {
+            $link = DetailTemp::where('detail_id', $detail_id)->first()->templates1->url . '/' . $detail_id;
         }
         return redirect($link);
     }
 
     //------------------Mẫu 01. ĐƠN DỰ THẦU (thuộc HSĐXKT)---------------------
-    public function create1()
+    public function create1($detail_id)
     {
 
         $projects = $this->projectService->all();
@@ -88,12 +89,52 @@ class TemplateController extends Controller
         $customers = $this->contractorService->all();
         $contractors = $this->contractorService->all();
 
-        $detail_id = Auth::user()->userDetails[0]->detail_id;
         $detail = $this->detailService->find($detail_id);
 
+        $exist = Mau1::select("*")->where('detail_id', $detail_id)->exists();
+        if ($exist) {
+            $temp = Mau1::where('detail_id', $detail_id)->first();
+        }else{
+            $temp = [];
+        }
 
+        return view('template.create1', compact('detail', 'detail_id','temp'));
+    }
 
-        return view('template.create1', compact('projects', 'packages', 'customers', 'contractors','detail'));
+    public function save1(Request $request)
+    {
+        if ($request->ajax()) {
+            $detail_id = $request->get('detail_id');
+            $exist = Mau1::select("*")->where('detail_id', $detail_id)->exists();
+            if ($exist) {
+                Mau1::where('detail_id', $detail_id)
+                    ->update([
+                        'date_dang_ky' => $request->get('date1'),
+                        'so_trich_yeu' => $request->get('soTrichYeu'),
+                        'so_sua_doi' => $request->get('soSuaDoi'),
+                        'name_nha_thau' => $request->get('nameNhaThau'),
+                        'time_thuc_hien' => $request->get('timeThucHien'),
+                        'time_hieu_luc' => $request->get('timeHieuLuc'),
+                        'date_start' => $request->get('dateStart'),
+                        'ten_chuc_danh' => $request->get('chucDanh')
+                    ]);
+                $res = 'Đã cập nhật bản lưu';
+            } else {
+                Mau1::create([
+                    'date_dang_ky' => $request->get('date1'),
+                    'so_trich_yeu' => $request->get('soTrichYeu'),
+                    'detail_id' => $detail_id,
+                    'so_sua_doi' => $request->get('soSuaDoi'),
+                    'name_nha_thau' => $request->get('nameNhaThau'),
+                    'time_thuc_hien' => $request->get('timeThucHien'),
+                    'time_hieu_luc' => $request->get('timeHieuLuc'),
+                    'date_start' => $request->get('dateStart'),
+                    'ten_chuc_danh' => $request->get('chucDanh')
+                ]);
+                $res = 'Đã tạo bản lưu cho file';
+            }
+            echo json_encode($res);
+        }
     }
     public function store1(Request $request)
     {
@@ -314,21 +355,21 @@ class TemplateController extends Controller
 
         $templateProcessor->setValues(array(
             'address' => $request->get('address') ?? '____',
-            'd' => $d ,
-            'm' => $m ,
-            'y' => $Y ,
+            'd' => $d,
+            'm' => $m,
+            'y' => $Y,
             'name_goi_thau' => $request->get('name_goi_thau') ?? '____ [ghi tên gói thầu]',
             'name_du_an' => $request->get('name_du_an') ?? '____ [ghi tên dự án]',
             'can_cu' => $request->get('can_cu') ?? '__ [Luật đấu thầu số 43/2013/QH13 ngày 26/11/2013 của Quốc hội];',
             'can_cu1' => $request->get('can_cu1') ?? '____ [Nghị định số 63/2014/NĐ-CP ngày 26/6/2014 của Chính phủ về hướng dẫn thi hành Luật đấu thầu về lựa chọn nhà thầu];',
-            'd1' => $d1 ,
-            'm1' => $m1 ,
-            'y1' => $y1 ,
+            'd1' => $d1,
+            'm1' => $m1,
+            'y1' => $y1,
             'name_thanh_vien' => $request->get('ten_thanh_vien') ?? '____[ghi tên từng thành viên liên danh]',
             'so_uy_quyen' => $request->get('so_uy_quyen') ?? '___',
-            'd2' => $d2 ,
-            'm2' => $m2 ,
-            'y2' => $y2 ,
+            'd2' => $d2,
+            'm2' => $m2,
+            'y2' => $y2,
             'name_lien_danh' => $request->get('name_lien_danh') ?? '____[ghi tên của liên danh theo thỏa thuận].',
             'hinh_thuc_khac' => $request->get('hinh_thuc_khac') ?? '____[ghi rõ hình thức xử lý khác].',
             'name_mot_ben' => $request->get('name_mot_ben') ?? '____[ghi tên một bên]',
@@ -360,17 +401,18 @@ class TemplateController extends Controller
         $projects = $this->projectService->all();
         $packages = $this->packageService->all();
 
-        return view('template.create4',compact('customers','contractors','packages','projects'));
+        return view('template.create4', compact('customers', 'contractors', 'packages', 'projects'));
     }
 
-    public function ajaxMT(Request $request){
+    public function ajaxMT(Request $request)
+    {
         if ($request->ajax()) {
             $id = $request->get('id');
             if ($id != '0') {
                 $customer = $this->customerService->find($id);
                 $data = array(
                     'name' => $customer->name,
-                    'address' =>$customer->address,
+                    'address' => $customer->address,
                 );
             }
             if ($id == "0") {
@@ -383,7 +425,8 @@ class TemplateController extends Controller
         }
     }
 
-    public function store4(Request $request){
+    public function store4(Request $request)
+    {
 
         // return $request->all();
         $date = $request->get('ngay_phat_hanh');
@@ -402,7 +445,7 @@ class TemplateController extends Controller
         $file = 'Mẫu 04 (a). BẢO LÃNH DỰ THẦU_' . date("Y-m-d") . '.docx';
 
         $templateProcessor->setValues(array(
-            'thong_tin_moi_thau' =>$request->get('thong_tin_moi_thau') ?? '___[ghi tên và địa chỉ của Bên mời thầu]',
+            'thong_tin_moi_thau' => $request->get('thong_tin_moi_thau') ?? '___[ghi tên và địa chỉ của Bên mời thầu]',
             'ngay_phat_hanh' => $new_date,
             'so_trich_yeu' => $request->get('so_trich_yeu') ?? '___[ghi số trích yếu của Bảo lãnh dự thầu]',
             'thong_tin_phat_hanh' => $request->get('thong_tin_phat_hanh'),
@@ -421,7 +464,6 @@ class TemplateController extends Controller
 
         header('Content-Disposition: attachment; filename="' . $file . '"');
         $templateProcessor->saveAs("php://output");
-
     }
 
     public function create4_1()
@@ -431,17 +473,18 @@ class TemplateController extends Controller
         $projects = $this->projectService->all();
         $packages = $this->packageService->all();
 
-        return view('template.create4_1',compact('customers','contractors','packages','projects'));
+        return view('template.create4_1', compact('customers', 'contractors', 'packages', 'projects'));
     }
 
-    public function ajaxMT41(Request $request){
+    public function ajaxMT41(Request $request)
+    {
         if ($request->ajax()) {
             $id = $request->get('id');
             if ($id != '0') {
                 $customer = $this->customerService->find($id);
                 $data = array(
                     'name' => $customer->name,
-                    'address' =>$customer->address,
+                    'address' => $customer->address,
                 );
             }
             if ($id == "0") {
@@ -454,7 +497,8 @@ class TemplateController extends Controller
         }
     }
 
-    public function store4_1(Request $request){
+    public function store4_1(Request $request)
+    {
 
         // return $request->all();
         $date = $request->get('ngay_phat_hanh');
@@ -473,7 +517,7 @@ class TemplateController extends Controller
         $file = 'Mẫu 04 (b). BẢO LÃNH DỰ THẦU_' . date("Y-m-d") . '.docx';
 
         $templateProcessor->setValues(array(
-            'thong_tin_moi_thau' =>$request->get('thong_tin_moi_thau') ?? '___[ghi tên và địa chỉ của Bên mời thầu]',
+            'thong_tin_moi_thau' => $request->get('thong_tin_moi_thau') ?? '___[ghi tên và địa chỉ của Bên mời thầu]',
             'ngay_phat_hanh' => $new_date,
             'so_trich_yeu' => $request->get('so_trich_yeu') ?? '___[ghi số trích yếu của Bảo lãnh dự thầu]',
             'thong_tin_phat_hanh' => $request->get('thong_tin_phat_hanh'),
@@ -493,7 +537,6 @@ class TemplateController extends Controller
 
         header('Content-Disposition: attachment; filename="' . $file . '"');
         $templateProcessor->saveAs("php://output");
-
     }
 
     // ------------------End Mẫu 04 (b). BẢO LÃNH DỰ THẦU---------------------
@@ -501,13 +544,15 @@ class TemplateController extends Controller
 
     // ------------------ Mẫu 05 (a). BẢN KÊ KHAI THÔNG TIN VỀ NHÀ THẦU---------------------
 
-    public function create5(){
+    public function create5()
+    {
         $packages = $this->packageService->all();
         $contractors = $this->contractorService->all();
-        return view('template.create5',compact('contractors','packages'));
+        return view('template.create5', compact('contractors', 'packages'));
     }
 
-    public function store5(Request $request){
+    public function store5(Request $request)
+    {
         return $request->all();
     }
 

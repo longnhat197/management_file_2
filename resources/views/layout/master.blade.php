@@ -873,7 +873,7 @@
                                         <a data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
                                             class="p-0 btn">
                                             <img width="42" class="rounded-circle"
-                                                src="dashboard/assets/images/_default-user.png" alt="">
+                                                src="img/user/{{ Auth::user()->avatar ?? '_default-user.png' }}" alt="">
                                             <i class="fa fa-angle-down ml-2 opacity-8"></i>
                                         </a>
                                         <div tabindex="-1" role="menu" aria-hidden="true"
@@ -888,7 +888,7 @@
                                                             <div class="widget-content-wrapper">
                                                                 <div class="widget-content-left mr-3">
                                                                     <img width="42" class="rounded-circle"
-                                                                        src="dashboard/assets/images/_default-user.png"
+                                                                        src="img/user/{{ Auth::user()->avatar ?? '_default-user.png' }}"
                                                                         alt="">
                                                                 </div>
                                                                 <div class="widget-content-left">
@@ -904,14 +904,14 @@
                                                                 </div>
 
                                                             </div>
-                                                            <div class="widget-content-wrapper">
+                                                            {{-- <div class="widget-content-wrapper">
                                                                 <div class="widget-content-left mr-3">
 
                                                                 </div>
                                                                 <div class="widget-content-right mr-2">
                                                                     <a href="./user/changePass/{{ Auth::user()->id }}" class="btn-pill btn-shadow btn-shine btn btn-outline-focus ">Đổi mật khẩu</a>
                                                                 </div>
-                                                            </div>
+                                                            </div> --}}
                                                         </div>
                                                     </div>
                                                 </div>
@@ -1479,18 +1479,17 @@
                                     <i class="metismenu-state-icon pe-7s-angle-down caret-left"></i>
                                 </a>
                                 <ul>
-                                    @if (!$isExitUser)
+
                                     <li>
                                         <a href="./home/add"
                                             class="{{ request()->segment(2) == 'add' ? 'mm-active' : '' }}">Thêm mới dự
                                             án</a>
                                     </li>
-                                    @endif
+
 
                                     <li>
-                                        <a href="./home/edit"
-                                            class="{{ request()->segment(2) == 'edit' ? 'mm-active' : '' }}">Sửa dự án
-                                            hiện tại</a>
+                                        <a href="./home/show"
+                                            class="{{ request()->segment(2) == 'show' ? 'mm-active' : '' }}">Danh sách dự án</a>
                                     </li>
                                     <li>
                                         <a href="./home/edit"
@@ -1503,14 +1502,38 @@
                                     </li>
                                 </ul>
                             </li>
-                            <li class="{{ request()->segment(1) == 'template' ? 'mm-active' : '' }}">
+                            @foreach ( $details as $detail )
+                            <li class="{{ $detail->id == request()->segment(3)  ? 'mm-active' : ''}}">
                                 <a href="#">
-                                    <i class="metismenu-icon pe-7s-plugin"></i>Template
+                                    <i class="metismenu-icon pe-7s-plugin"></i>{{ Str::of($detail->name_goi_thau)->limit(15) }}
                                     <i class="metismenu-state-icon pe-7s-angle-down caret-left"></i>
                                 </a>
                                 <ul>
+                                    @foreach ($detail->detailTemps as $item)
+                                        @if ($item->type == 0)
+                                            <li>
+                                                <a class="{{ preg_replace('/\D/', '', $item->templates0->url) == request()->segment(2) && $detail->id == request()->segment(3) ? 'mm-active' : '' }}"
+                                                    href="{{ $item->templates0->url }}/{{ $detail->id }}" data-placement="right" data-toggle="tooltip" title="{{ $item->templates0->name }}">
+                                                        {{ Str::of($item->templates0->name)->limit(20) }}
+                                                </a>
+
+                                            </li>
+                                        @elseif ($item->type == 1)
+                                        <li><a  class="{{ preg_replace('/\D/', '', $item->templates1->url) == request()->segment(2) && $detail->id == request()->segment(3) ? 'mm-active' : '' }}"
+                                            href="{{ $item->templates1->url }}/{{ $detail->id }}" data-placement="right" data-toggle="tooltip" title="{{ $item->templates1->name }}">
+                                                {{ Str::of($item->templates1->name)->limit(20) }}
+                                            </a></li>
+                                        @endif
+
+                                    @endforeach
+                                </ul>
+                            </li>
+
+                            @endforeach
+                            <li >
+                                <ul>
                                     {{-- {{ $list_temps->first() }} --}}
-                                    @if ($list_temps)
+                                    {{-- @if ($list_temps)
                                         @if ($list_temps->first()->type == 0)
                                             @foreach ($list_temps as $item)
                                                 <li>
@@ -1530,7 +1553,7 @@
                                                 </li>
                                             @endforeach
                                         @endif
-                                    @endif
+                                    @endif --}}
 
                                 </ul>
                                 {{-- <ul>

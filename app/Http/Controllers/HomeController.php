@@ -13,6 +13,7 @@ use App\Services\Contractor\ContractorServiceInterface;
 use App\Services\Customer\CustomerServiceInterface;
 use App\Services\File\FileServiceInterface;
 use App\Services\ListUser\ListUserServiceInterface;
+use App\Services\Login\LoginServiceInterface;
 use App\Services\Package\PackageServiceInterface;
 use App\Services\Project\ProjectServiceInterface;
 use Illuminate\Http\Request;
@@ -27,6 +28,7 @@ class HomeController extends Controller
     private $packageService;
     private $listUserService;
     private $detailService;
+    private $loginService;
     public function __construct(
         FileServiceInterface $fileService,
         ContractorServiceInterface $contractorService,
@@ -34,7 +36,8 @@ class HomeController extends Controller
         CustomerServiceInterface $customerService,
         PackageServiceInterface $packageService,
         ListUserServiceInterface $listUserService,
-        DetailServiceInterface $detailService
+        DetailServiceInterface $detailService,
+        LoginServiceInterface $loginService
 
     ) {
         $this->fileService = $fileService;
@@ -44,6 +47,7 @@ class HomeController extends Controller
         $this->packageService = $packageService;
         $this->listUserService = $listUserService;
         $this->detailService = $detailService;
+        $this->loginService = $loginService;
     }
     public function getLogin()
     {
@@ -51,33 +55,12 @@ class HomeController extends Controller
     }
     public function postLogin(Request $request)
     {
-        $credentials = [
-            'email' => $request->email,
-            'password' => $request->password,
-        ];
-        $remember = $request->remember;
-        if (Auth::attempt($credentials, $remember)) {
-            $isEnabled = User::select("*")
-                ->where('email', $request->email)
-                ->where('enabled', 1)
-                ->exists();
-            if ($isEnabled) {
-                $isExit = UserDetail::select("*")
-                    ->where("user_id", Auth::user()->id)->exists();
-                if ($isExit) {
-                    return redirect('home/edit');
-                }
-                return redirect('home/add'); // Mặc định vào trang thêm thông tin chung
-            }else{
-                return back()->with('notification','Tài khoản chưa được kích hoạt');
-            }
-        } else {
-            return back()->with('notification', 'ERROR: Email or password is incorrect');
-        }
+        return $this->loginService->loginExpert($request);
     }
 
     public function edit()
     {
+
         $id = Auth::user()->userDetails[0]->detail_id;
         $detail = $this->detailService->find($id);
 
@@ -120,6 +103,11 @@ class HomeController extends Controller
         return view('home.index');
     }
 
+    public function show(Request $request){
+        $details = $this->detailService->searchAndPaginate('name_goi_thau',$request->get('search'),8);
+        return view('home.show',compact('details'));
+    }
+
     public function create(Request $request)
     {
         // $request->validate([
@@ -155,13 +143,13 @@ class HomeController extends Controller
             'time_phat_hanh' => $request->get('time_phat_hanh'),
             'time_mo_thau' => $request->get('time_mo_thau'),
             'time_dong_thau' => $request->get('time_dong_thau'),
+            'user_id' => $request->get('user_id'),
         ]);
         $id = $detail->id;
 
         UserDetail::create([
             'user_id' =>  $request->get('user_id'),
             'detail_id' => $id,
-            'comment' => 'create',
         ]);
 
         if ($request->get('hinh_thuc_tham_du') == 0) {
