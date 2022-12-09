@@ -10,7 +10,7 @@
                         <i class="pe-7s-ticket icon-gradient bg-mean-fruit"></i>
                     </div>
                     <div>
-                        Quản lý nhà thầu
+                        Danh sách dự án
                         <div class="page-title-subheading">
                             View, create, update, delete and manage.
                         </div>
@@ -18,7 +18,7 @@
                 </div>
 
                 <div class="page-title-actions">
-                    <a href="./contractor/create" class="btn-shadow btn-hover-shine mr-3 btn btn-primary">
+                    <a href="./home/add" class="btn-shadow btn-hover-shine mr-3 btn btn-primary">
                         <span class="btn-icon-wrapper pr-2 opacity-7">
                             <i class="fa fa-plus fa-w-20"></i>
                         </span>
@@ -119,16 +119,15 @@
                                         </td>
                                         <td class="text-center">
                                             @if ($detail->user_id == Auth::user()->id || Auth::user()->level == 0)
-                                            <a href="./admin/home/detail/{{ $detail->id }}/edit" data-toggle="tooltip" title="Edit"
+                                            <a href="./home/show/{{ $detail->id }}/edit" data-toggle="tooltip" title="Edit"
                                                 data-placement="bottom" class="btn btn-outline-warning border-0 btn-sm">
                                                 <span class="btn-icon-wrapper opacity-8">
                                                     <i class="fa fa-edit fa-w-20"></i>
                                                 </span>
                                             </a>
 
-                                            <form class="d-inline" action="./admin/home/detail/{{ $detail->id }}/delete" method="post">
+                                            <form class="d-inline" action="./home/show/{{ $detail->id }}/delete" method="post">
                                                 @csrf
-                                                @method('DELETE')
                                                 <button class="btn btn-hover-shine btn-outline-danger border-0 btn-sm"
                                                     type="submit" data-toggle="tooltip" title="Delete"
                                                     data-placement="bottom"

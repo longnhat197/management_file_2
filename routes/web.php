@@ -32,6 +32,7 @@ Route::prefix('admin')->middleware('CheckAdminLogin')->group(function (){
     Route::get('home/detail/{id}/edit',[App\Http\Controllers\Admin\DetailController::class,'edit']);
     Route::post('home/detail/edit',[\App\Http\Controllers\Admin\DetailController::class,'editStore']);
     Route::post('home/detail/{id}/delete',[\App\Http\Controllers\Admin\DetailController::class,'delete']);
+    Route::resource('home/customer',\App\Http\Controllers\Admin\CustomerController::class);
 
 
     Route::prefix('login')->group(function(){
@@ -46,8 +47,10 @@ Route::middleware('CheckLogin')->group(function () {
     Route::get('', [\App\Http\Controllers\HomeController::class, 'index']);
     Route::get('home/add', [\App\Http\Controllers\HomeController::class, 'index']);
     Route::post('home/add', [\App\Http\Controllers\HomeController::class, 'create']);
-    Route::get('home/edit', [\App\Http\Controllers\HomeController::class, 'edit']);
+    Route::get('home/show/{id}/edit', [\App\Http\Controllers\HomeController::class, 'edit']);
+    Route::post('home/show/{id}/delete', [\App\Http\Controllers\HomeController::class, 'delete']);
     Route::get('home/show',[\App\Http\Controllers\HomeController::class, 'show']);
+    // Route::get();
     Route::post('home/edit', [\App\Http\Controllers\HomeController::class, 'editStore']);
     Route::resource('file', \App\Http\Controllers\FileController::class);
     Route::resource('file/{file_id}/path', \App\Http\Controllers\FilePathController::class);
@@ -62,11 +65,14 @@ Route::middleware('CheckLogin')->group(function () {
 
 
 
+
 });
 
 Route::middleware('CheckLogin')->prefix('template')->group(function () {
     Route::get('', [\App\Http\Controllers\TemplateController::class, 'index']);
     Route::post('', [\App\Http\Controllers\TemplateController::class, 'test']);
+    Route::post('cancel/{id}', [\App\Http\Controllers\TemplateController::class, 'cancelTemp']);
+
 
     Route::get('1/{detail_id}', [\App\Http\Controllers\TemplateController::class, 'create1']);
     Route::post('1', [\App\Http\Controllers\TemplateController::class, 'store1']);
@@ -74,6 +80,7 @@ Route::middleware('CheckLogin')->prefix('template')->group(function () {
 
     Route::get('2/{detail_id}', [\App\Http\Controllers\TemplateController::class, 'create2']);
     Route::post('2', [\App\Http\Controllers\TemplateController::class, 'store2']);
+    Route::post('2/save',[\App\Http\Controllers\TemplateController::class, 'save2']);
     Route::post('2/ajax', [\App\Http\Controllers\TemplateController::class, 'ajax']);
     Route::post('2/ajax1', [\App\Http\Controllers\TemplateController::class, 'ajax1']);
     Route::post('2/ajaxUQ', [\App\Http\Controllers\TemplateController::class, 'ajaxUQ']);

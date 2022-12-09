@@ -44,7 +44,7 @@
                                 <div class="row">
                                     <div class="col-md-3"></div>
                                     <div class="form-group col-md-5">
-                                        <label for="date">Ngày tháng năm đăng ký đơn dự thầu:</label>
+                                        <label for="date_test">Ngày tháng năm đăng ký đơn dự thầu:</label>
                                         <input type="date" class="form-control" value="{{ $temp != [] ? $temp->date_dang_ky : 0 }}" id="date_test" name="date">
                                         <input type="hidden" value="{{ $detail_id }}" id="detail_id" data-url="./template/1/save">
                                     </div>
@@ -88,7 +88,7 @@
                                     <div class="form-group col-md-5">
                                         <label for="so_trich_yeu_test">Số trích yếu của Thư mời thầu đối với đấu thầu hạn
                                             chế:</label>
-                                        <input type="text" class="form-control" id="so_trich_yeu_test" value="{{ $temp != [] ? $temp->so_trich_yeu : ''  }}" name="so_trich_yeu">
+                                        <input type="text" class="form-control" id="so_trich_yeu_test" value="{{ $temp != [] ? $temp->so_trich_yeu : '' }}" name="so_trich_yeu">
                                     </div>
                                 </div>
                                 <div class="row">
@@ -183,10 +183,10 @@
                         <div class="row">
                             <div class="col-md-3"></div>
                             <div class="form-group col-md-3">
-                                {{-- <button type="submit" class="btn btn-primary">Export Word</button> --}}
-                                <a href="javascript:void(0)" class="btn btn-outline-primary">Export word</a>
+                                <button type="submit" class="btn btn-outline-primary">Export Word</button>
+
                             </div>
-                            <div class="form-group col-md-2">
+                            <div class="form-group col-md-2 text-right">
                                 {{-- <button type="submit" class="btn btn-primary">Export Word</button> --}}
                                 <a href="javascript:void(0)" id="save" class="btn btn-outline-primary">Lưu</a>
                             </div>
@@ -256,8 +256,8 @@
                         style="line-height: 110%;"><span style="font-family: &quot;Times New Roman&quot;, serif;"><span
                                 lang="IT" style=""><span style="line-height: 110%;"><span style="font-size: 14pt;">Sau
                                         khi nghi&ecirc;n cứu hồ sơ mời thầu v&agrave; văn bản sửa đổi hồ sơ mời thầu
-                                        số&nbsp;<span id="so_sua_doi1"></span></span><i
-                                        style="font-size: 14pt;">&nbsp;</i><span style="font-size: 14pt;">m&agrave;
+                                        <span id="so_sua_doi1">số ___[ghi số của văn bản sửa đổi (nếu có)]</span></span><i
+                                        style="font-size: 14pt;"></i><span style="font-size: 14pt;"> m&agrave;
                                         ch&uacute;ng t&ocirc;i đ&atilde; nhận được,
                                         ch&uacute;ng t&ocirc;i,&nbsp;</span><i style="font-size: 14pt;"></i><span
                                         id="name_nha_thau1" style="font-size: 14pt;">____[ghi tên nhà thầu]</span><span
@@ -364,18 +364,11 @@
                                         </span></span><span lang="X-NONE" style="font-size:14.0pt"><span
                                             style="line-height:110%">c&oacute; hiệu lực trong thời gian <span
                                                 id="time1">___</span>
-                                            <sup>(</sup></span></span><sup><span style="font-size:14.0pt"><span
-                                                style="line-height:110%">3</span></span></sup><sup><span lang="X-NONE"
-                                            style="font-size:14.0pt"><span
-                                                style="line-height:110%">)</span></span></sup><span lang="X-NONE"
+                                            <sup></span></span></sup><span lang="X-NONE"
                                         style="font-size:14.0pt"><span style="line-height:110%">ng&agrave;y, kể từ
                                             ng&agrave;y <span id="d1">___</span> th&aacute;ng <span id="m1">___</span>
                                             năm
-                                            <span id="y1">___</span><sup>(</sup></span></span><sup><span
-                                            style="font-size:14.0pt"><span
-                                                style="line-height:110%">4</span></span></sup><sup><span lang="X-NONE"
-                                            style="font-size:14.0pt"><span
-                                                style="line-height:110%">)</span></span></sup><i><span lang="X-NONE"
+                                            <span id="y1">___</span></span></span><i><span lang="X-NONE"
                                             style="font-size:14.0pt"><span
                                                 style="line-height:110%">.</span></span></i></span></span></span></span>
                 </p>

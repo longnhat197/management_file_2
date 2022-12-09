@@ -50,6 +50,7 @@ class DetailController extends Controller
         try{
             UserDetail::where('detail_id',$id)->delete();
             DetailTemp::where('detail_id',$id)->delete();
+            $this->detailService->deleteSave($id);
             $this->detailService->delete($id);
         }catch(\Exception $err){
             return redirect('admin/home/detail')->with('error', $err->getMessage());

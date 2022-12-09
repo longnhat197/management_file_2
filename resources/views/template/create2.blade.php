@@ -24,229 +24,222 @@
                 <div class="card-body">
                     <form action="./template/2" method="post">
                         @csrf
+                        <nav>
+                            <div class="nav nav-tabs nav-fill" id="nav-tab" role="tablist">
+                                <a class="nav-item nav-link active p-2" id="nav-home-tab" data-toggle="tab"
+                                    href="#nav-home" role="tab" aria-controls="nav-home" aria-selected="true">
+                                    <i class="fas fa-clipboard p-2"></i>
+                                    Tab 1
+                                </a>
+                                <a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-profile"
+                                    role="tab" aria-controls="nav-profile" aria-selected="false">Tab 2</a>
+                                <a class="nav-item nav-link" id="nav-contact-tab" data-toggle="tab" href="#nav-contact"
+                                    role="tab" aria-controls="nav-contact" aria-selected="false">
+                                    <i class="fas fa-calendar-day p-2"></i>
+                                    Tab 3
+                                </a>
+                            </div>
+                        </nav>
+                        <div class="tab-content" id="nav-tabContent">
+                            <div class="tab-pane fade show active" id="nav-home" role="tabpanel"
+                                aria-labelledby="nav-home-tab">
+                                <div class="row">
+                                    <div class="col-md-2"></div>
+                                    <div class="form-group col-md-6">
+                                        <label for="date">Ngày làm giấy:</label>
+                                        <input type="date" value="{{ $temp != [] ? $temp->date : 0 }}" name="date" id="date" class="form-control">
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-2"></div>
+                                    <div class="form-group col-md-6">
+                                        <label for="address_test">Nơi làm giấy uỷ quyền:</label>
+                                        <input type="text" class="form-control" value="{{ $temp != [] ? $temp->noi_lam_giay : '' }}" id="address_test" name="address">
+                                        <input type="hidden" value="{{ $detail_id }}"  id="detail_id" data-url="./template/2/save">
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-2"></div>
+                                    <div class="form-group col-md-6">
+                                        <label for="thong_tin_dai_dien_test">Tên, số CMND hoặc số hộ chiếu, chức danh
+                                            của người
+                                            đại diện theo pháp
+                                            luật của nhà thầu:</label>
+
+                                        <textarea style="" name="thong_tin_dai_dien" class="form-control"
+                                            id="thong_tin_dai_dien_test" cols="90" rows="5">{{ $temp != [] ? $temp->thong_tin_dai_dien : '' }}</textarea>
+
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-2"></div>
+                                    <div class="form-group col-md-6">
+                                        <label for="name_nha_thau_test">Tên nhà thầu:</label>
+
+                                        <input type="text" class="form-control" value="{{ $temp != [] ? $temp->name_nha_thau : '' }}" id="name_nha_thau_test"
+                                            name="name_nha_thau">
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-2"></div>
+                                    <div class="form-group col-md-6">
+                                        <label for="dia_chi_nha_thau">Địa chỉ nhà thầu:</label>
+                                        <input type="text" class="form-control" value="{{ $temp != [] ? $temp->dia_chi_nha_thau : '' }}" id="dia_chi_nha_thau_test"
+                                            name="dia_chi_nha_thau">
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <div class="tab-pane fade" id="nav-profile" role="tabpanel"
+                                aria-labelledby="nav-profile-tab">
+                                <div class="row">
+                                    <div class="col-md-2"></div>
+                                    <div class="form-group col-md-6">
+                                        <label for="thong_tin_nguoi_duoc_uy_quyen_test">Tên, số CMND hoặc số hộ chiếu,
+                                            chức
+                                            danh
+                                            của người được ủy quyền:</label>
+
+                                        <textarea style="" name="thong_tin_nguoi_duoc_uy_quyen" class="form-control"
+                                            id="thong_tin_nguoi_duoc_uy_quyen_test" cols="90" rows="5">{{ $temp != [] ? $temp->thong_tin_nguoi_duoc_uy_quyen : '' }}</textarea>
+
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-2"></div>
+                                    <div class="form-group col-md-6">
+                                        <label for="name_goi_thau_test">Tên gói thầu:</label>
+                                        <input type="text" class="form-control" value="{{ $detail->name_goi_thau }}" id="name_goi_thau_test"
+                                            name="name_goi_thau">
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-2"></div>
+                                    <div class="form-group col-md-6">
+                                        <label for="name_du_an_test">Tên dự án:</label>
+                                        <input type="text" class="form-control" value="{{ $detail->name_du_an }}" id="name_du_an_test" name="name_du_an">
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-2"></div>
+                                    <div class="form-group col-md-6">
+                                        <label for="name_moi_thau_test">Tên của Bên mời thầu:</label>
+
+                                        <input type="text" class="form-control" value="{{ $detail->name_moi_thau }}" id="name_moi_thau_test"
+                                            name="name_moi_thau">
+                                    </div>
+                                </div>
+                                {{-- <div class="row">
+                                    <div class="col-md-3"></div>
+                                    <div class="form-group col-md-5">
+                                        <label for="content_test">Nội dung:</label>
+
+                                        <textarea name="content" class="form-control tabSupport" id="content_test"
+                                            cols="90" rows="5">
+    - Ký đơn dự thầu thuộc hồ sơ đề xuất về kỹ thuật và đơn dự thầu thuộc hồ sơ đề xuất về tài chính;
+    - Ký thỏa thuận liên danh (nếu có);
+    - Ký các văn bản, tài liệu để giao dịch với Bên mời thầu trong quá trình tham gia đấu thầu, kể cả văn bản đề nghị làm rõ hồ sơ mời thầu và văn bản giải trình, làm rõ hồ sơ dự thầu hoặc văn bản đề nghị rút hồ sơ dự thầu, sửa đổi, thay thế hồ sơ đề xuất về kỹ thuật, hồ sơ đề xuất về tài chính;
+    - Tham gia quá trình thương thảo, hoàn thiện hợp đồng;
+    - Ký đơn kiến nghị trong trường hợp nhà thầu có kiến nghị;
+    - Ký kết hợp đồng với Chủ đầu tư nếu được lựa chọn
+                                    </textarea>
+                                    </div>
+                                </div> --}}
+                                {{-- <div class="row">
+                                    <div class="col-md-3"></div>
+                                    <div class="form-group col-md-5">
+                                        <label for="name_nha_thau1_test">Tên nhà thầu:</label>
+                                        <input type="text" class="form-control" id="name_nha_thau1_test"
+                                            name="name_nha_thau1">
+                                    </div>
+                                </div> --}}
+                                <div class="row">
+                                    <div class="col-md-2"></div>
+                                    <div class="form-group col-md-6">
+                                        <label for="name_dai_dien_test">Tên người đại diện theo pháp luật của nhà
+                                            thầu:</label>
+                                        <input type="text" class="form-control" value="{{ $temp != [] ? $temp->name_dai_dien : '' }}" id="name_dai_dien_test"
+                                            name="name_dai_dien">
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-2"></div>
+                                    <div class="form-group col-md-6">
+                                        <label for="name_uy_quyen_test">Tên người được uỷ quyền:</label>
+                                        <input type="text" class="form-control" value="{{ $temp != [] ? $temp->name_uy_quyen : '' }}" id="name_uy_quyen_test"
+                                            name="name_uy_quyen">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="tab-pane fade" id="nav-contact" role="tabpanel"
+                                aria-labelledby="nav-contact-tab">
+                                <div class="row">
+                                    <div class="col-md-2"></div>
+                                    <div class="form-group col-md-3">
+                                        <label for="from_date_test">Kể từ ngày:</label>
+                                        <input type="date" name="from_date" value="{{ $temp != [] ? $temp->from_date : 0 }}" id="from_date_test" class="form-control">
+                                    </div>
+                                    <div class="form-group col-md-3">
+                                        <label for="to_date_test">Đến ngày:</label>
+                                        <input type="date" name="to_date" value="{{ $temp != [] ? $temp->to_date : 0 }}" id="to_date_test" class="form-control">
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-2"></div>
+                                    <div class="form-group col-md-3">
+                                        <label for="total_test">Tổng (bản):</label>
+                                        <input type="text" name="total" value="{{ $temp != [] ? $temp->total : '' }}" class="form-control" id="total_test">
+                                    </div>
+                                    <div class="form-group col-md-3">
+                                        <label for="uq_giu_test">Uỷ quyền giữ (bản):</label>
+                                        <input type="text" name="uq_giu" value="{{ $temp != [] ? $temp->uq_giu : '' }}" class="form-control" id="uq_giu_test">
+                                    </div>
+
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-2"></div>
+                                    <div class="form-group col-md-3">
+                                        <label for="duq_giu_test">Được uỷ quyền giữ (bản):</label>
+                                        <input type="text" name="duq_giu" value="{{ $temp != [] ? $temp->duq_giu : '' }}" class="form-control" id="duq_giu_test">
+                                    </div>
+                                    <div class="form-group col-md-3">
+                                        <label for="moi_thau_giu_test">Mời thầu giữ (bản):</label>
+                                        <input type="text" name="moi_thau_giu" value="{{ $temp != [] ? $temp->moi_thau_giu : '' }}" class="form-control"
+                                            id="moi_thau_giu_test">
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-2"></div>
+                                    <div class="form-group col-md-3">
+                                        <label for="chu_ky_duq_test">Ghi tên, chức danh người được uỷ quyền:</label>
+                                        <textarea name="chu_ky_duq" class="form-control" id="chu_ky_duq_test" cols="30"
+                                            rows="3">{{ $temp != [] ? $temp->chu_ky_duq : '' }}</textarea>
+                                    </div>
+                                    <div class="form-group col-md-3">
+                                        <label for="chu_ky_uq_test">Ghi tên, chức danh người uỷ quyền:</label>
+                                        <textarea name="chu_ky_uq" class="form-control" id="chu_ky_uq_test" cols="30"
+                                            rows="3">{{ $temp != [] ? $temp->chu_ky_uq : '' }}</textarea>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+
+
                         <div class="row">
-                            <div class="col-md-3"></div>
+                            <div class="col-md-2"></div>
                             <div class="form-group col-md-3">
-                                <label for="address_test">Nơi làm giấy uỷ quyền:</label>
-                                <input type="text" class="form-control" id="address_test" name="address">
+                                <button type="submit" class="btn btn-outline-primary">Export Word</button>
+                                {{-- <a href="javascript:void(0)" class="btn btn-primary">Export word</a> --}}
                             </div>
-                        </div>
-
-                        <div class="row">
-                            <div class="col-md-3"></div>
-                            <div class="form-group col-md-5">
-                                <label for="thong_tin_dai_dien_test">Tên, số CMND hoặc số hộ chiếu, chức danh của người
-                                    đại diện theo pháp
-                                    luật của nhà thầu:</label>
-                                    <div class="btn-actions-pane-right">
-                                        <div class="input-group w-50">
-                                            <select required id="thong_tin_dai_dien" class="form-control">
-                                                <option value="" data-id1="0" data-url1="./template/2/ajax1">--Người đại diện--</option>
-                                                @foreach ($user_dds as $user_dd)
-                                                <option data-id1="{{ $user_dd->id }}" data-url1="./template/2/ajax1"
-                                                    value="{{ $user_dd->name }}">{{ $user_dd->name }}</option>
-                                                @endforeach
-                                            </select>
-                                        </div>
-                                    </div>
-                                <textarea style="" name="thong_tin_dai_dien" class="form-control"
-                                    id="thong_tin_dai_dien_test" cols="90" rows="5"></textarea>
-
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-3"></div>
-                            <div class="form-group col-md-5">
-                                <label for="name_nha_thau_test">Tên nhà thầu:</label>
-                                <div class="btn-actions-pane-right">
-                                    <div class="input-group w-50">
-                                        <select required id="name_nha_thau" class="form-control">
-                                            <option value="" data-id="0" data-url="./template/2/ajax">--Tên nhà thầu--</option>
-                                            @foreach ($contractors as $contractor)
-                                            <option data-id="{{ $contractor->id }}" data-url="./template/2/ajax"
-                                                value="{{ $contractor->name }}">{{ $contractor->name }}</option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-                                </div>
-                                <input type="text" class="form-control" id="name_nha_thau_test" name="name_nha_thau">
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-3"></div>
-                            <div class="form-group col-md-5">
-                                <label for="dia_chi_nha_thau">Địa chỉ nhà thầu:</label>
-                                <input type="text" class="form-control" id="dia_chi_nha_thau_test"
-                                    name="dia_chi_nha_thau">
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-3"></div>
-                            <div class="form-group col-md-5">
-                                <label for="thong_tin_nguoi_duoc_uy_quyen_test">Tên, số CMND hoặc số hộ chiếu, chức danh
-                                    của người được ủy quyền:</label>
-                                    <div class="btn-actions-pane-right">
-                                        <div class="input-group w-50">
-                                            <select required id="thong_tin_nguoi_duoc_uy_quyen" class="form-control">
-                                                <option value="" data-id2="0" data-url2="./template/2/ajaxUQ">--Người đại diện--</option>
-                                                @foreach ($user_duqs as $user_duq)
-                                                <option data-id2="{{ $user_duq->id }}" data-url2="./template/2/ajaxUQ"
-                                                    value="{{ $user_duq->name }}">{{ $user_duq->name }}</option>
-                                                @endforeach
-                                            </select>
-                                        </div>
-                                    </div>
-                                <textarea style="" name="thong_tin_nguoi_duoc_uy_quyen" class="form-control"
-                                    id="thong_tin_nguoi_duoc_uy_quyen_test" cols="90" rows="5"></textarea>
-
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-3"></div>
-                            <div class="form-group col-md-5">
-                                <label for="name_goi_thau_test">Tên gói thầu:</label>
-                                <div class="btn-actions-pane-right">
-                                    <div class="input-group w-50">
-                                        <select required id="name_goi_thau" class="form-control">
-                                            <option value="">--Tên gói thầu--</option>
-                                            @foreach ($packages as $package)
-                                            <option value="{{ $package->name }}">{{ $package->name }}</option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-                                </div>
-                                <input type="text" class="form-control" id="name_goi_thau_test" name="name_goi_thau">
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-3"></div>
-                            <div class="form-group col-md-5">
-                                <label for="name_du_an_test">Tên dự án:</label>
-                                <div class="btn-actions-pane-right">
-                                    <div class="input-group w-50">
-                                        <select required id="name_du_an" class="form-control">
-                                            <option value="">--Tên dự án--</option>
-                                            @foreach ($projects as $project)
-                                            <option value="{{ $project->name }}">{{ $project->name }}</option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-                                </div>
-                                <input type="text" class="form-control" id="name_du_an_test" name="name_du_an">
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-3"></div>
-                            <div class="form-group col-md-5">
-                                <label for="name_moi_thau_test">Tên của Bên mời thầu:</label>
-                                <div class="btn-actions-pane-right">
-                                    <div class="input-group w-50">
-                                        <select required id="name_moi_thau" class="form-control">
-                                            <option value="">--Tên bên mời thầu--</option>
-                                            @foreach ($customers as $customer)
-                                            <option value="{{ $customer->name }}">{{ $customer->name }}</option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-                                </div>
-                                <input type="text" class="form-control" id="name_moi_thau_test" name="name_moi_thau">
-                            </div>
-                        </div>
-                        {{-- <div class="row">
-                            <div class="col-md-3"></div>
-                            <div class="form-group col-md-5">
-                                <label for="content_test">Nội dung:</label>
-
-                                <textarea name="content" class="form-control tabSupport" id="content_test" cols="90"
-                                    rows="5">
-- Ký đơn dự thầu thuộc hồ sơ đề xuất về kỹ thuật và đơn dự thầu thuộc hồ sơ đề xuất về tài chính;
-- Ký thỏa thuận liên danh (nếu có);
-- Ký các văn bản, tài liệu để giao dịch với Bên mời thầu trong quá trình tham gia đấu thầu, kể cả văn bản đề nghị làm rõ hồ sơ mời thầu và văn bản giải trình, làm rõ hồ sơ dự thầu hoặc văn bản đề nghị rút hồ sơ dự thầu, sửa đổi, thay thế hồ sơ đề xuất về kỹ thuật, hồ sơ đề xuất về tài chính;
-- Tham gia quá trình thương thảo, hoàn thiện hợp đồng;
-- Ký đơn kiến nghị trong trường hợp nhà thầu có kiến nghị;
-- Ký kết hợp đồng với Chủ đầu tư nếu được lựa chọn
-                                </textarea>
-                            </div>
-                        </div> --}}
-                        {{-- <div class="row">
-                            <div class="col-md-3"></div>
-                            <div class="form-group col-md-5">
-                                <label for="name_nha_thau1_test">Tên nhà thầu:</label>
-                                <input type="text" class="form-control" id="name_nha_thau1_test" name="name_nha_thau1">
-                            </div>
-                        </div> --}}
-                        <div class="row">
-                            <div class="col-md-3"></div>
-                            <div class="form-group col-md-5">
-                                <label for="name_dai_dien_test">Tên người đại diện theo pháp luật của nhà thầu:</label>
-                                <input type="text" class="form-control" id="name_dai_dien_test" name="name_dai_dien">
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-3"></div>
-                            <div class="form-group col-md-5">
-                                <label for="name_uy_quyen_test">Tên người được uỷ quyền:</label>
-                                <input type="text" class="form-control" id="name_uy_quyen_test" name="name_uy_quyen">
-                            </div>
-                        </div>
-
-                        <div class="row">
-                            <div class="col-md-3"></div>
-                            <div class="form-group col-md-2">
-                                <label for="from_date_test">Kể từ ngày:</label>
-                                <input type="date" name="from_date" id="from_date_test" class="form-control">
-                            </div>
-                            <div class="form-group col-md-2">
-                                <label for="to_date_test">Đến ngày:</label>
-                                <input type="date" name="to_date" id="to_date_test" class="form-control">
-                            </div>
-                        </div>
-
-                        <div class="row">
-                            <div class="col-md-3"></div>
-                            <div class="form-group col-md-2">
-                                <label for="total_test">Tổng (bản):</label>
-                                <input type="text" name="total" class="form-control" id="total_test">
-                            </div>
-                            <div class="form-group col-md-2">
-                                <label for="uq_giu_test">Uỷ quyền giữ (bản):</label>
-                                <input type="text" name="uq_giu" class="form-control" id="uq_giu_test">
-                            </div>
-
-                        </div>
-                        <div class="row">
-                            <div class="col-md-3"></div>
-                            <div class="form-group col-md-2">
-                                <label for="duq_giu_test">Được uỷ quyền giữ (bản):</label>
-                                <input type="text" name="duq_giu" class="form-control" id="duq_giu_test">
-                            </div>
-                            <div class="form-group col-md-2">
-                                <label for="moi_thau_giu_test">Mời thầu giữ (bản):</label>
-                                <input type="text" name="moi_thau_giu" class="form-control" id="moi_thau_giu_test">
-                            </div>
-                        </div>
-
-                        <div class="row">
-                            <div class="col-md-3"></div>
-                            <div class="form-group col-md-2">
-                                <label for="chu_ky_duq_test">Ghi tên, chức danh người được uỷ quyền:</label>
-                                <textarea name="chu_ky_duq" class="form-control" id="chu_ky_duq_test" cols="30"
-                                    rows="3"></textarea>
-                            </div>
-                            <div class="form-group col-md-2">
-                                <label for="chu_ky_uq_test">Ghi tên, chức danh người uỷ quyền:</label>
-                                <textarea name="chu_ky_uq" class="form-control" id="chu_ky_uq_test" cols="30"
-                                    rows="3"></textarea>
-                            </div>
-
-                        </div>
-
-
-                        <div class="row">
-                            <div class="col-md-3"></div>
-                            <div class="form-group col-md-5">
+                            <div class="form-group col-md-3 text-right">
                                 {{-- <button type="submit" class="btn btn-primary">Export Word</button> --}}
-                                <a href="javascript:void(0)" class="btn btn-primary">Export word</a>
+                                <a href="javascript:void(0)" id="save" class="btn btn-outline-primary">Lưu</a>
                             </div>
                         </div>
 
@@ -273,7 +266,7 @@
                                 style="font-family:&quot;Times New Roman&quot;,serif"><span lang="VI"
                                     style="font-size:14.0pt"><span style="line-height:110%">H&ocirc;m nay, ng&agrave;y
                                     </span></span><span lang="VI" style="font-size:14.0pt"><span
-                                        style="line-height:110%">{{ $d }} th&aacute;ng {{ $m }} năm {{ $Y }}, tại
+                                        style="line-height:110%"><span id="d">___</span> th&aacute;ng <span id="m">___</span> năm <span id="y">___</span>, tại
                                         <span id="address1">____</span></span></span></span></span></span></p>
 
                 <p style="margin-top:8px; margin-bottom:8px; text-indent:28.35pt; text-align:justify">&nbsp;</p>

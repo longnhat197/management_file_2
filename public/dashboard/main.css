@@ -44899,6 +44899,7 @@ span.multiselect-native-select select {
 }
 
 .ui-theme-settings {
+    display: none;
     position: fixed;
     z-index: 155;
     right: -30px;

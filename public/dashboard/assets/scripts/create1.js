@@ -47,6 +47,7 @@ $(document).ready(function () {
 
     date = document.getElementById('d_test');
     date.onchange = function () {
+        Str_date = String(date.value);
         console.log(Str_date);
         y = Str_date.slice(0, 4);
         m = Str_date.slice(5, 7);
@@ -58,15 +59,33 @@ $(document).ready(function () {
     }
 
     soTrichYeu = document.getElementById('so_trich_yeu_test');
+    document.getElementById('so_trich_yeu1').innerHTML = soTrichYeu.value != '' ? soTrichYeu.value : '[ghi số trích yếu của Thư mời thầu đối với đấu thầu hạn chế]'
+
     soSuaDoi = document.getElementById('so_sua_doi_test');
+
+
     nameNhaThau = document.getElementById('name_nha_thau_test');
+    document.getElementById('name_nha_thau1').innerText = nameNhaThau.value != ''
+        ? nameNhaThau.value : '____[ghi tên nhà thầu]'
+
+
     timeThucHien = document.getElementById('date_thuc_hien_test');
+    document.getElementById('date_thuc_hien1').innerText = timeThucHien.value
+
     timeHieuLuc = document.getElementById('time_test');
-    dateStart = document.getElementById('d_test');
+    document.getElementById('time1').innerText = timeHieuLuc.value
+
+
+    document.getElementById('m1').innerText = date.value != '' ? String(date.value).slice(5, 7) : '___'
+    document.getElementById('y1').innerText = date.value != '' ? String(date.value).slice(0, 4) : '___'
+    document.getElementById('d1').innerText = date.value != '' ? String(date.value).slice(8, 10) : '___'
+
+
     detail_id = document.getElementById('detail_id');
     chucDanh = document.getElementById('ten_chuc_danh_test');
 
     date1 = document.getElementById('date_test');
+    document.getElementById('date1').innerText = date1.value != '' ?  String(date1.value).slice(8, 10) + '/' + String(date1.value).slice(5, 7) + '/' + String(date1.value).slice(0, 4) : '[ghi ngày tháng năm ký đơn dự thầu]'
     date1.onchange = function () {
         Str_date = String(date1.value);
 
@@ -120,7 +139,7 @@ $(document).ready(function () {
             nameNhaThau: nameNhaThau.value,
             timeThucHien: timeThucHien.value,
             timeHieuLuc: timeHieuLuc.value,
-            dateStart: dateStart.value,
+            dateStart: date.value,
             detail_id: detail_id.value,
             chucDanh: chucDanh.value,
         }

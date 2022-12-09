@@ -24,9 +24,16 @@
         <div class="col-md-12">
             <div class="main-card mb-3 card">
                 <div class="row">
-                    <div class="col-md-3"></div>
+                    <div class="col-md-3">
+                        <form class="d-inline" action="./template/cancel/{{ $id }}" method="post">
+                            @csrf
+                            <button class="btn btn-hover-shine btn-outline-danger border-0 btn-sm" type="submit"
+                                data-placement="bottom">Cancel
+                            </button>
+                        </form>
+                    </div>
                     <div class="col-md-6">
-                        <form action="./template" method="POST" >
+                        <form action="./template" method="POST">
                             @csrf
                             <div class="card-header">
                                 <h4>Checklist test</h4>
@@ -38,14 +45,16 @@
                                 <li class="list-group-item">
                                     {{ $tem->name }}
                                     <label class="checkbox">
-                                        <input name="list_tem[]" type="checkbox" value="{{ $tem->id }}"/>
+                                        <input name="list_tem[]" type="checkbox" value="{{ $tem->id }}" />
                                         <span class="primary"></span>
                                     </label>
                                 </li>
                                 @endforeach
 
                             </ul>
-                            <button type="submit" class="btn btn-primary mb-4 mt-2">Submit</button>
+                            <button type="submit" class="btn btn-outline-primary mb-4 mt-2">Submit</button>
+
+
                         </form>
                     </div>
                     <div class="col-md-3"></div>
@@ -57,4 +66,7 @@
     </div>
 </div>
 <!-- End Main -->
+@endsection
+@section('script')
+<script type="text/javascript" src="./dashboard/assets/scripts/selectTemp.js"></script>
 @endsection

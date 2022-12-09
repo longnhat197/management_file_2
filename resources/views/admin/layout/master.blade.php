@@ -1488,16 +1488,20 @@
                                             class="{{ request()->segment(3) == 'userDetail' ? 'mm-active' : '' }}">Tình trạng</a>
                                     </li>
                                     <li>
+                                        <a href="./admin/home/customer"
+                                            class="{{ request()->segment(3) == 'customer' ? 'mm-active' : '' }}">Danh sách chủ đầu tư</a>
+                                    </li>
+                                    <li>
                                         <a href="./home/edit"
                                             class="{{ request()->segment(2) == '2' ? 'mm-active' : '' }}">Xem lại</a>
                                     </li>
                                 </ul>
                             </li>
                             <li class="{{ request()->segment(1) == 'template' ? 'mm-active' : '' }}">
-                                <a href="#">
+                                {{-- <a href="#">
                                     <i class="metismenu-icon pe-7s-plugin"></i>Template
                                     <i class="metismenu-state-icon pe-7s-angle-down caret-left"></i>
-                                </a>
+                                </a> --}}
                                 <ul>
                                     {{-- {{ $list_temps->first() }} --}}
                                     {{-- @if ($list_temps)

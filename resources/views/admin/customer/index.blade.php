@@ -1,5 +1,5 @@
 @extends('admin.layout.master')
-@section('title','User')
+@section('title','customer')
 @section('body')
 <!-- Main -->
 <div class="app-main__inner">
@@ -10,7 +10,7 @@
                     <i class="pe-7s-ticket icon-gradient bg-mean-fruit"></i>
                 </div>
                 <div>
-                    User
+                    Quản lý danh sách khách hàng
                     <div class="page-title-subheading">
                         View, create, update, delete and manage.
                     </div>
@@ -18,7 +18,7 @@
             </div>
 
             <div class="page-title-actions">
-                <a href="./admin/user/create" class="btn-shadow btn-hover-shine mr-3 btn btn-primary">
+                <a href="./admin/home/customer/create" class="btn-shadow btn-hover-shine mr-3 btn btn-primary">
                     <span class="btn-icon-wrapper pr-2 opacity-7">
                         <i class="fa fa-plus fa-w-20"></i>
                     </span>
@@ -36,17 +36,17 @@
         {{ session('error') }}
     </div>
     @endif
-
     <div class="row">
         <div class="col-md-12">
             <div class="main-card mb-3 card">
 
                 <div class="card-header">
 
+
                     <form>
                         <div class="input-group">
                             <input type="search" name="search" id="search" value="{{ request('search') }}"
-                                placeholder="Search everything" class="form-control">
+                                placeholder="Search by name" class="form-control">
                             <span class="input-group-append">
                                 <button type="submit" class="btn btn-primary">
                                     <i class="fa fa-search"></i>&nbsp;
@@ -55,6 +55,13 @@
                             </span>
                         </div>
                     </form>
+
+                    {{-- <div class="btn-actions-pane-right">
+                        <div role="group" class="btn-group-sm btn-group">
+                            <button class="btn btn-focus">This week</button>
+                            <button class="active btn btn-focus">Anytime</button>
+                        </div>
+                    </div> --}}
                 </div>
 
                 <div class="table-responsive">
@@ -62,52 +69,55 @@
                         <thead>
                             <tr>
                                 <th class="text-center">ID</th>
-                                <th> Name</th>
-                                <th class="text-center">Email</th>
-                                <th class="text-center">Level</th>
-                                <th class="text-center">Enable</th>
+                                <th>Tên khách hàng</th>
+                                {{-- <th>Địa chỉ</th> --}}
+                                <th>Updated at</th>
                                 <th class="text-center">Actions</th>
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($users as $user)
+                            @foreach ($customers as $customer)
                             <tr>
-                                <td class="text-center text-muted">#{{ $user->id }}</td>
+                                <td class="text-center text-muted">#{{ $customer->id }}</td>
                                 <td>
                                     <div class="widget-content p-0">
                                         <div class="widget-content-wrapper">
-                                            <div class="widget-content-left mr-3">
-                                                <div class="widget-content-left">
-                                                    <img width="40" class="rounded-circle"
-                                                        data-toggle="tooltip" title="Image"
-                                                        data-placement="bottom"
-                                                        src="img/user/{{ $user->avatar ?? '_default-user.png' }}" alt="">
-                                                </div>
-                                            </div>
                                             <div class="widget-content-left flex2">
-                                                <div class="widget-heading">{{ $user->name }}</div>
+                                                <div class="widget-heading">
+                                                    <a style="color: #495057"
+                                                        href="./admin/home/customer/{{ $customer->id }}/edit">{{ $customer->name
+                                                        }}</a>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
                                 </td>
-                                <td class="text-center">{{ $user->email }}</td>
-                                <td class="text-center">
-                                    {{ \App\Utilities\Constant::$user_level[$user->level] }}
+                                {{-- <td>
+                                    <div class="widget-content p-0">
+                                        <div class="widget-content-wrapper">
+                                            <div class="widget-content-left flex2">
+                                                <div class="widget-heading">{{ $customer->address }}</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </td> --}}
+                                <td>
+                                    <div class="widget-content p-0">
+                                        <div class="widget-content-wrapper">
+                                            <div class="widget-content-left flex2">
+                                                <div class="widget-heading">{{ $customer->updated_at }}</div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </td>
                                 <td class="text-center">
-                                    {!! $user->enabled == 0 ? '<a href="./admin/user/active/'. $user->id .'"
-                                        class="btn btn-danger btn-sm"><i class="fas fa-times-circle"></i></a>' : '<a
-                                        href="./admin/user/active/'. $user->id .'" class="btn btn-primary btn-sm"><i
-                                            class="fas fa-check-circle"></i></a>' !!}
-                                </td>
-                                <td class="text-center">
-                                    <a href="./admin/home/user/{{ $user->id }}/edit" data-toggle="tooltip" title="Edit"
+                                    <a href="./admin/home/customer/{{ $customer->id }}/edit" data-toggle="tooltip" title="Edit"
                                         data-placement="bottom" class="btn btn-outline-warning border-0 btn-sm">
                                         <span class="btn-icon-wrapper opacity-8">
                                             <i class="fa fa-edit fa-w-20"></i>
                                         </span>
                                     </a>
-                                    {{-- <form class="d-inline" action="./admin/user/{{ $user->id }}" method="post">
+                                    <form class="d-inline" action="./admin/home/customer/{{ $customer->id }}" method="post">
                                         @csrf
                                         @method('DELETE')
                                         <button class="btn btn-hover-shine btn-outline-danger border-0 btn-sm"
@@ -117,18 +127,19 @@
                                                 <i class="fa fa-trash fa-w-20"></i>
                                             </span>
                                         </button>
-                                    </form> --}}
+                                    </form>
                                 </td>
                             </tr>
                             @endforeach
 
+
+
                         </tbody>
                     </table>
-
                 </div>
 
                 <div class="d-block card-footer">
-                    {{ $users->links() }}
+                    {{ $customers->links() }}
                 </div>
 
             </div>

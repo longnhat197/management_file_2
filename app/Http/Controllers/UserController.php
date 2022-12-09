@@ -19,8 +19,9 @@ class UserController extends Controller
 
     public function editStore(Request $request,$id){
         $data = $request->all();
+
         // $data['name'] == $request->get('name');
-        if($_FILES['image']){
+        if($request->hasFile('image')){
             //Thêm file mới:
             $data['avatar'] = Common::uploadFile($request->file('image'),'img/user');
 

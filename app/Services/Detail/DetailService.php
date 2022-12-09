@@ -12,4 +12,8 @@ class DetailService extends BaseService implements DetailServiceInterface{
     {
         $this->repository = $DetailRepository;
     }
+
+    public function deleteSave($id){
+        return $this->repository->deleteSave($id);
+    }
 }

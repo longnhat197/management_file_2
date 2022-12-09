@@ -58,10 +58,10 @@ class HomeController extends Controller
         return $this->loginService->loginExpert($request);
     }
 
-    public function edit()
+    public function edit($id)
     {
 
-        $id = Auth::user()->userDetails[0]->detail_id;
+        // $id = Auth::user()->userDetails[0]->detail_id;
         $detail = $this->detailService->find($id);
 
         return view('home.edit', compact('detail'));
@@ -70,9 +70,14 @@ class HomeController extends Controller
     public function editStore(Request $request)
     {
         $id = $request->get('id');
+        $detail = $this->detailService->find($id);
+
+
+
         $data = [
             'name_goi_thau' => $request->get('name_goi_thau'),
             'name_du_an' => $request->get('name_du_an'),
+            'customer' => $request->get('customer'),
             'so_thong_bao' => $request->get('so_tbmt'),
             'name_moi_thau' => $request->get('name_moi_thau'),
             'address' => $request->get('address'),
@@ -82,10 +87,35 @@ class HomeController extends Controller
         ];
         try {
             $this->detailService->update($data, $id);
+            DetailTemp::where('detail_id', $id)->delete();
+            $this->detailService->deleteSave($id);
+            if ($detail->hinh_thuc_tham_du == 0) {
+
+                $type = 0;
+                $templates = Template0::all();
+                return view('template.index', compact('templates', 'id', 'type'));
+            } else if ($detail->hinh_thuc_tham_du == 1) {
+                $type = 1;
+                $templates = Template1::all();
+                return view('template.index', compact('templates', 'id', 'type'));
+            }
             return back()->with('success', 'Cập nhật thành công');
         } catch (\Exception $err) {
             return back()->with('error', $err->getMessage());
         }
+    }
+
+    public function delete($id)
+    {
+        try {
+            UserDetail::where('detail_id', $id)->delete();
+            DetailTemp::where('detail_id', $id)->delete();
+            $this->detailService->deleteSave($id);
+            $this->detailService->delete($id);
+        } catch (\Exception $err) {
+            return redirect('home/show')->with('error', $err->getMessage());
+        }
+        return redirect('home/show')->with('success', 'Đã xoá thành công');
     }
 
     public function logout()
@@ -100,12 +130,14 @@ class HomeController extends Controller
         // $detail_id = Auth::user()->userDetails[0]->detail_id;
         // $list_temps = DetailTemp::where('detail_id',$detail_id)->get() ?? [];
         // return $list_temps;
-        return view('home.index');
+        $customers = $this->customerService->all();
+        return view('home.index', compact('customers'));
     }
 
-    public function show(Request $request){
-        $details = $this->detailService->searchAndPaginate('name_goi_thau',$request->get('search'),8);
-        return view('home.show',compact('details'));
+    public function show(Request $request)
+    {
+        $details = $this->detailService->searchAndPaginate('name_goi_thau', $request->get('search'), 8);
+        return view('home.show', compact('details'));
     }
 
     public function create(Request $request)
@@ -134,6 +166,7 @@ class HomeController extends Controller
         $detail = $this->detailService->create([
             'name_goi_thau' => $request->get('name_goi_thau'),
             'name_du_an' => $request->get('name_du_an'),
+            'customer' => $request->get('customer'),
             'so_thong_bao' => $request->get('so_tbmt'),
             'name_moi_thau' => $request->get('name_moi_thau'),
             'address' => $request->get('address'),

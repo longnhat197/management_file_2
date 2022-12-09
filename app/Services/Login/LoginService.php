@@ -90,6 +90,7 @@ class LoginService implements LoginServiceInterface
                 } else {
                     return back()->with('notification', 'Tài khoản không có quyền truy cập hoặc không tồn tại');
                 }
+
             }
         } catch (\LdapRecord\Auth\BindException $e) {
             $err = $e->getDetailedError();

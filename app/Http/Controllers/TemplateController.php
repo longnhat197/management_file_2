@@ -5,7 +5,9 @@ namespace App\Http\Controllers;
 use App\Models\Detail;
 use App\Models\DetailTemp;
 use App\Models\Mau1;
+use App\Models\Mau2;
 use App\Models\Template0;
+use App\Models\UserDetail;
 use App\Services\Detail\DetailServiceInterface;
 use App\Services\Contractor\ContractorServiceInterface;
 use App\Services\Customer\CustomerServiceInterface;
@@ -80,6 +82,14 @@ class TemplateController extends Controller
         return redirect($link);
     }
 
+    public function cancelTemp($id)
+    {
+
+        $this->detailService->delete($id);
+        UserDetail::where('detail_id',$id)->delete();
+        return redirect('home/add');
+    }
+
     //------------------Mẫu 01. ĐƠN DỰ THẦU (thuộc HSĐXKT)---------------------
     public function create1($detail_id)
     {
@@ -94,11 +104,11 @@ class TemplateController extends Controller
         $exist = Mau1::select("*")->where('detail_id', $detail_id)->exists();
         if ($exist) {
             $temp = Mau1::where('detail_id', $detail_id)->first();
-        }else{
+        } else {
             $temp = [];
         }
 
-        return view('template.create1', compact('detail', 'detail_id','temp'));
+        return view('template.create1', compact('detail', 'detail_id', 'temp'));
     }
 
     public function save1(Request $request)
@@ -175,32 +185,86 @@ class TemplateController extends Controller
     //------------------End Mẫu 01. ĐƠN DỰ THẦU (thuộc HSĐXKT)---------------------
 
     // ------------------Mẫu 02. GIẤY ỦY QUYỀN---------------------
-    public function create2()
+    public function create2($detail_id)
     {
-        $d = date("d");
-        $m = date("m");
-        $Y = date("Y");
-        $contractors = $this->contractorService->all();
-        $packages = $this->packageService->all();
-        $projects = $this->projectService->all();
-        $customers = $this->customerService->all();
+        // $d = date("d");
+        // $m = date("m");
+        // $Y = date("Y");
+        // $contractors = $this->contractorService->all();
+        // $packages = $this->packageService->all();
+        // $projects = $this->projectService->all();
+        // $customers = $this->customerService->all();
 
-        $user_dds = $this->listUserService->getUserByType(1);
-        $user_duqs = $this->listUserService->getUserByType(2);
+        // $user_dds = $this->listUserService->getUserByType(1);
+        // $user_duqs = $this->listUserService->getUserByType(2);
+        $detail = $this->detailService->find($detail_id);
 
-
-
+        $exist = Mau2::select("*")->where('detail_id', $detail_id)->exists();
+        if ($exist) {
+            $temp = Mau2::where('detail_id', $detail_id)->first();
+        } else {
+            $temp = [];
+        }
         return view('template.create2', compact(
-            'd',
-            'm',
-            'Y',
-            'contractors',
-            'user_dds',
-            'user_duqs',
-            'packages',
-            'projects',
-            'customers'
+            // 'd',
+            // 'm',
+            // 'Y',
+            'detail',
+            'detail_id',
+            'temp'
         ));
+    }
+
+    public function save2(Request $request)
+    {
+
+        if ($request->ajax()) {
+            $detail_id = $request->get('detail_id');
+            $exist = Mau2::select("*")->where('detail_id', $detail_id)->exists();
+            if ($exist) {
+                Mau2::where('detail_id', $detail_id)->update([
+                    'noi_lam_giay' => $request->get('noi_lam_giay'),
+                    'date' => $request->get('date'),
+                    'thong_tin_dai_dien' => $request->get('thong_tin_dai_dien'),
+                    'name_nha_thau' => $request->get('name_nha_thau'),
+                    'dia_chi_nha_thau' => $request->get('dia_chi_nha_thau'),
+                    'thong_tin_nguoi_duoc_uy_quyen' => $request->get('thong_tin_nguoi_duoc_uy_quyen'),
+                    'name_dai_dien' => $request->get('name_dai_dien'),
+                    'name_uy_quyen' => $request->get('name_uy_quyen'),
+                    'from_date' => $request->get('from_date'),
+                    'to_date' => $request->get('to_date'),
+                    'total' => $request->get('total'),
+                    'uq_giu' => $request->get('uq_giu'),
+                    'duq_giu' => $request->get('duq_giu'),
+                    'moi_thau_giu' => $request->get('moi_thau_giu'),
+                    'chu_ky_duq' => $request->get('chu_ky_duq'),
+                    'chu_ky_uq' => $request->get('chu_ky_uq'),
+                ]);
+                $res = 'Đã cập nhật bản lưu';
+            } else {
+                Mau2::create([
+                    'detail_id' => $detail_id,
+                    'noi_lam_giay' => $request->get('noi_lam_giay'),
+                    'date' => $request->get('date'),
+                    'thong_tin_dai_dien' => $request->get('thong_tin_dai_dien'),
+                    'name_nha_thau' => $request->get('name_nha_thau'),
+                    'dia_chi_nha_thau' => $request->get('dia_chi_nha_thau'),
+                    'thong_tin_nguoi_duoc_uy_quyen' => $request->get('thong_tin_nguoi_duoc_uy_quyen'),
+                    'name_dai_dien' => $request->get('name_dai_dien'),
+                    'name_uy_quyen' => $request->get('name_uy_quyen'),
+                    'from_date' => $request->get('from_date'),
+                    'to_date' => $request->get('to_date'),
+                    'total' => $request->get('total'),
+                    'uq_giu' => $request->get('uq_giu'),
+                    'duq_giu' => $request->get('duq_giu'),
+                    'moi_thau_giu' => $request->get('moi_thau_giu'),
+                    'chu_ky_duq' => $request->get('chu_ky_duq'),
+                    'chu_ky_uq' => $request->get('chu_ky_uq'),
+                ]);
+                $res = 'Đã tạo bản lưu';
+            }
+            echo json_encode($res);
+        }
     }
 
     public function store2(Request $request)
@@ -222,15 +286,20 @@ class TemplateController extends Controller
 
         $new_date1 = $d1 . '/' . $m1 . '/' . $y1;
 
+        $date2 = $request->get('date');
+        $y2 = substr($date2, 0, 4);
+        $m2 = substr($date2, 5, 2);
+        $d2 = substr($date2, 8, 2);
+
 
 
         $templateProcessor = new \PhpOffice\PhpWord\Template('Mẫu 02. GIẤY ỦY QUYỀN.docx');
         $file = 'Mẫu 02. GIẤY ỦY QUYỀN_' . date("Y-m-d") . '.docx';
 
         $templateProcessor->setValues(array(
-            'd' => date("d"),
-            'm' => date("m"),
-            'y' => date("Y"),
+            'd' => $d2,
+            'm' => $m2,
+            'y' => $y2,
             'address' => $request->get('address') ?? '___',
             'thong_tin_dai_dien' => $request->get('thong_tin_dai_dien') ?? '____[ghi tên, số CMND hoặc số hộ chiếu, chức danh của người đại diện theo pháp luật của nhà thầu]',
             'name_nha_thau' => $request->get('name_nha_thau') ?? '____[ghi tên nhà thầu]',
