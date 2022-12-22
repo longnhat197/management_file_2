@@ -34,6 +34,9 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
     <script src="https://cdn.tiny.cloud/1/ht2q8shag22vyn89yaaa2xbmc0c9mg5bqppl375w2z6iz0qn/tinymce/6/tinymce.min.js"
         referrerpolicy="origin"></script>
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
+    <link rel="stylesheet" href="./dashboard/assets/css/jquery.datetimepicker.min.css">
+
 </head>
 
 <body>
@@ -1486,51 +1489,92 @@
                                             class="{{ request()->segment(2) == 'add' ? 'mm-active' : '' }}">Thêm mới dự
                                             án</a>
                                     </li>
-
-
-                                    <li>
-                                        <a href="./home/show"
+                                    {{-- <li>
+                                        <a href="javascript:void(0)
                                             class="{{ request()->segment(2) == 'show' ? 'mm-active' : '' }}">Danh sách dự án</a>
-                                    </li>
-                                    <li>
-                                        <a href="./home/edit"
-                                            class="{{ request()->segment(2) == '1123' ? 'mm-active' : '' }}">Hiệu
-                                            chỉnh</a>
-                                    </li>
-                                    <li>
-                                        <a href="./home/edit"
-                                            class="{{ request()->segment(2) == '2214124' ? 'mm-active' : '' }}">Xem lại</a>
-                                    </li>
+                                    </li> --}}
                                 </ul>
                             </li>
-                            @foreach ( $details as $detail )
-                            <li class="{{ $detail->id == request()->segment(3)  ? 'mm-active' : ''}}">
-                                <a href="#">
-                                    <i class="metismenu-icon pe-7s-plugin"></i>{{ Str::of($detail->name_goi_thau)->limit(15) }}
+                            <li class="{{ request()->segment(2) == 'show' ? 'mm-active' : '' }}">
+                                <a href="./template/show" >
+                                    <i class="metismenu-icon pe-7s-plugin"></i>Hiệu chỉnh
                                     <i class="metismenu-state-icon pe-7s-angle-down caret-left"></i>
                                 </a>
                                 <ul>
-                                    @foreach ($detail->detailTemps as $item)
-                                        @if ($item->type == 0)
-                                            <li>
-                                                <a class="{{ preg_replace('/\D/', '', $item->templates0->url) == request()->segment(2) && $detail->id == request()->segment(3) ? 'mm-active' : '' }}"
-                                                    href="{{ $item->templates0->url }}/{{ $detail->id }}" data-placement="right" data-toggle="tooltip" title="{{ $item->templates0->name }}">
-                                                        {{ Str::of($item->templates0->name)->limit(20) }}
-                                                </a>
+                                    @foreach ( $details as $detail )
+                                    <li class="{{ $detail->id == request()->segment(3)  ? 'mm-active' : ''}}">
+                                        <a href="#">
+                                            <i class="metismenu-icon pe-7s-plugin"></i>{{ Str::of($detail->name_goi_thau)->limit(15) }}
+                                            <i class="metismenu-state-icon pe-7s-angle-down caret-left"></i>
+                                        </a>
+                                        <ul>
+                                            @foreach ($detail->detailTemps as $item)
+                                                @if ($item->type == 0)
+                                                    <li>
+                                                        <a class="{{ preg_replace('/\D/', '', $item->templates0->url) == request()->segment(2) && $detail->id == request()->segment(3) ? 'mm-active' : '' }}"
+                                                            href="{{ $item->templates0->url }}/{{ $detail->id }}" data-placement="right" data-toggle="tooltip" title="{{ $item->templates0->name }}">
+                                                                {{ Str::of($item->templates0->name)->limit(20) }}
+                                                        </a>
 
-                                            </li>
-                                        @elseif ($item->type == 1)
-                                        <li><a  class="{{ preg_replace('/\D/', '', $item->templates1->url) == request()->segment(2) && $detail->id == request()->segment(3) ? 'mm-active' : '' }}"
-                                            href="{{ $item->templates1->url }}/{{ $detail->id }}" data-placement="right" data-toggle="tooltip" title="{{ $item->templates1->name }}">
-                                                {{ Str::of($item->templates1->name)->limit(20) }}
-                                            </a></li>
-                                        @endif
+                                                    </li>
+                                                @elseif ($item->type == 1)
+                                                <li><a  class="{{ preg_replace('/\D/', '', $item->templates1->url) == request()->segment(2) && $detail->id == request()->segment(3) ? 'mm-active' : '' }}"
+                                                    href="{{ $item->templates1->url }}/{{ $detail->id }}" data-placement="right" data-toggle="tooltip" title="{{ $item->templates1->name }}">
+                                                        {{ Str::of($item->templates1->name)->limit(20) }}
+                                                    </a></li>
+                                                @endif
+
+                                            @endforeach
+                                        </ul>
+                                    </li>
 
                                     @endforeach
+
                                 </ul>
                             </li>
 
-                            @endforeach
+
+                            <li class="{{ request()->segment(2) == 'showHs' ? 'mm-active' : '' }}">
+                                <a href="./template/showHs">
+                                    <i class="metismenu-icon pe-7s-plugin"></i>Xem lại
+                                    <i class="metismenu-state-icon pe-7s-angle-down caret-left"></i>
+                                </a>
+                                <ul>
+                                    @php
+
+                                    @endphp
+                                    @foreach ( $detail0s as $detail0 )
+                                    <li class="{{ $detail0->id == request()->segment(3)  ? 'mm-active' : ''}}">
+                                        <a href="#">
+                                            <i class="metismenu-icon pe-7s-plugin"></i>{{ Str::of($detail0->name_goi_thau)->limit(15) }}
+                                            <i class="metismenu-state-icon pe-7s-angle-down caret-left"></i>
+                                        </a>
+                                        <ul>
+                                            @foreach ($detail0->detailTemps as $item0)
+                                                @if ($item0->type == 0)
+                                                    <li>
+                                                        <a class="{{ preg_replace('/\D/', '', $item0->templates0->url) == request()->segment(2) && $detail0->id == request()->segment(3) ? 'mm-active' : '' }}"
+                                                            href="{{ $item0->templates0->url }}/{{ $detail0->id }}" data-placement="right" data-toggle="tooltip" title="{{ $item0->templates0->name }}">
+                                                                {{ Str::of($item0->templates0->name)->limit(20) }}
+                                                        </a>
+
+                                                    </li>
+                                                @elseif ($item0->type == 1)
+                                                <li><a  class="{{ preg_replace('/\D/', '', $item0->templates1->url) == request()->segment(2) && $detail0->id == request()->segment(3) ? 'mm-active' : '' }}"
+                                                    href="{{ $item0->templates1->url }}/{{ $detail0->id }}" data-placement="right" data-toggle="tooltip" title="{{ $item0->templates1->name }}">
+                                                        {{ Str::of($item0->templates1->name)->limit(20) }}
+                                                    </a></li>
+                                                @endif
+
+                                            @endforeach
+                                        </ul>
+                                    </li>
+
+                                    @endforeach
+
+                                </ul>
+                            </li>
+
                             <li >
                                 <ul>
                                     {{-- {{ $list_temps->first() }} --}}
@@ -2798,6 +2842,9 @@
     <script type="text/javascript" src="./dashboard/assets/scripts/main.js"></script>
     <script type="text/javascript" src="./dashboard/assets/scripts/my_script.js"></script>
     <script src="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/alertify.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
+    <script src="dashboard/assets/scripts/jquery.datetimepicker.full.js"></script>
     <script>
         $(document).ready(function() {
             $('[data-toggle="tooltip"]').tooltip();

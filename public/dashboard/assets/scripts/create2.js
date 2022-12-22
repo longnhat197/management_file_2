@@ -178,41 +178,67 @@ $(document).ready(function () {
     //     document.getElementById('name_du_an_test').value = nameDuAn.value
     //     document.getElementById('name_du_an_test'.replace("_test", "1")).innerText = nameDuAn.value
     // }
+    datePick = document.getElementById('datePick');
+    datePick.onchange = function() {
+        dP = datePick.value.substr(0,2)
+        mP = datePick.value.substr(3,2)
+        yP = datePick.value.substr(6,4)
+        // date.value = $(this).val();
+        date.value = datePick.value != '' ? `${yP}-${mP}-${dP}` : ''
 
+        document.getElementById('y').innerText = yP ?? '__';
+        document.getElementById('m').innerText = mP ?? '__';
+        document.getElementById('d').innerText = dP ?? '__';
 
+    }
+
+    datePick.value = date.value != '' ? `${String(date.value).slice(8, 10)}/${String(date.value).slice(5, 7)}/${String(date.value).slice(0, 4)}` : ''
     date = document.getElementById('date');
     date.onchange = function () {
         document.getElementById('y').innerText = String(date.value).slice(0, 4);
         document.getElementById('m').innerText = String(date.value).slice(5, 7);
         document.getElementById('d').innerText = String(date.value).slice(8, 10);
+
+
     }
     document.getElementById('y').innerText = date.value != '' ? String(date.value).slice(0, 4) : '___'
     document.getElementById('m').innerText = date.value != '' ? String(date.value).slice(5, 7) : '___'
     document.getElementById('d').innerText = date.value != '' ? String(date.value).slice(8, 10) : '___'
 
     date1 = document.getElementById('from_date_test');
-    date1.onchange = function () {
-        Str_date = String(date1.value);
-        // console.log(Str_date);
-        y = Str_date.slice(0, 4);
-        m = Str_date.slice(5, 7);
-        d = Str_date.slice(8, 10);
+    from_date = document.getElementById('from_date')
 
-        document.getElementById('from_date_test'.replace("_test", "1")).innerText = d + '/' + m + '/' + y
+    from_date.onchange =function(){
+        dP = from_date.value.substr(0,2)
+        mP = from_date.value.substr(3,2)
+        yP = from_date.value.substr(6,4)
+        // date.value = $(this).val();
+
+        date1.value = from_date.value != '' ? `${yP}-${mP}-${dP}` : '';
+        document.getElementById('from_date1').innerText = date1.value != '' ?  String(date1.value).slice(8, 10) + '/' + String(date1.value).slice(5, 7) + '/' + String(date1.value).slice(0, 4) : '____'
+
     }
     document.getElementById('from_date1').innerText = date1.value != '' ?  String(date1.value).slice(8, 10) + '/' + String(date1.value).slice(5, 7) + '/' + String(date1.value).slice(0, 4) : '____'
+    from_date.value = date1.value != '' ? `${String(date1.value).slice(8, 10)}/${String(date1.value).slice(5, 7)}/${String(date1.value).slice(0, 4)}` : ''
+
+
+
 
     date2 = document.getElementById('to_date_test');
-    date2.onchange = function () {
-        Str_date = String(date2.value);
-        // console.log(Str_date);
-        y = Str_date.slice(0, 4);
-        m = Str_date.slice(5, 7);
-        d = Str_date.slice(8, 10);
+    to_date = document.getElementById('to_date')
+    to_date.onchange =function(){
+        dP = to_date.value.substr(0,2)
+        mP = to_date.value.substr(3,2)
+        yP = to_date.value.substr(6,4)
+        // date.value = $(this).val();
 
-        document.getElementById('to_date_test'.replace("_test", "1")).innerText = d + '/' + m + '/' + y
+        date2.value = to_date.value != '' ? `${yP}-${mP}-${dP}` : '';
+        document.getElementById('to_date1').innerText = date2.value != '' ?  String(date2.value).slice(8, 10) + '/' + String(date2.value).slice(5, 7) + '/' + String(date1.value).slice(0, 4) : '____'
+
     }
-    document.getElementById('to_date1').innerText = date2.value != '' ?  String(date2.value).slice(8, 10) + '/' + String(date2.value).slice(5, 7) + '/' + String(date2.value).slice(0, 4) : '____'
+    document.getElementById('to_date1').innerText = date2.value != '' ?  String(date2.value).slice(8, 10) + '/' + String(date2.value).slice(5, 7) + '/' + String(date1.value).slice(0, 4) : '____'
+    to_date.value = date1.value != '' ? `${String(date2.value).slice(8, 10)}/${String(date2.value).slice(5, 7)}/${String(date2.value).slice(0, 4)}` : ''
+
 
 
     function text_to_tem(data) {
@@ -256,6 +282,21 @@ $(document).ready(function () {
         }
     }
 
+    $("#datePick,#from_date,#to_date").datepicker({
+        dateFormat: 'dd/mm/yy',
+    });
+
+    $('.date-icon').on('click', function() {
+        $('#datePick').focus();
+    })
+
+    $('.from_date').on('click', function () {
+        $('#from_date').focus();
+    })
+    $('.to_date').on('click', function () {
+        $('#to_date').focus();
+    })
+
     select();
 
     save = document.getElementById('save');
@@ -292,7 +333,7 @@ $(document).ready(function () {
             data: data,
             dataType: 'json',
             success: function (res) {
-                alertify.set('notifier','position', 'top-center');
+                alertify.set('notifier','position', 'bottom-right');
                 alertify.success(res);
 
             },

@@ -873,7 +873,7 @@
                                         <a data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
                                             class="p-0 btn">
                                             <img width="42" class="rounded-circle"
-                                                src="dashboard/assets/images/_default-user.png" alt="">
+                                                src="img/user/{{ Auth::user()->avatar ?? '_default-user.png' }}" alt="">
                                             <i class="fa fa-angle-down ml-2 opacity-8"></i>
                                         </a>
                                         <div tabindex="-1" role="menu" aria-hidden="true"
@@ -888,7 +888,7 @@
                                                             <div class="widget-content-wrapper">
                                                                 <div class="widget-content-left mr-3">
                                                                     <img width="42" class="rounded-circle"
-                                                                        src="dashboard/assets/images/_default-user.png"
+                                                                        src="img/user/{{ Auth::user()->avatar ?? '_default-user.png' }}"
                                                                         alt="">
                                                                 </div>
                                                                 <div class="widget-content-left">
@@ -1491,10 +1491,7 @@
                                         <a href="./admin/home/customer"
                                             class="{{ request()->segment(3) == 'customer' ? 'mm-active' : '' }}">Danh sách chủ đầu tư</a>
                                     </li>
-                                    <li>
-                                        <a href="./home/edit"
-                                            class="{{ request()->segment(2) == '2' ? 'mm-active' : '' }}">Xem lại</a>
-                                    </li>
+
                                 </ul>
                             </li>
                             <li class="{{ request()->segment(1) == 'template' ? 'mm-active' : '' }}">

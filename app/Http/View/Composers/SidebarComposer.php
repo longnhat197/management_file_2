@@ -24,16 +24,19 @@ class SidebarComposer{
             $details = Detail::select("details.*")
                             ->join('user_details','details.id','=','user_details.detail_id')
                             ->join('users','user_details.user_id','=','users.id')
+                            ->where('details.enabled',1)
                             ->where('users.id','=',Auth::user()->id)->get();
         }else{
             $details = [];
         }
         // $list_temps = [];
 
-
+        $detail0s = Detail::select("details.*")
+                            ->where('details.enabled',0)
+                            ->get();
         $view->with([
             'details'=> $details,
-
+            'detail0s'=> $detail0s,
         ]);
     }
 }

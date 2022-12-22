@@ -17,14 +17,7 @@
                     </div>
                 </div>
 
-                <div class="page-title-actions">
-                    <a href="./contractor/create" class="btn-shadow btn-hover-shine mr-3 btn btn-primary">
-                        <span class="btn-icon-wrapper pr-2 opacity-7">
-                            <i class="fa fa-plus fa-w-20"></i>
-                        </span>
-                        Create
-                    </a>
-                </div>
+
             </div>
         </div>
         @if (session('success'))
@@ -72,6 +65,7 @@
                                     <th>Tên dự án</th>
                                     <th>Tên bên mời thầu</th>
                                     <th>Người tạo</th>
+                                    <th class="text-center">Tình trạng</th>
                                     <th class="text-center">Actions</th>
                                 </tr>
                             </thead>
@@ -116,6 +110,12 @@
                                                     </div>
                                                 </div>
                                             </div>
+                                        </td>
+                                        <td class="text-center">
+                                            {!! $detail->enabled == 0 ? '<a href="javascript:void(0)"
+                                                class="btn btn-danger btn-sm"><i class="fas fa-times-circle"></i></a>' : '<a
+                                                href="javascript:void(0)" class="btn btn-primary btn-sm"><i
+                                                    class="fas fa-check-circle"></i></a>' !!}
                                         </td>
                                         <td class="text-center">
                                             <a href="./admin/home/detail/{{ $detail->id }}/edit" data-toggle="tooltip" title="Edit"

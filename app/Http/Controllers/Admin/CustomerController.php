@@ -88,7 +88,6 @@ class CustomerController extends Controller
             }catch(\Exception $err){
                 return redirect('admin/home/customer')->with('error',$err->getMessage());
             }
-
             return redirect('admin/home/customer')->with('success','Update thành công');
     }
 

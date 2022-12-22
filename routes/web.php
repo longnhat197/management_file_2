@@ -47,16 +47,16 @@ Route::middleware('CheckLogin')->group(function () {
     Route::get('', [\App\Http\Controllers\HomeController::class, 'index']);
     Route::get('home/add', [\App\Http\Controllers\HomeController::class, 'index']);
     Route::post('home/add', [\App\Http\Controllers\HomeController::class, 'create']);
-    Route::get('home/show/{id}/edit', [\App\Http\Controllers\HomeController::class, 'edit']);
+    Route::get('home/show/n{id}/edit', [\App\Http\Controllers\HomeController::class, 'edit']);
     Route::post('home/show/{id}/delete', [\App\Http\Controllers\HomeController::class, 'delete']);
-    Route::get('home/show',[\App\Http\Controllers\HomeController::class, 'show']);
+    Route::get('template/show',[\App\Http\Controllers\HomeController::class, 'show']);
+    Route::get('template/showHs',[\App\Http\Controllers\HomeController::class, 'showHs']);
     // Route::get();
     Route::post('home/edit', [\App\Http\Controllers\HomeController::class, 'editStore']);
     Route::resource('file', \App\Http\Controllers\FileController::class);
     Route::resource('file/{file_id}/path', \App\Http\Controllers\FilePathController::class);
     Route::resource('contractor', \App\Http\Controllers\ContractorController::class);
     Route::resource('project', \App\Http\Controllers\ProjectController::class);
-    Route::resource('customer', \App\Http\Controllers\CustomerController::class);
     Route::resource('package', \App\Http\Controllers\PackageController::class);
     // Route::resource('user', \App\Http\Controllers\ListUserController::class);
     Route::get('user/edit/{id}',[\App\Http\Controllers\UserController::class,'edit']);
@@ -88,6 +88,7 @@ Route::middleware('CheckLogin')->prefix('template')->group(function () {
 
     Route::get('3/{detail_id}', [\App\Http\Controllers\TemplateController::class, 'create3']);
     Route::post('3', [\App\Http\Controllers\TemplateController::class, 'store3']);
+    Route::post('3/save',[\App\Http\Controllers\TemplateController::class, 'save3']);
 
     Route::get('4/{detail_id}', [\App\Http\Controllers\TemplateController::class, 'create4']);
     Route::post('4', [\App\Http\Controllers\TemplateController::class, 'store4']);
@@ -95,9 +96,11 @@ Route::middleware('CheckLogin')->prefix('template')->group(function () {
 
     Route::get('41/{detail_id}', [\App\Http\Controllers\TemplateController::class, 'create4_1']);
     Route::post('41', [\App\Http\Controllers\TemplateController::class, 'store4_1']);
-    Route::post('41/ajaxMT41', [\App\Http\Controllers\TemplateController::class, 'ajaxMT41']);
+    Route::post('41/save',[\App\Http\Controllers\TemplateController::class, 'save41']);
+    // Route::post('41/ajaxMT41', [\App\Http\Controllers\TemplateController::class, 'ajaxMT41']);
 
-    Route::get('5/{detail_id}',[\App\Http\Controllers\TemplateController::class, 'create5']);
-    Route::post('5',[\App\Http\Controllers\TemplateController::class, 'store5']);
+    Route::get('51/{detail_id}',[\App\Http\Controllers\TemplateController::class, 'create51']);
+    Route::post('51',[\App\Http\Controllers\TemplateController::class, 'store51']);
+    Route::post('51/save',[\App\Http\Controllers\TemplateController::class, 'save51']);
 
 });

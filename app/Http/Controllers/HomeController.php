@@ -55,6 +55,7 @@ class HomeController extends Controller
     }
     public function postLogin(Request $request)
     {
+        $this->loginService->checkOverTime();
         return $this->loginService->loginExpert($request);
     }
 
@@ -89,15 +90,15 @@ class HomeController extends Controller
             $this->detailService->update($data, $id);
             DetailTemp::where('detail_id', $id)->delete();
             $this->detailService->deleteSave($id);
+            $uy_quyen = $this->detailService->find($id)->uy_quyen;
             if ($detail->hinh_thuc_tham_du == 0) {
-
                 $type = 0;
                 $templates = Template0::all();
-                return view('template.index', compact('templates', 'id', 'type'));
+                return view('template.update', compact('templates', 'id', 'type','uy_quyen'));
             } else if ($detail->hinh_thuc_tham_du == 1) {
                 $type = 1;
                 $templates = Template1::all();
-                return view('template.index', compact('templates', 'id', 'type'));
+                return view('template.update', compact('templates', 'id', 'type','uy_quyen'));
             }
             return back()->with('success', 'Cập nhật thành công');
         } catch (\Exception $err) {
@@ -113,9 +114,9 @@ class HomeController extends Controller
             $this->detailService->deleteSave($id);
             $this->detailService->delete($id);
         } catch (\Exception $err) {
-            return redirect('home/show')->with('error', $err->getMessage());
+            return redirect()->back()->with('error', $err->getMessage());
         }
-        return redirect('home/show')->with('success', 'Đã xoá thành công');
+        return redirect()->back()->with('success', 'Đã xoá thành công');
     }
 
     public function logout()
@@ -130,18 +131,27 @@ class HomeController extends Controller
         // $detail_id = Auth::user()->userDetails[0]->detail_id;
         // $list_temps = DetailTemp::where('detail_id',$detail_id)->get() ?? [];
         // return $list_temps;
+
         $customers = $this->customerService->all();
         return view('home.index', compact('customers'));
     }
 
     public function show(Request $request)
     {
-        $details = $this->detailService->searchAndPaginate('name_goi_thau', $request->get('search'), 8);
+        $details = $this->detailService->searchActive($request->get('search'),5);
         return view('home.show', compact('details'));
+    }
+
+    public function showHs(Request $request)
+    {
+
+        $details = $this->detailService->searchNoActive($request->get('search'),5);
+        return view('home.showHs', compact('details'));
     }
 
     public function create(Request $request)
     {
+
         // $request->validate([
         //     'name_goi_thau' => 'required',
         //     'name_du_an' => 'required',
@@ -177,6 +187,7 @@ class HomeController extends Controller
             'time_mo_thau' => $request->get('time_mo_thau'),
             'time_dong_thau' => $request->get('time_dong_thau'),
             'user_id' => $request->get('user_id'),
+            'enabled' =>1
         ]);
         $id = $detail->id;
 
@@ -184,15 +195,15 @@ class HomeController extends Controller
             'user_id' =>  $request->get('user_id'),
             'detail_id' => $id,
         ]);
-
+        $uy_quyen = $request->get('uy_quyen');
         if ($request->get('hinh_thuc_tham_du') == 0) {
             $type = 0;
             $templates = Template0::all();
-            return view('template.index', compact('templates', 'id', 'type'));
+            return view('template.index', compact('templates', 'id', 'type','uy_quyen'));
         } else if ($request->get('hinh_thuc_tham_du') == 1) {
             $type = 1;
             $templates = Template1::all();
-            return view('template.index', compact('templates', 'id', 'type'));
+            return view('template.index', compact('templates', 'id', 'type','uy_quyen'));
         }
     }
 }

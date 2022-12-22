@@ -6,6 +6,9 @@ use App\Models\Detail;
 use App\Models\DetailTemp;
 use App\Models\Mau1;
 use App\Models\Mau2;
+use App\Models\Mau3;
+use App\Models\Mau41;
+use App\Models\Mau51;
 use App\Models\Template0;
 use App\Models\UserDetail;
 use App\Services\Detail\DetailServiceInterface;
@@ -86,7 +89,7 @@ class TemplateController extends Controller
     {
 
         $this->detailService->delete($id);
-        UserDetail::where('detail_id',$id)->delete();
+        UserDetail::where('detail_id', $id)->delete();
         return redirect('home/add');
     }
 
@@ -166,9 +169,9 @@ class TemplateController extends Controller
             'date' => $new_date ?? '[ghi ngày tháng năm ký đơn dự thầu]',
             'name_goi_thau' => $request->get('name_goi_thau') ?? '[ghi tên gói thầu theo thông báo mời thầu]',
             'name_du_an' => $request->get('name_du_an') ?? '[ghi tên dự án]',
-            'so_trich_yeu' => $request->get('so_trich_yeu') ?? '[ghi số trích yếu của Thư mời thầu đối với đấu thầu hạn chế]',
+            'so_trich_yeu' => $request->get('so_trich_yeu') != '' ? '</w:t><w:br/><w:t>Thư mời thầu số: ' . $request->get('so_trich_yeu') . '.' : '',
             'name_moi_thau' => $request->get('name_moi_thau') ?? '[ghi đầy đủ và chính xác tên của Bên mời thầu]',
-            'so_sua_doi' => $request->get('so_sua_doi') ?? '___[ghi số của văn bản sửa đổi (nếu có)]',
+            'so_sua_doi' => $request->get('so_sua_doi') != '' ? 'số ' . $request->get('so_sua_doi') : '',
             'name_nha_thau' => $request->get('name_nha_thau') ?? '____ [ghi tên nhà thầu]',
             'name_goi_thau1' => $request->get('name_goi_thau1') ?? '____ [ghi tên gói thầu]',
             'date_thuc_hien' => $request->get('date_thuc_hien') ?? '___[ghi thời gian thực hiện tất cả các công việc theo yêu cầu của gói thầu]',
@@ -392,22 +395,95 @@ class TemplateController extends Controller
 
 
     // ------------------Mẫu 03. THỎA THUẬN LIÊN DANH---------------------
-    public function create3()
+    public function create3($detail_id)
     {
-        $d = date("d");
-        $m = date("m");
-        $Y = date("Y");
-        $packages = $this->packageService->all();
-        $projects = $this->projectService->all();
 
-        return view('template.create3', compact('d', 'm', 'Y', 'packages', 'projects'));
+        $detail = $this->detailService->find($detail_id);
+        $exist = Mau3::select("*")->where('detail_id', $detail_id)->exists();
+        if ($exist) {
+            $temp = Mau3::where('detail_id', $detail_id)->first();
+        } else {
+            $temp = [];
+        }
+        return view('template.create3', compact('detail', 'temp', 'detail_id'));
     }
 
+    public function save3(Request $request)
+    {
+        if ($request->ajax()) {
+            $detail_id = $request->get('detail_id');
+            $exist = Mau3::select("*")->where('detail_id', $detail_id)->exists();
+            if ($exist) {
+                Mau3::where('detail_id', $detail_id)->update([
+                    'ngay_lam_giay' => $request->get('ngay_lam_giay'),
+                    'noi_lam_thoa_thuan' => $request->get('noi_lam_giay'),
+                    'can_cu' => $request->get('can_cu'),
+                    'can_cu1' => $request->get('can_cu1'),
+                    'date_hsmt' => $request->get('date_hsmt'),
+                    'ten_thanh_vien' => $request->get('ten_thanh_vien'),
+                    'name_dai_dien' => $request->get('name_dai_dien'),
+                    'chuc_vu' => $request->get('chuc_vu'),
+                    'dia_chi' => $request->get('dia_chi'),
+                    'dien_thoai' => $request->get('dien_thoai'),
+                    'fax' => $request->get('fax'),
+                    'email' => $request->get('email'),
+                    'tai_khoan' => $request->get('tai_khoan'),
+                    'ma_so_thue' => $request->get('ma_so_thue'),
+                    'so_uy_quyen' => $request->get('so_uy_quyen'),
+                    'date_uq' => $request->get('date_uq'),
+                    'name_lien_danh' => $request->get('name_lien_danh'),
+                    'table_content' => $request->get('table_content'),
+                    'hinh_thuc_khac' => $request->get('hinh_thuc_khac'),
+                    'name_mot_ben' => $request->get('name_mot_ben'),
+                    'noi_dung_khac' => $request->get('noi_dung_khac'),
+                    'total' => $request->get('total'),
+                    'moi_ben_giu' => $request->get('moi_ben_giu'),
+                    'chu_ky_dung_dau' => $request->get('chu_ky_dung_dau'),
+                    'chu_ky_thanh_vien' => $request->get('chu_ky_thanh_vien')
+                ]);
+                $res = 'Đã cập nhật bản lưu';
+            } else {
+                Mau3::create([
+                    'detail_id' => $detail_id,
+                    'ngay_lam_giay' => $request->get('ngay_lam_giay'),
+                    'noi_lam_thoa_thuan' => $request->get('noi_lam_giay'),
+                    'can_cu' => $request->get('can_cu'),
+                    'can_cu1' => $request->get('can_cu1'),
+                    'date_hsmt' => $request->get('date_hsmt'),
+                    'ten_thanh_vien' => $request->get('ten_thanh_vien'),
+                    'name_dai_dien' => $request->get('name_dai_dien'),
+                    'chuc_vu' => $request->get('chuc_vu'),
+                    'dia_chi' => $request->get('dia_chi'),
+                    'dien_thoai' => $request->get('dien_thoai'),
+                    'fax' => $request->get('fax'),
+                    'email' => $request->get('email'),
+                    'tai_khoan' => $request->get('tai_khoan'),
+                    'ma_so_thue' => $request->get('ma_so_thue'),
+                    'so_uy_quyen' => $request->get('so_uy_quyen'),
+                    'date_uq' => $request->get('date_uq'),
+                    'name_lien_danh' => $request->get('name_lien_danh'),
+                    'table_content' => $request->get('table_content'),
+                    'hinh_thuc_khac' => $request->get('hinh_thuc_khac'),
+                    'name_mot_ben' => $request->get('name_mot_ben'),
+                    'noi_dung_khac' => $request->get('noi_dung_khac'),
+                    'total' => $request->get('total'),
+                    'moi_ben_giu' => $request->get('moi_ben_giu'),
+                    'chu_ky_dung_dau' => $request->get('chu_ky_dung_dau'),
+                    'chu_ky_thanh_vien' => $request->get('chu_ky_thanh_vien')
+                ]);
+
+                $res = 'Đã tạo bản lưu';
+            }
+            echo json_encode($res);
+        }
+    }
     public function store3(Request $request)
     {
-        $d = date("d");
-        $m = date("m");
-        $Y = date("Y");
+
+        $date = $request->get('date');
+        $y = substr($date, 0, 4);
+        $m = substr($date, 5, 2);
+        $d = substr($date, 8, 2);
 
         $date1 = $request->get('date1');
         $y1 = $date1 != null ? substr($date1, 0, 4) : '___';
@@ -426,8 +502,8 @@ class TemplateController extends Controller
             'address' => $request->get('address') ?? '____',
             'd' => $d,
             'm' => $m,
-            'y' => $Y,
-            'name_goi_thau' => $request->get('name_goi_thau') ?? '____ [ghi tên gói thầu]',
+            'y' => $y,
+            'name_goi_thau' => $request->get('name_goi_thau') ?? '____ [ghi tên gói thầu] ',
             'name_du_an' => $request->get('name_du_an') ?? '____ [ghi tên dự án]',
             'can_cu' => $request->get('can_cu') ?? '__ [Luật đấu thầu số 43/2013/QH13 ngày 26/11/2013 của Quốc hội];',
             'can_cu1' => $request->get('can_cu1') ?? '____ [Nghị định số 63/2014/NĐ-CP ngày 26/6/2014 của Chính phủ về hướng dẫn thi hành Luật đấu thầu về lựa chọn nhà thầu];',
@@ -435,14 +511,19 @@ class TemplateController extends Controller
             'm1' => $m1,
             'y1' => $y1,
             'name_thanh_vien' => $request->get('ten_thanh_vien') ?? '____[ghi tên từng thành viên liên danh]',
-            'so_uy_quyen' => $request->get('so_uy_quyen') ?? '___',
-            'd2' => $d2,
-            'm2' => $m2,
-            'y2' => $y2,
+            'uy_quyen' => $request->get('so_uy_quyen') != '' ? '</w:t><w:br/><w:t>Giấy uỷ quyền số ' . $request->get('so_uy_quyen') . ' ngày ' . $d2 . ' tháng ' . $m2 . ' năm ' . $y2 . '.' : '',
+            'name_dai_dien' => $request->get('name_dai_dien') ?? '______________________________________________________',
+            'chuc_vu' => $request->get('chuc_vu') ?? '______________________________________________________________',
+            'dia_chi' => $request->get('dia_chi') ?? '_______________________________________________________________',
+            'dien_thoai' => $request->get('dien_thoai') ?? '_____________________________________________________________',
+            'fax' => $request->get('fax') ?? '__________________________________________________________________',
+            'email' => $request->get('email') ?? '________________________________________________________________',
+            'tai_khoan' => $request->get('tai_khoan') ?? '_____________________________________________________________',
+            'ma_so_thue' => $request->get('ma_so_thue') ?? '____________________________________________________________',
             'name_lien_danh' => $request->get('name_lien_danh') ?? '____[ghi tên của liên danh theo thỏa thuận].',
-            'hinh_thuc_khac' => $request->get('hinh_thuc_khac') ?? '____[ghi rõ hình thức xử lý khác].',
+            'hinh_thuc_khac' => $request->get('hinh_thuc_khac') != '' ? '</w:t><w:br/><w:t>- Hình thức xử lý khác ' . $request->get('hinh_thuc_khac') . '.' : '',
             'name_mot_ben' => $request->get('name_mot_ben') ?? '____[ghi tên một bên]',
-            'noi_dung_khac' => $request->get('noi_dung_khac') ?? '____[ghi rõ nội dung các công việc khác (nếu có)].',
+            'noi_dung_khac' => $request->get('noi_dung_khac') != '' ? '</w:t><w:br/><w:t>- Các công việc khác trừ việc ký kết hợp đồng ' . $request->get('noi_dung_khac') . '.</w:t>' : '',
             'total' => $request->get('total') ?? '___',
             'moi_ben_giu' => $request->get('moi_ben_giu') ?? '___',
             'chu_ky_dung_dau' => $request->get('chu_ky_dung_dau') ?? '[ghi tên, chức danh, ký tên và đóng dấu]',
@@ -535,16 +616,64 @@ class TemplateController extends Controller
         $templateProcessor->saveAs("php://output");
     }
 
-    public function create4_1()
+    public function create4_1($detail_id)
     {
-        $customers = $this->customerService->all();
-        $contractors = $this->contractorService->all();
-        $projects = $this->projectService->all();
-        $packages = $this->packageService->all();
+        $detail = $this->detailService->find($detail_id);
+        $exist = Mau41::select("*")->where('detail_id', $detail_id)->exists();
+        if ($exist) {
+            $temp = Mau41::where('detail_id', $detail_id)->first();
+        } else {
+            $temp = [];
+        }
 
-        return view('template.create4_1', compact('customers', 'contractors', 'packages', 'projects'));
+
+        return view('template.create4_1', compact('detail', 'temp', 'detail_id'));
     }
 
+    public function save41(Request $request)
+    {
+        if ($request->ajax()) {
+            $detail_id = $request->get('detail_id');
+            $exist = Mau41::select("*")->where('detail_id', $detail_id)->exists();
+            if ($exist) {
+                Mau41::where('detail_id', $detail_id)
+                    ->update([
+                        'thong_tin_moi_thau' => $request->get('thong_tin_moi_thau'),
+                        'ngay_phat_hanh' => $request->get('ngay_phat_hanh'),
+                        'so_trich_yeu' => $request->get('so_trich_yeu'),
+                        'thong_tin_phat_hanh' => $request->get('thong_tin_phat_hanh'),
+                        'name_nha_thau' => $request->get('name_nha_thau'),
+                        'so_trich_yeu1' => $request->get('so_trich_yeu1'),
+                        'so_tien_bl' => $request->get('so_tien_bl'),
+                        'time' => $request->get('time'),
+                        'from_date' => $request->get('from_date'),
+                        'so_tien_tt' => $request->get('so_tien_tt'),
+                        'name_lien_danh' => $request->get('name_lien_danh'),
+                        'name_chuc_danh' => $request->get('name_chuc_danh'),
+                    ]);
+                $res = 'Đã cập nhật bản lưu';
+            } else {
+                Mau41::create([
+                    'detail_id' => $detail_id,
+                    'thong_tin_moi_thau' => $request->get('thong_tin_moi_thau'),
+                    'ngay_phat_hanh' => $request->get('ngay_phat_hanh'),
+                    'so_trich_yeu' => $request->get('so_trich_yeu'),
+                    'thong_tin_phat_hanh' => $request->get('thong_tin_phat_hanh'),
+                    'name_nha_thau' => $request->get('name_nha_thau'),
+                    'so_trich_yeu1' => $request->get('so_trich_yeu1'),
+                    'so_tien_bl' => $request->get('so_tien_bl'),
+                    'time' => $request->get('time'),
+                    'from_date' => $request->get('from_date'),
+                    'so_tien_tt' => $request->get('so_tien_tt'),
+                    'name_lien_danh' => $request->get('name_lien_danh'),
+                    'name_chuc_danh' => $request->get('name_chuc_danh'),
+
+                ]);
+                $res = 'Đã tạo bản lưu cho file';
+            }
+            echo json_encode($res);
+        }
+    }
     public function ajaxMT41(Request $request)
     {
         if ($request->ajax()) {
@@ -599,7 +728,7 @@ class TemplateController extends Controller
             'd' => $d1,
             'm' => $m1,
             'y' => $y1,
-            'so_tien1' => $request->get('so_tien1') ?? '[ghi bằng chữ] [ghi bằng số]',
+            'so_tien_1' => $request->get('so_tien1') ?? '[ghi bằng chữ] [ghi bằng số]',
             'name_lien_danh' => $request->get('name_lien_danh') ?? '_____ [ghi đầy đủ tên của nhà thầu liên danh]',
             'ten_chuc_danh' => $request->get('ten_chuc_danh') ?? '[ghi tên, chức danh, ký tên và đóng dấu]',
         ));
@@ -613,16 +742,68 @@ class TemplateController extends Controller
 
     // ------------------ Mẫu 05 (a). BẢN KÊ KHAI THÔNG TIN VỀ NHÀ THẦU---------------------
 
-    public function create5()
+    public function create51($detail_id)
     {
-        $packages = $this->packageService->all();
-        $contractors = $this->contractorService->all();
-        return view('template.create5', compact('contractors', 'packages'));
+        $detail = $this->detailService->find($detail_id);
+        $exist = Mau51::select("*")->where('detail_id', $detail_id)->exists();
+        if ($exist) {
+            $temp = Mau51::where('detail_id', $detail_id)->first();
+        } else {
+            $temp = [];
+        }
+        return view('template.create51', compact('detail', 'temp', 'detail_id'));
     }
 
-    public function store5(Request $request)
+    public function store51(Request $request)
     {
         return $request->all();
+    }
+
+    public function save51(Request $request)
+    {
+        if ($request->ajax()) {
+            $detail_id = $request->get('detail_id');
+            $exist = Mau51::select("*")->where('detail_id', $detail_id)->exists();
+            if ($exist) {
+                Mau51::where('detail_id', $detail_id)
+                    ->update([
+                        'ngay_ke_khai' => $request->get('ngay_ke_khai'),
+                        'so_hieu' => $request->get('so_hieu'),
+                        'trang' => $request->get('trang'),
+                        'tren_trang' => $request->get('tren_trang'),
+                        'name_lien_danh' => $request->get('name_lien_danh'),
+                        'name_thanh_vien_lien_danh' => $request->get('name_thanh_vien_lien_danh'),
+                        'quoc_gia_dang_ky' => $request->get('quoc_gia_dang_ky'),
+                        'nam_thanh_lap' => $request->get('nam_thanh_lap'),
+                        'dia_chi_hop_phap' => $request->get('dia_chi_hop_phap'),
+                        'name_thanh_vien' => $request->get('name_thanh_vien'),
+                        'dia_chi' => $request->get('dia_chi'),
+                        'so_dien_thoai' => $request->get('so_dien_thoai'),
+                        'email' => $request->get('email'),
+                    ]);
+                $res = 'Đã cập nhật bản lưu';
+            } else {
+                Mau51::create([
+                    'detail_id' => $detail_id,
+                    'ngay_ke_khai' => $request->get('ngay_ke_khai'),
+                    'so_hieu' => $request->get('so_hieu'),
+                    'trang' => $request->get('trang'),
+                    'tren_trang' => $request->get('tren_trang'),
+                    'name_lien_danh' => $request->get('name_lien_danh'),
+                    'name_thanh_vien_lien_danh' => $request->get('name_thanh_vien_lien_danh'),
+                    'quoc_gia_dang_ky' => $request->get('quoc_gia_dang_ky'),
+                    'nam_thanh_lap' => $request->get('nam_thanh_lap'),
+                    'dia_chi_hop_phap' => $request->get('dia_chi_hop_phap'),
+                    'name_thanh_vien' => $request->get('name_thanh_vien'),
+                    'dia_chi' => $request->get('dia_chi'),
+                    'so_dien_thoai' => $request->get('so_dien_thoai'),
+                    'email' => $request->get('email'),
+
+                ]);
+                $res = 'Đã tạo bản lưu cho file';
+            }
+            echo json_encode($res);
+        }
     }
 
 

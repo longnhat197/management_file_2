@@ -1,0 +1,11 @@
+.date-container {
+    position: relative;
+    float: left;
+}
+
+.date-container .date-icon {
+    position: absolute;
+    top: 60%;
+    right: 5%;
+    cursor: pointer;
+}

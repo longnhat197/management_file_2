@@ -1,5 +1,8 @@
 @extends('layout.master')
 @section('title','Đơn dự thầu')
+@section('my_style')
+<link rel="stylesheet" href="./dashboard/assets/css/input-date.css">
+@endsection
 @section('body')
 <!-- Main -->
 <div class="app-main__inner mb-md-5">
@@ -23,35 +26,42 @@
                 <div class="card-body">
                     <form action="./template/1" method="post">
                         @csrf
-                        <div class="nav nav-tabs nav-fill" id="nav-tab" role="tablist">
-                            <a class="nav-item nav-link active p-2" id="nav-home-tab" data-toggle="tab" href="#nav-home"
-                                role="tab" aria-controls="nav-home" aria-selected="true">
-                                <i class="fas fa-clipboard p-2"></i>
-                                Thông tin chung
-                            </a>
-                            {{-- <a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-profile"
-                                role="tab" aria-controls="nav-profile" aria-selected="false">Project Tab 2</a> --}}
-                            <a class="nav-item nav-link" id="nav-contact-tab" data-toggle="tab" href="#nav-contact"
-                                role="tab" aria-controls="nav-contact" aria-selected="false">
-                                <i class="fas fa-calendar-day p-2"></i>
-                                Thời gian
-                            </a>
-                        </div>
-
+                        <nav>
+                            <div class="nav nav-tabs nav-fill" id="nav-tab" role="tablist">
+                                <a class="nav-item nav-link active p-2" id="nav-home-tab" data-toggle="tab"
+                                    href="#nav-home" role="tab" aria-controls="nav-home" aria-selected="true">
+                                    <i class="fas fa-clipboard p-2"></i>
+                                    Thông tin chung
+                                </a>
+                                {{-- <a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab"
+                                    href="#nav-profile" role="tab" aria-controls="nav-profile"
+                                    aria-selected="false">Project Tab 2</a> --}}
+                                <a class="nav-item nav-link" id="nav-contact-tab" data-toggle="tab" href="#nav-contact"
+                                    role="tab" aria-controls="nav-contact" aria-selected="false">
+                                    <i class="fas fa-calendar-day p-2"></i>
+                                    Thời gian
+                                </a>
+                            </div>
+                        </nav>
                         <div class="tab-content" id="nav-tabContent">
                             <div class="tab-pane fade show active" id="nav-home" role="tabpanel"
                                 aria-labelledby="nav-home-tab">
                                 <div class="row">
                                     <div class="col-md-3"></div>
-                                    <div class="form-group col-md-5">
+                                    <div class="form-group date-container col-md-6">
                                         <label for="date_test">Ngày tháng năm đăng ký đơn dự thầu:</label>
-                                        <input type="date" class="form-control" value="{{ $temp != [] ? $temp->date_dang_ky : 0 }}" id="date_test" name="date">
-                                        <input type="hidden" value="{{ $detail_id }}" id="detail_id" data-url="./template/1/save">
+                                        <i class="date-icon date_ttld fas fa-calendar-alt" aria-hidden="true"></i>
+                                        <input class="form-control" type="text" id="datePick">
+                                        <input type="hidden" class="form-control" {{ $detail->enabled == 0 ? 'disabled'
+                                        : '' }} value="{{ $temp != [] ? $temp->date_dang_ky : 0 }}" id="date_test"
+                                        name="date">
+                                        <input type="hidden" value="{{ $detail_id }}" id="detail_id"
+                                            data-url="./template/1/save">
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="col-md-3"></div>
-                                    <div class="form-group col-md-5">
+                                    <div class="form-group col-md-6">
                                         <label for="name_goi_thau">Tên gói thầu theo thông báo mời thầu:</label>
                                         {{-- <div class="btn-actions-pane-right">
                                             <div class="input-group w-50">
@@ -63,12 +73,14 @@
                                                 </select>
                                             </div>
                                         </div> --}}
-                                        <input type="text" class="form-control" id="name_goi_thau_test" value="{{ $detail->name_goi_thau }}" >
+                                        <input type="text" name="name_goi_thau" class="form-control" {{ $detail->enabled
+                                        == 0 ? 'disabled' : '' }} id="name_goi_thau_test" value="{{
+                                        $detail->name_goi_thau }}" >
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="col-md-3"></div>
-                                    <div class="form-group col-md-5">
+                                    <div class="form-group col-md-6">
                                         <label for="name_du_an">Tên dự án:</label>
                                         {{-- <div class="btn-actions-pane-right">
                                             <div class="input-group w-50">
@@ -80,20 +92,24 @@
                                                 </select>
                                             </div>
                                         </div> --}}
-                                        <input type="text" class="form-control" id="name_du_an_test" value="{{ $detail->name_du_an }}" >
+                                        <input type="text" name="name_du_an" class="form-control" {{ $detail->enabled ==
+                                        0 ? 'disabled' : '' }} id="name_du_an_test" value="{{ $detail->name_du_an }}" >
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="col-md-3"></div>
-                                    <div class="form-group col-md-5">
-                                        <label for="so_trich_yeu_test">Số trích yếu của Thư mời thầu đối với đấu thầu hạn
+                                    <div class="form-group col-md-6">
+                                        <label for="so_trich_yeu_test">Số trích yếu của Thư mời thầu đối với đấu thầu
+                                            hạn
                                             chế:</label>
-                                        <input type="text" class="form-control" id="so_trich_yeu_test" value="{{ $temp != [] ? $temp->so_trich_yeu : '' }}" name="so_trich_yeu">
+                                        <input type="text" class="form-control" {{ $detail->enabled == 0 ? 'disabled' :
+                                        '' }} id="so_trich_yeu_test" value="{{ $temp != [] ? $temp->so_trich_yeu : ''
+                                        }}" name="so_trich_yeu">
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="col-md-3"></div>
-                                    <div class="form-group col-md-5">
+                                    <div class="form-group col-md-6">
                                         <label for="name_moi_thau_test">Tên của Bên mời thầu:</label>
                                         {{-- <div class="btn-actions-pane-right">
                                             <div class="input-group w-50">
@@ -105,31 +121,38 @@
                                                 </select>
                                             </div>
                                         </div> --}}
-                                        <input type="text" class="form-control" id="name_moi_thau_test" value="{{ $detail->name_moi_thau }}" >
+                                        <input type="text" name="name_moi_thau" class="form-control" {{ $detail->enabled
+                                        == 0 ? 'disabled' : '' }} id="name_moi_thau_test" value="{{
+                                        $detail->name_moi_thau }}" >
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="col-md-3"></div>
-                                    <div class="form-group col-md-5">
+                                    <div class="form-group col-md-6">
                                         <label for="so_sua_doi_test">Số của văn bản sửa đổi (nếu có):</label>
-                                        <input type="text" class="form-control" value="{{ $temp != [] ? $temp->so_sua_doi : '' }}" id="so_sua_doi_test" name="so_sua_doi">
+                                        <input type="text" class="form-control" {{ $detail->enabled == 0 ? 'disabled' :
+                                        '' }} value="{{ $temp != [] ? $temp->so_sua_doi : '' }}" id="so_sua_doi_test"
+                                        name="so_sua_doi">
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="col-md-3"></div>
-                                    <div class="form-group col-md-5">
+                                    <div class="form-group col-md-6">
                                         <label for="name_nha_thau_test">Tên nhà thầu:</label>
                                         {{-- <div class="btn-actions-pane-right">
                                             <div class="input-group w-50">
                                                 <select required id="name_nha_thau" class="form-control">
                                                     <option value="">--Tên nhà thầu--</option>
                                                     @foreach ($contractors as $contractor)
-                                                    <option value="{{ $contractor->name }}">{{ $contractor->name }}</option>
+                                                    <option value="{{ $contractor->name }}">{{ $contractor->name }}
+                                                    </option>
                                                     @endforeach
                                                 </select>
                                             </div>
                                         </div> --}}
-                                        <input type="text" class="form-control" id="name_nha_thau_test" value="{{ $temp != [] ? $temp->name_nha_thau : '' }}" name="name_nha_thau">
+                                        <input type="text" class="form-control" {{ $detail->enabled == 0 ? 'disabled' :
+                                        '' }} id="name_nha_thau_test" value="{{ $temp != [] ? $temp->name_nha_thau : ''
+                                        }}" name="name_nha_thau">
                                     </div>
                                 </div>
                             </div>
@@ -138,22 +161,32 @@
                                 aria-labelledby="nav-contact-tab">
                                 <div class="row">
                                     <div class="col-md-3"></div>
-                                    <div class="form-group col-md-5">
-                                        <label for="date_thuc_hien_test">Thời gian thực hiện tất cả các công việc theo yêu cầu
+                                    <div class="form-group col-md-6">
+                                        <label for="date_thuc_hien_test">Thời gian thực hiện tất cả các công việc theo
+                                            yêu cầu
                                             của
                                             gói thầu:</label>
-                                        <input type="text" class="form-control" id="date_thuc_hien_test" value="{{ $temp != [] ? $temp->time_thuc_hien : '' }}" name="date_thuc_hien">
+                                        <input type="text" class="form-control" {{ $detail->enabled == 0 ? 'disabled' :
+                                        '' }} id="date_thuc_hien_test" value="{{ $temp != [] ? $temp->time_thuc_hien :
+                                        '' }}" name="date_thuc_hien">
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="col-md-3"></div>
                                     <div class="form-group col-md-3">
                                         <label for="time_test">Có hiệu lực trong thời gian:</label>
-                                        <input type="text" class="form-control" value="{{ $temp != [] ? $temp->time_hieu_luc : '' }}" id="time_test" name="time">
+                                        <input type="text" class="form-control" {{ $detail->enabled == 0 ? 'disabled' :
+                                        '' }} value="{{ $temp != [] ? $temp->time_hieu_luc : '' }}" id="time_test"
+                                        name="time">
                                     </div>
-                                    <div class="form-group col-md-2">
+                                    <div class="form-group date-container col-md-3">
                                         <label for="d_test">Kể từ ngày:</label>
-                                        <input type="date" value="{{ $temp != [] ? $temp->date_start : '' }}" class="form-control" id="d_test" name="d">
+                                        <i class="date-icon date_start fas fa-calendar-alt" aria-hidden="true"></i>
+                                        <input type="text" {{ $detail->enabled == 0 ? 'disabled' : '' }}
+                                        class="form-control" id="date_start">
+                                        <input type="hidden" value="{{ $temp != [] ? $temp->date_start : '' }}" {{
+                                            $detail->enabled == 0 ? 'disabled' : '' }} class="form-control" id="d_test"
+                                        name="d">
                                     </div>
 
 
@@ -161,11 +194,11 @@
 
                                 <div class="row">
                                     <div class="col-md-3"></div>
-                                    <div class="form-group col-md-5">
+                                    <div class="form-group col-md-6">
                                         <label for="ten_chuc_danh_test">Ghi tên, chức danh:</label>
                                         {{-- <input type="text" class="form-control" id="ten_chuc_danh_test"
                                             name="ten_chuc_danh"> --}}
-                                        <textarea name="ten_chuc_danh"  class="form-control" id="ten_chuc_danh_test" cols="90"
+                                        <textarea name="ten_chuc_danh" {{ $detail->enabled == 0 ? 'disabled' : '' }}  class="form-control" id="ten_chuc_danh_test" cols="90"
                                             rows="5">{{ $temp != [] ? $temp->ten_chuc_danh : '' }}</textarea>
                                     </div>
                                 </div>
@@ -188,7 +221,10 @@
                             </div>
                             <div class="form-group col-md-2 text-right">
                                 {{-- <button type="submit" class="btn btn-primary">Export Word</button> --}}
+                                @if ($detail->enabled != 0)
                                 <a href="javascript:void(0)" id="save" class="btn btn-outline-primary">Lưu</a>
+                                @endif
+
                             </div>
                         </div>
 
@@ -204,7 +240,7 @@
                         style="font-size:14pt"><span style="line-height:110%"><span
                                 style="font-family:&quot;Times New Roman&quot;,serif"><span
                                     style="font-weight:bold"><span lang="ES-TRAD" style="line-height:110%">ĐƠN DỰ THẦU
-                                        </span></span></span></span></span></p>
+                                    </span></span></span></span></span></p>
 
                 <p align="center" style="margin-top:8px; margin-bottom:8px; text-align:center"><span
                         style="font-size:12pt"><span style="line-height:110%"><span style="tab-stops:right 6.25in"><span
@@ -217,8 +253,9 @@
                 <p style="margin-top:8px; margin-bottom:8px; text-indent:28.35pt; text-align:justify"><span
                         style="font-size:12pt"><span style="line-height:110%"><span style="tab-stops:right 6.25in"><span
                                     style="font-family:&quot;Times New Roman&quot;,serif"><span lang="IT"
-                                        style="font-size:14.0pt"><span style="line-height:110%">Ng&agrave;y:&nbsp; <span
-                                                id="date1">[ghi ngày tháng năm ký đơn dự
+                                        style="font-size:14.0pt"><span style="line-height:110%;">Ng&agrave;y:&nbsp;
+                                            <span id="date1" style="background-color: yellow">[ghi ngày tháng năm ký đơn
+                                                dự
                                                 thầu]</span></span></span></span></span></span>
                 </p>
 
@@ -226,7 +263,8 @@
                         style="font-size:12pt"><span style="line-height:110%"><span style="tab-stops:right 6.25in"><span
                                     style="font-family:&quot;Times New Roman&quot;,serif"><span lang="IT"
                                         style="font-size:14.0pt"><span style="line-height:110%">T&ecirc;n g&oacute;i
-                                            thầu:&nbsp; <span id="name_goi_thau1">[ghi tên gói thầu theo thông báo mời
+                                            thầu:&nbsp; <span id="name_goi_thau1" style="background-color: yellow">[ghi
+                                                tên gói thầu theo thông báo mời
                                                 thầu]</span></span></span></span></span></span></span>
                 </p>
 
@@ -234,21 +272,25 @@
                         style="font-size:12pt"><span style="line-height:110%"><span style="tab-stops:right 6.25in"><span
                                     style="font-family:&quot;Times New Roman&quot;,serif"><span lang="IT"
                                         style="font-size:14.0pt"><span style="line-height:110%">T&ecirc;n dự
-                                            &aacute;n:&nbsp; <span id="name_du_an1">[ghi tên dự
+                                            &aacute;n:&nbsp; <span id="name_du_an1"
+                                                style="background-color: yellow">[ghi tên dự
                                                 án]</span></span></span></span></span></span></span></p>
 
                 <p style="margin-top:8px; margin-bottom:8px; text-indent:28.35pt; text-align:justify"><span
                         style="font-size:12pt"><span style="line-height:110%"><span style="tab-stops:right 6.25in"><span
                                     style="font-family:&quot;Times New Roman&quot;,serif"><span lang="IT"
-                                        style="font-size:14.0pt"><span style="line-height:110%">Thư mời thầu
-                                            số:&nbsp; <span id="so_trich_yeu1">___[số trích yếu của Thư mời thầu đối với
+                                        style="font-size:14.0pt"><span style="line-height:110%" id="so_trich_yeu">Thư
+                                            mời thầu
+                                            số:&nbsp; <span id="so_trich_yeu1" style="background-color: yellow">___[số
+                                                trích yếu của Thư mời thầu đối với
                                                 đấu thầu hạn chế]</span></span></span></span></span></span></span></p>
 
                 <p style="margin-top:8px; margin-bottom:8px; text-indent:28.35pt; text-align:justify"><span
                         style="font-size:12pt"><span style="line-height:110%"><span
                                 style="font-family:&quot;Times New Roman&quot;,serif"><span lang="IT"
                                     style="font-size:14.0pt"><span style="line-height:110%">K&iacute;nh
-                                        gửi:&nbsp; <span style="font-size: 14pt;" id="name_moi_thau1">[ghi đầy đủ và
+                                        gửi:&nbsp; <span style="font-size: 14pt;background-color: yellow"
+                                            id="name_moi_thau1">[ghi đầy đủ và
                                             chính xác tên của Bên mời thầu]</span></span></span></span></span></span>
                 </p>
 
@@ -256,17 +298,20 @@
                         style="line-height: 110%;"><span style="font-family: &quot;Times New Roman&quot;, serif;"><span
                                 lang="IT" style=""><span style="line-height: 110%;"><span style="font-size: 14pt;">Sau
                                         khi nghi&ecirc;n cứu hồ sơ mời thầu v&agrave; văn bản sửa đổi hồ sơ mời thầu
-                                        <span id="so_sua_doi1">số ___[ghi số của văn bản sửa đổi (nếu có)]</span></span><i
-                                        style="font-size: 14pt;"></i><span style="font-size: 14pt;"> m&agrave;
+                                        <span id="so_sua_doi">số <span id="so_sua_doi1"
+                                                style="background-color: yellow">___[ghi số của văn bản sửa đổi (nếu
+                                                có)]</span></span></span><i style="font-size: 14pt;"></i><span
+                                        style="font-size: 14pt;"> m&agrave;
                                         ch&uacute;ng t&ocirc;i đ&atilde; nhận được,
                                         ch&uacute;ng t&ocirc;i,&nbsp;</span><i style="font-size: 14pt;"></i><span
-                                        id="name_nha_thau1" style="font-size: 14pt;">____[ghi tên nhà thầu]</span><span
-                                        style="font-size: 14pt;">, cam kết thực hiện
-                                        g&oacute;i thầu&nbsp;<span style="font-size: 14pt;"
+                                        id="name_nha_thau1" style="font-size: 14pt; background-color: yellow">____[ghi
+                                        tên nhà thầu]</span><span style="font-size: 14pt;">, cam kết thực hiện
+                                        g&oacute;i thầu&nbsp;<span style="font-size: 14pt; background-color: yellow"
                                             class="name_goi_thau11">____[ghi tên gói thầu]</span>&nbsp;theo
                                         đ&uacute;ng y&ecirc;u cầu của hồ sơ mời thầu với thời gian thực hiện hợp đồng
                                         l&agrave;</span><span style="font-size: 15.5556px;">&nbsp;</span><span
-                                        style="font-size: 14pt;" id="date_thuc_hien1">___[ghi thời gian thực hiện tất cả
+                                        style="font-size: 14pt; background-color: yellow" id="date_thuc_hien1">___[ghi
+                                        thời gian thực hiện tất cả
                                         các công việc theo yêu cầu của gói thầu]</span>.
                                     <span style="font-size: 14pt;">Hồ sơ dự thầu của
                                         ch&uacute;ng t&ocirc;i gồm c&oacute; hồ sơ đề xuất về kỹ thuật n&agrave;y
@@ -362,15 +407,18 @@
                                             hồ</span></span> <span style="font-size:14.0pt"><span
                                             style="line-height:110%">sơ đề xuất về t&agrave;i ch&iacute;nh
                                         </span></span><span lang="X-NONE" style="font-size:14.0pt"><span
-                                            style="line-height:110%">c&oacute; hiệu lực trong thời gian <span
-                                                id="time1">___</span>
-                                            <sup></span></span></sup><span lang="X-NONE"
-                                        style="font-size:14.0pt"><span style="line-height:110%">ng&agrave;y, kể từ
-                                            ng&agrave;y <span id="d1">___</span> th&aacute;ng <span id="m1">___</span>
-                                            năm
-                                            <span id="y1">___</span></span></span><i><span lang="X-NONE"
-                                            style="font-size:14.0pt"><span
-                                                style="line-height:110%">.</span></span></i></span></span></span></span>
+                                            style="line-height:110%">c&oacute; hiệu lực trong thời gian
+                                            <span lang="X-NONE" style="font-size:14.0pt"><span id="time1"
+                                                    style="background-color: yellow">____</span><span
+                                                    style="line-height:110%"> ng&agrave;y, kể từ
+                                                    ng&agrave;y <span id="d1"
+                                                        style="background-color: yellow">___</span> th&aacute;ng <span
+                                                        id="m1" style="background-color: yellow">___</span>
+                                                    năm
+                                                    <span id="y1"
+                                                        style="background-color: yellow">___</span></span></span><i><span
+                                                    lang="X-NONE" style="font-size:14.0pt"><span
+                                                        style="line-height:110%">.</span></span></i></span></span></span></span>
                 </p>
 
                 <p align="right" class="MsoBodyText"
@@ -390,7 +438,8 @@
 
                 <h1 style="text-align: right;"><i><span style="font-size:14.0pt"><span
                                 style="font-family:&quot;Times New Roman&quot;,serif">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                <span id="ten_chuc_danh1">[ghi t&ecirc;n, chức danh, k&yacute; t&ecirc;n v&agrave;
+                                <span id="ten_chuc_danh1" style="background-color: yellow">[ghi t&ecirc;n, chức danh,
+                                    k&yacute; t&ecirc;n v&agrave;
                                     đ&oacute;ng dấu
                                     <sup>(6)</sup>]</span></span></span></i></h1>
 

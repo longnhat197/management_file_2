@@ -10,9 +10,9 @@
                     <i class="pe-7s-ticket icon-gradient bg-mean-fruit"></i>
                 </div>
                 <div>
-                    Danh sách dự án
+                    Danh sách dự án đã đóng
                     <div class="page-title-subheading">
-                        View, create, update, delete and manage.
+                        Các dự án đã qua thời gian đóng thầu
                     </div>
                 </div>
             </div>
@@ -192,6 +192,7 @@
 
             </div>
             @endif
+
 
         </div>
     </div>

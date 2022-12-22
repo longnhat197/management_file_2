@@ -5,4 +5,6 @@ use App\Services\ServiceInterface;
 
 interface DetailServiceInterface extends ServiceInterface{
     public function deleteSave($id);
+    public function searchActive($searches, $perPage);
+    public function searchNoActive($searches, $perPage);
 }

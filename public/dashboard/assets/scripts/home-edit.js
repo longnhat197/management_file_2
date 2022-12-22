@@ -8,30 +8,113 @@ var b,c;
     address = document.getElementById('address')
     a = document.getElementById('time_phat_hanh')
 
+    c = new Date(dateTimeStart.value).getTime()
+    b = new Date(endTime.value).getTime()
 
-    var time2 = new Date(endTime.value)
-    var time = new Date(dateTimeStart.value)
+
+    var time2 = endTime.value
+    var time = dateTimeStart.value
 
     dateTimeStart.onchange = function(){
         c = new Date(dateTimeStart.value).getTime()
         if(b < c ){
             alertify.error('Thời gian đóng thầu không được nhỏ hơn thời gian mở thầu')
             endTime.value = 0
+            PickTimeEnd.value =''
         }
     }
+
     endTime.onchange = function(){
+
+
         b = new Date(endTime.value).getTime()
         if(b < c ){
             alertify.error('Thời gian đóng thầu không được nhỏ hơn thời gian mở thầu')
             endTime.value = 0
+            PickTimeEnd.value = ''
         }
         else if(b - c > 3600000){
             alertify.error('Thời gian đóng thầu so với mở thầu nhỏ hơn 1 tiếng')
             endTime.value = 0
+            PickTimeEnd.value = ''
+        }
+
+    }
+    PickTimeStart = document.getElementById('time_mo_thau_pick');
+    PickTimeEnd = document.getElementById('time_dong_thau_pick');
+    datePick = document.getElementById('datePick');
+
+    datePick.value = a.value != '' ? `${String(a.value).slice(8, 10)}/${String(a.value).slice(5, 7)}/${String(a.value).slice(0, 4)}` : ''
+    PickTimeStart.value = time != '' ? `${String(time).slice(8, 10)}/${String(time).slice(5, 7)}/${String(time).slice(0, 4)} ${String(time).slice(11,13)}:${String(time).slice(14,16)}` : ''
+    PickTimeEnd.value = time2 != '' ? `${String(time2).slice(8, 10)}/${String(time2).slice(5, 7)}/${String(time2).slice(0, 4)} ${String(time2).slice(11,13)}:${String(time2).slice(14,16)}` : ''
+    PickTimeStart.onchange = function(){
+        dP = PickTimeStart.value.substr(0,2)
+        mP = PickTimeStart.value.substr(3,2)
+        yP = PickTimeStart.value.substr(6,4)
+        hP = PickTimeStart.value.substr(11,2)
+        iP = PickTimeStart.value.substr(14,2)
+        //2022-12-13T09:58
+        dateTimeStart.value = `${yP}-${mP}-${dP}T${hP}:${iP}`
+
+        c = new Date(dateTimeStart.value).getTime()
+        console.log(`c`, c);
+        if(b < c ){
+            alertify.error('Thời gian đóng thầu không được nhỏ hơn thời gian mở thầu')
+            endTime.value = 0
+            PickTimeEnd.value =''
         }
 
     }
 
+    PickTimeEnd.onchange = function(){
+        dP = PickTimeEnd.value.substr(0,2)
+        mP = PickTimeEnd.value.substr(3,2)
+        yP = PickTimeEnd.value.substr(6,4)
+        hP = PickTimeEnd.value.substr(11,2)
+        iP = PickTimeEnd.value.substr(14,2)
+        //2022-12-13T09:58
+        endTime.value = `${yP}-${mP}-${dP}T${hP}:${iP}`
+
+        b = new Date(endTime.value).getTime()
+        if(b < c ){
+            alertify.error('Thời gian đóng thầu không được nhỏ hơn thời gian mở thầu')
+            endTime.value = 0
+            PickTimeEnd.value =''
+        }
+        else if(b - c > 3600000){
+            alertify.error('Thời gian đóng thầu so với mở thầu nhỏ hơn 1 tiếng')
+            endTime.value = 0
+            PickTimeEnd.value =''
+        }
+    }
+
+    $('.date-icon1').on('click', function() {
+        $('#datePick').focus();
+    })
+
+    $('.date-icon2').on('click', function() {
+        $('#time_mo_thau_pick').focus();
+    })
+
+    $('.date-icon3').on('click', function() {
+        $('#time_dong_thau_pick').focus();
+    })
+
+    $('#time_mo_thau_pick').datetimepicker({
+        format: 'd/m/Y H:i',
+        step:1
+
+    });
+
+    $('#time_dong_thau_pick').datetimepicker({
+        format: 'd/m/Y H:i',
+        step:1
+
+    });
+    $('#datePick').datetimepicker({
+        format: 'd/m/Y',
+        timepicker: false,
+    });
 
     function checkform(){
 

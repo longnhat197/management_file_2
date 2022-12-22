@@ -5,10 +5,10 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Mau3 extends Model
+class Mau41 extends Model
 {
     use HasFactory;
-    protected $table ='mau_3';
+    protected $table ='mau_41';
     protected $primaryKey ='id';
     protected $guarded = [];
     public function  detail(){

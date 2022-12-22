@@ -2,6 +2,7 @@
 
 namespace App\Services\Login;
 
+use App\Models\Detail;
 use App\Models\User;
 use App\Services\Login\LoginServiceInterface;
 use App\Utilities\Constant;
@@ -52,7 +53,7 @@ class LoginService implements LoginServiceInterface
                         'password' => Hash::make($password),
                         'enabled' => 0,
                         'level' => 2,
-                        'name' => 'name'
+                        'name' => substr($email,0,strpos($email, '@'))
                     ]);
                     return redirect()->back()->with('success', 'Đã thêm tài khoản. Cần được Admin kích hoạt để sử dụng');
                 }
@@ -95,6 +96,17 @@ class LoginService implements LoginServiceInterface
         } catch (\LdapRecord\Auth\BindException $e) {
             $err = $e->getDetailedError();
             return redirect()->back()->with('error', $err->getErrorMessage());
+        }
+    }
+    public function checkOverTime(){
+        $today = date('Y-m-d H:i:s');
+        $details = Detail::all()->where('enabled',1);
+        foreach($details as $detail){
+            $time_over = strtotime($detail->time_dong_thau) - strtotime($today);
+            if($time_over<0){
+                $detail->enabled = 0;
+                $detail->update();
+            }
         }
     }
 }

@@ -24,7 +24,7 @@
             <div class="col-md-12">
                 <div class="main-card mb-3 card">
                     <div class="card-body">
-                        <form method="post" action="customer/{{ $customer->id }}" enctype="multipart/form-data">
+                        <form method="post" action="./admin/home/customer/{{ $customer->id }}" enctype="multipart/form-data">
                             @csrf
                             @method('PUT')
                             <div class="position-relative row form-group">
@@ -35,13 +35,13 @@
                                 </div>
                             </div>
 
-                            <div class="position-relative row form-group">
+                            {{-- <div class="position-relative row form-group">
                                 <label for="address" class="col-md-3 text-md-right col-form-label">Địa chỉ</label>
                                 <div class="col-md-9 col-xl-8">
                                     <input required name="address" id="address" placeholder="Địa chỉ" type="text"
                                         class="form-control" value="{{ $customer->address }}">
                                 </div>
-                            </div>
+                            </div> --}}
 
                             <div class="position-relative row form-group mb-1">
                                 <div class="col-md-9 col-xl-8 offset-md-2">

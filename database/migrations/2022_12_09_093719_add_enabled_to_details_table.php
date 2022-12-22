@@ -14,7 +14,7 @@ class AddEnabledToDetailsTable extends Migration
     public function up()
     {
         Schema::table('details', function (Blueprint $table) {
-            //
+            $table->integer('enabled')->after('user_id');
         });
     }
 
@@ -26,7 +26,7 @@ class AddEnabledToDetailsTable extends Migration
     public function down()
     {
         Schema::table('details', function (Blueprint $table) {
-            //
+            $table->dropColumn('enabled');
         });
     }
 }

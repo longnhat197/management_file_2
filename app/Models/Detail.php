@@ -37,4 +37,13 @@ class Detail extends Model
     {
         return $this->belongsTo(Mau2::class, 'detail_id', 'id');
     }
+    public function mau3()
+    {
+        return $this->belongsTo(Mau2::class, 'detail_id', 'id');
+    }
+
+    public function mau41()
+    {
+        return $this->belongsTo(Mau2::class, 'detail_id', 'id');
+    }
 }

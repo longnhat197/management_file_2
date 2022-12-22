@@ -45,7 +45,38 @@ $(document).ready(function () {
 
     }
 
+    $("#datePick,#date_start").datetimepicker({
+        format: 'd/m/Y',
+        timepicker: false,
+    });
+    $('.date_ttld').on('click', function () {
+        $('#datePick').focus();
+    })
+    $('.date_start').on('click', function () {
+        $('#date_start').focus();
+    })
+
     date = document.getElementById('d_test');
+    dateStart = document.getElementById('date_start');
+    dateStart.onchange = function () {
+        dP = dateStart.value.substr(0, 2)
+        mP = dateStart.value.substr(3, 2)
+        yP = dateStart.value.substr(6, 4)
+        // date.value = $(this).val();
+        date.value = dateStart.value != '' ? `${yP}-${mP}-${dP}` : '';
+        document.getElementById('d1').innerText = dP
+        document.getElementById('m1').innerText = mP
+        document.getElementById('y1').innerText = yP
+
+
+    }
+    document.getElementById('y1').innerText = date.value != '' ? String(date.value).slice(0, 4) : '____'
+    document.getElementById('m1').innerText = date.value != '' ? String(date.value).slice(5, 7) : '____'
+    document.getElementById('d1').innerText = date.value != '' ? String(date.value).slice(8, 10) : '____'
+    dateStart.value = date.value != '' ? `${String(date.value).slice(8, 10)}/${String(date.value).slice(5, 7)}/${String(date.value).slice(0, 4)}` : ''
+
+
+
     date.onchange = function () {
         Str_date = String(date.value);
         console.log(Str_date);
@@ -70,10 +101,10 @@ $(document).ready(function () {
 
 
     timeThucHien = document.getElementById('date_thuc_hien_test');
-    document.getElementById('date_thuc_hien1').innerText = timeThucHien.value
+    document.getElementById('date_thuc_hien1').innerText = timeThucHien.value != '' ? timeThucHien.value : '___'
 
     timeHieuLuc = document.getElementById('time_test');
-    document.getElementById('time1').innerText = timeHieuLuc.value
+    document.getElementById('time1').innerText = timeHieuLuc.value != '' ? timeHieuLuc.value : '___'
 
 
     document.getElementById('m1').innerText = date.value != '' ? String(date.value).slice(5, 7) : '___'
@@ -85,16 +116,46 @@ $(document).ready(function () {
     chucDanh = document.getElementById('ten_chuc_danh_test');
 
     date1 = document.getElementById('date_test');
+    datePick = document.getElementById('datePick');
+    datePick.onchange = function () {
+        dP = datePick.value.substr(0, 2)
+        mP = datePick.value.substr(3, 2)
+        yP = datePick.value.substr(6, 4)
+        // date.value = $(this).val();
+        date1.value = datePick.value != '' ? `${yP}-${mP}-${dP}` : '';
+        document.getElementById('date1').innerText = date1.value != '' ?  String(date1.value).slice(8, 10) + '/' + String(date1.value).slice(5, 7) + '/' + String(date1.value).slice(0, 4) : '[ghi ngày tháng năm ký đơn dự thầu]'
+
+
+    }
+    datePick.value = date1.value != '' ? `${String(date1.value).slice(8, 10)}/${String(date1.value).slice(5, 7)}/${String(date1.value).slice(0, 4)}` : ''
     document.getElementById('date1').innerText = date1.value != '' ?  String(date1.value).slice(8, 10) + '/' + String(date1.value).slice(5, 7) + '/' + String(date1.value).slice(0, 4) : '[ghi ngày tháng năm ký đơn dự thầu]'
-    date1.onchange = function () {
-        Str_date = String(date1.value);
 
-        y = Str_date.slice(0, 4);
-        m = Str_date.slice(5, 7);
-        d = Str_date.slice(8, 10);
+    if(soSuaDoi.value == ''){
+        document.getElementById('so_sua_doi').style.display = 'none'
+    }else{
+        document.getElementById('so_sua_doi').style.display = 'inline'
+    }
 
-        document.getElementById('date_test'.replace("_test", "1")).innerText = d + '/' + m + '/' + y
+    soSuaDoi.onkeyup = function(){
+        document.getElementById('so_sua_doi').style.display = 'inline'
+        document.getElementById('so_sua_doi1').innerText = soSuaDoi.value
+        if(soSuaDoi.value == ''){
+            document.getElementById('so_sua_doi').style.display = 'none'
+        }
+    }
 
+
+    if(soTrichYeu.value == ''){
+        document.getElementById('so_trich_yeu').style.display = 'none'
+    }else{
+        document.getElementById('so_trich_yeu').style.display = 'block'
+    }
+    soTrichYeu.onkeyup = function(){
+        document.getElementById('so_trich_yeu').style.display = 'block'
+        document.getElementById('so_trich_yeu1').innerText = soTrichYeu.value
+        if(soTrichYeu.value == ''){
+            document.getElementById('so_trich_yeu').style.display = 'none'
+        }
     }
 
     nameDuAn = document.getElementById('name_du_an_test');
@@ -155,7 +216,7 @@ $(document).ready(function () {
             data: data,
             dataType: 'json',
             success: function (res) {
-                alertify.set('notifier','position', 'top-center');
+                alertify.set('notifier','position', 'bottom-right');
                 alertify.success(res);
 
             },

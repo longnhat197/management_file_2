@@ -30,13 +30,13 @@ class UserController extends Controller
                 User::where('id', $user->id)->update([
                     'enabled' => 0,
                 ]);
-                return redirect()->back()->with('success', 'Update tình trạng thành công cho tài khoản ' . $user->name);
+                return redirect()->back()->with('success', 'Khoá thành công tài khoản ' . $user->email);
             } else {
                 User::where('id', $user->id)->update([
                     'enabled' => 1,
                 ]);
 
-                return redirect()->back()->with('success', 'Update tình trạng thành công cho tài khoản ' . $user->name);
+                return redirect()->back()->with('success', 'Kích hoạt thành công cho tài khoản ' . $user->email);
             }
         } catch (\Exception $err) {
 

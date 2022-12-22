@@ -1,7 +1,7 @@
 @extends('layout.master')
 @section('title','Thông tin chung')
 @section('my_style')
-{{-- <link rel="stylesheet" href="./dashboard/assets/css/mdb.min.css"> --}}
+<link rel="stylesheet" href="./dashboard/assets/css/create2.css">
 @endsection
 @section('body')
 <!-- Main -->
@@ -41,7 +41,7 @@
                                 aria-labelledby="nav-home-tab">
                                 <div class="row">
                                     <div class="col-md-3"></div>
-                                    <div class="form-group col-md-5">
+                                    <div class="form-group col-md-6">
                                         <label for="nguoi_thuc_hien">Người thực hiện:</label>
                                         <input type="text" class="form-control" value="{{ Auth::user()->email }}"
                                             id="nguoi_thuc_hien" disabled>
@@ -50,34 +50,36 @@
                                 </div>
                                 <div class="row">
                                     <div class="col-md-3"></div>
-                                    <div class="form-group col-md-5">
+                                    <div class="form-group col-md-6">
                                         <label for="name_goi_thau">Tên gói thầu:</label>
-                                        <input type="text" class="form-control" id="name_goi_thau"
-                                             name="name_goi_thau" value="{{ old('name_goi_thau') }}">
+                                        <input type="text" class="form-control" id="name_goi_thau" name="name_goi_thau"
+                                            value="{{ old('name_goi_thau') }}">
                                         @if ($errors->has('name_goi_thau'))
-                                            <span class="text-danger">{{ $errors->first('name_goi_thau') }}</span>
+                                        <span class="text-danger">{{ $errors->first('name_goi_thau') }}</span>
                                         @endif
                                     </div>
                                 </div>
 
                                 <div class="row">
                                     <div class="col-md-3"></div>
-                                    <div class="form-group col-md-5">
+                                    <div class="form-group col-md-6">
                                         <label for="name_du_an">Tên dự án:</label>
-                                        <input type="text" class="form-control" value="{{ old('name_du_an') }}" id="name_du_an" name="name_du_an">
+                                        <input type="text" class="form-control" value="{{ old('name_du_an') }}"
+                                            id="name_du_an" name="name_du_an">
                                         @if ($errors->has('name_du_an'))
-                                            <span class="text-danger">{{ $errors->first('name_du_an') }}</span>
-                                    @endif
+                                        <span class="text-danger">{{ $errors->first('name_du_an') }}</span>
+                                        @endif
                                     </div>
                                 </div>
 
                                 <div class="row">
                                     <div class="col-md-3"></div>
-                                    <div class="form-group col-md-5">
+                                    <div class="form-group col-md-6">
                                         <label for="customer">Chủ đầu tư:</label>
                                         <div class="btn-actions-pane-right">
                                             <div class="input-group ">
-                                                <select required value="{{ old('customer') }}" id="customer" name="customer" class="form-control">
+                                                <select value="{{ old('customer') }}" id="customer" name="customer"
+                                                    class="form-control">
                                                     <option value="">--Tên chủ đầu tư--</option>
                                                     @foreach ($customers as $customer)
                                                     <option value="{{ $customer->name }}">{{ $customer->name }}</option>
@@ -90,32 +92,35 @@
 
                                 <div class="row">
                                     <div class="col-md-3"></div>
-                                    <div class="form-group col-md-5">
+                                    <div class="form-group col-md-6">
                                         <label for="so_tbmt">Số thông báo mời thầu:</label>
-                                        <input type="text" class="form-control" value="{{ old('so_tbmt') }}" id="so_tbmt" name="so_tbmt">
+                                        <input type="text" class="form-control" value="{{ old('so_tbmt') }}"
+                                            id="so_tbmt" name="so_tbmt">
                                         @if ($errors->has('so_tbmt'))
-                                            <span class="text-danger">{{ $errors->first('so_tbmt') }}</span>
+                                        <span class="text-danger">{{ $errors->first('so_tbmt') }}</span>
                                         @endif
                                     </div>
                                 </div>
 
                                 <div class="row">
                                     <div class="col-md-3"></div>
-                                    <div class="form-group col-md-5">
+                                    <div class="form-group col-md-6">
                                         <label for="name_moi_thau">Bên mời thầu:</label>
-                                        <input type="text" class="form-control" value="{{ old('name_moi_thau') }}" id="name_moi_thau" name="name_moi_thau">
+                                        <input type="text" class="form-control" value="{{ old('name_moi_thau') }}"
+                                            id="name_moi_thau" name="name_moi_thau">
                                         @if ($errors->has('name_moi_thau'))
-                                            <span class="text-danger">{{ $errors->first('name_moi_thau') }}</span>
+                                        <span class="text-danger">{{ $errors->first('name_moi_thau') }}</span>
                                         @endif
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="col-md-3"></div>
-                                    <div class="form-group col-md-5">
+                                    <div class="form-group col-md-6">
                                         <label for="address">Địa chỉ:</label>
-                                        <input type="text" class="form-control" value="{{ old('address') }}" id="address" name="address">
+                                        <input type="text" class="form-control" value="{{ old('address') }}"
+                                            id="address" name="address">
                                         @if ($errors->has('address'))
-                                            <span class="text-danger">{{ $errors->first('address') }}</span>
+                                        <span class="text-danger">{{ $errors->first('address') }}</span>
                                         @endif
                                     </div>
                                 </div>
@@ -124,7 +129,7 @@
                                 aria-labelledby="nav-profile-tab">
                                 <div class="row">
                                     <div class="col-md-3"></div>
-                                    <div class="col-md-5">
+                                    <div class="col-md-6">
                                         <label><strong>Hình thức thầu:</strong></label>
                                         <div class="form-group">
                                             <div class="form-check form-check-inline">
@@ -143,7 +148,7 @@
                                 </div>
                                 <div class="row">
                                     <div class="col-md-3"></div>
-                                    <div class="col-md-5">
+                                    <div class="col-md-6">
                                         <label><strong>Hình thức tham dự:</strong></label>
                                         <div class="form-group">
                                             <div class="form-check form-check-inline">
@@ -164,17 +169,17 @@
                                 </div>
                                 <div class="row">
                                     <div class="col-md-3"></div>
-                                    <div class="col-md-5">
+                                    <div class="col-md-6">
                                         <label><strong>Nhà thầu có uỷ quyền:</strong></label>
                                         <div class="form-group">
                                             <div class="form-check form-check-inline">
                                                 <input class="form-check-input" type="radio" name="uy_quyen"
-                                                    id="uy_quyen1" checked value="0">
+                                                    id="uy_quyen1" checked value="1">
                                                 <label class="form-check-label" for="uy_quyen1">Có</label>
                                             </div>
                                             <div class="form-check form-check-inline">
                                                 <input class="form-check-input" type="radio" name="uy_quyen"
-                                                    id="uy_quyen2" value="1">
+                                                    id="uy_quyen2" value="0">
                                                 <label class="form-check-label" for="uy_quyen2">Không</label>
                                             </div>
                                         </div>
@@ -186,37 +191,36 @@
                                 aria-labelledby="nav-contact-tab">
                                 <div class="row">
                                     <div class="col-md-3"></div>
-                                    <div class="form-group col-md-5">
+                                    <div class="form-group date-container col-md-6">
                                         <label for="time_phat_hanh">Thời gian phát hành hồ sơ:</label>
-                                        <input type="date" class="form-control" value="{{ old('time_phat_hanh') }}" id="time_phat_hanh"
-                                            name="time_phat_hanh">
-                                        @if ($errors->has('time_phat_hanh'))
-                                            <span class="text-danger">{{ $errors->first('time_phat_hanh') }}</span>
-                                        @endif
+                                        <input class="form-control" type="text" id="datePick">
+                                        <i class="date-icon date-icon1 fas fa-calendar-alt" aria-hidden="true"></i>
+                                        <input type="hidden" name="time_phat_hanh" id="time_phat_hanh" class="form-control">
+
+
+
                                     </div>
                                 </div>
 
                                 <div class="row">
                                     <div class="col-md-3"></div>
-                                    <div class="form-group col-md-5">
+                                    <div class="form-group date-container col-md-6">
                                         <label for="time_mo_thau">Thời gian mở thầu:</label>
-                                        <input type="datetime-local" value="{{ old('time_mo_thau') }}" class="form-control" id="time_mo_thau"
-                                            name="time_mo_thau">
-                                        @if ($errors->has('time_mo_thau'))
-                                            <span class="text-danger">{{ $errors->first('time_mo_thau') }}</span>
-                                        @endif
+                                        <input type="hidden" value="{{ old('time_mo_thau') }}"
+                                            class="form-control" id="time_mo_thau" name="time_mo_thau">
+                                        <i class="date-icon date-icon2 fas fa-calendar-alt" aria-hidden="true"></i>
+                                        <input type="text" class="form-control" id="time_mo_thau_pick" >
                                     </div>
                                 </div>
 
                                 <div class="row">
                                     <div class="col-md-3"></div>
-                                    <div class="form-group col-md-5">
+                                    <div class="form-group date-container col-md-6">
                                         <label for="time_dong_thau">Thời gian đóng thầu:</label>
-                                        <input type="datetime-local" value="{{ old('time_dong_thau') }}" class="form-control" id="time_dong_thau"
-                                            name="time_dong_thau">
-                                        @if ($errors->has('time_dong_thau'))
-                                            <span class="text-danger">{{ $errors->first('time_dong_thau') }}</span>
-                                        @endif
+                                        <input type="hidden" value="{{ old('time_dong_thau') }}"
+                                            class="form-control" id="time_dong_thau" name="time_dong_thau">
+                                        <i class="date-icon date-icon3 fas fa-calendar-alt" aria-hidden="true"></i>
+                                        <input type="text" class="form-control" id="time_dong_thau_pick" >
                                     </div>
                                 </div>
                             </div>

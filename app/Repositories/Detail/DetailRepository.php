@@ -4,7 +4,12 @@ namespace App\Repositories\Detail;
 use App\Models\Detail;
 use App\Models\Mau1;
 use App\Models\Mau2;
+use App\Models\Mau3;
+use App\Models\Mau41;
+use App\Models\Mau51;
+use App\Models\UserDetail;
 use App\Repositories\BaseRepository;
+use Illuminate\Support\Facades\Auth;
 
 
 class DetailRepository extends BaseRepository implements DetailRepositoryInterface{
@@ -20,6 +25,69 @@ class DetailRepository extends BaseRepository implements DetailRepositoryInterfa
         if(Mau2::select("*")->where('detail_id', $id)->exists()){
             Mau2::where('detail_id', $id)->delete();
         }
-
+        if(Mau3::select("*")->where('detail_id', )->exists()){
+            Mau3::where('detail_id', $id)->delete();
+        }
+        if(Mau41::select("*")->where('detail_id', )->exists()){
+            Mau41::where('detail_id', $id)->delete();
+        }
+        if(Mau51::select("*")->where('detail_id', )->exists()){
+            Mau51::where('detail_id', $id)->delete();
+        }
     }
+
+    public function searchActive($searches, $perPage = 5){
+        $searches = explode(',', $searches);
+        $query = Detail::select("details.*")
+            ->join('user_details', 'details.id', '=', 'user_details.detail_id')
+            ->join('users', 'user_details.user_id', '=', 'users.id')
+            ->where('details.enabled', 1)
+            ->where('users.id', '=', Auth::user()->id);
+        foreach ($searches as $search) {
+            $query
+            ->where(function($q) use ($search)
+            {
+                $q->where('name_du_an','like','%' . $search . '%')
+                ->orWhere('users.email', 'like', '%' . $search . '%')
+                ->orWhere('customer','like','%' . $search . '%')
+                ->orWhere('so_thong_bao','like','%' . $search . '%')
+                ->orWhere('name_moi_thau','like','%' . $search . '%')
+                ->orWhere('address','like','%' . $search . '%');
+            });
+
+        }
+        $data = $query->orderBy('id', 'desc')
+            ->paginate($perPage)
+            ->appends(['search' => $search]);
+        return $data;
+    }
+
+    public function searchNoActive($searches, $perPage = 5){
+        $searches = explode(',', $searches);
+        $isExit = UserDetail::select("*")
+        ->where("user_id",Auth::user()->id)->exists();
+
+        $query = Detail::select("details.*")
+        ->join('users', 'details.user_id', '=', 'users.id');
+        foreach ($searches as $search) {
+            $query
+            ->where('details.enabled',0)
+            ->where(function($q) use ($search)
+            {
+                $q->where('name_du_an','like','%' . $search . '%')
+                ->orWhere('users.email', 'like', '%' . $search . '%')
+                ->orWhere('customer','like','%' . $search . '%')
+                ->orWhere('so_thong_bao','like','%' . $search . '%')
+                ->orWhere('name_moi_thau','like','%' . $search . '%')
+                ->orWhere('address','like','%' . $search . '%');
+            });
+
+        }
+        $data = $query->orderBy('id', 'desc')
+            ->paginate($perPage)
+            ->appends(['search' => $search]);
+        return $data;
+    }
+
+
 }

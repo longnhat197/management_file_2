@@ -1,7 +1,11 @@
 @extends('layout.master')
 @section('title','Giấy uỷ quyền')
+@section('my_style')
+<link rel="stylesheet" href="./dashboard/assets/css/create2.css">
+@endsection
 @section('body')
 <!-- Main -->
+
 
 <div class="app-main__inner">
 
@@ -43,51 +47,68 @@
                         <div class="tab-content" id="nav-tabContent">
                             <div class="tab-pane fade show active" id="nav-home" role="tabpanel"
                                 aria-labelledby="nav-home-tab">
-                                <div class="row">
+                                {{-- <div class="row">
                                     <div class="col-md-2"></div>
                                     <div class="form-group col-md-6">
                                         <label for="date">Ngày làm giấy:</label>
-                                        <input type="date" value="{{ $temp != [] ? $temp->date : 0 }}" name="date" id="date" class="form-control">
+
+                                    </div>
+                                </div> --}}
+
+                                <div class="row">
+                                    <div class="col-md-3"></div>
+                                    <div class="form-group date-container col-md-6">
+                                        <label for="datePick">Ngày làm giấy:</label>
+                                        <input class="form-control" type="text" id="datePick">
+                                        <i class="date-icon fas fa-calendar-alt" aria-hidden="true"></i>
+                                        <input type="hidden" {{ $detail->enabled == 0 ? 'disabled' : '' }} value="{{ $temp != [] ? $temp->date : '' }}"
+                                            name="date" id="date" class="form-control">
                                     </div>
                                 </div>
 
                                 <div class="row">
-                                    <div class="col-md-2"></div>
+                                    <div class="col-md-3"></div>
                                     <div class="form-group col-md-6">
                                         <label for="address_test">Nơi làm giấy uỷ quyền:</label>
-                                        <input type="text" class="form-control" value="{{ $temp != [] ? $temp->noi_lam_giay : '' }}" id="address_test" name="address">
-                                        <input type="hidden" value="{{ $detail_id }}"  id="detail_id" data-url="./template/2/save">
+                                        <input type="text" class="form-control" {{ $detail->enabled == 0 ? 'disabled' : '' }}
+                                            value="{{ $temp != [] ? $temp->noi_lam_giay : '' }}" id="address_test"
+                                            name="address">
+                                        <input type="hidden" value="{{ $detail_id }}" id="detail_id"
+                                            data-url="./template/2/save">
                                     </div>
                                 </div>
 
                                 <div class="row">
-                                    <div class="col-md-2"></div>
+                                    <div class="col-md-3"></div>
                                     <div class="form-group col-md-6">
                                         <label for="thong_tin_dai_dien_test">Tên, số CMND hoặc số hộ chiếu, chức danh
                                             của người
                                             đại diện theo pháp
                                             luật của nhà thầu:</label>
 
-                                        <textarea style="" name="thong_tin_dai_dien" class="form-control"
-                                            id="thong_tin_dai_dien_test" cols="90" rows="5">{{ $temp != [] ? $temp->thong_tin_dai_dien : '' }}</textarea>
+                                        <textarea style="" name="thong_tin_dai_dien" {{ $detail->enabled == 0 ? 'disabled' : '' }} class="form-control"
+                                            id="thong_tin_dai_dien_test" cols="90"
+                                            rows="5">{{ $temp != [] ? $temp->thong_tin_dai_dien : '' }}</textarea>
 
                                     </div>
                                 </div>
                                 <div class="row">
-                                    <div class="col-md-2"></div>
+                                    <div class="col-md-3"></div>
                                     <div class="form-group col-md-6">
                                         <label for="name_nha_thau_test">Tên nhà thầu:</label>
 
-                                        <input type="text" class="form-control" value="{{ $temp != [] ? $temp->name_nha_thau : '' }}" id="name_nha_thau_test"
-                                            name="name_nha_thau">
+                                        <input type="text" class="form-control" {{ $detail->enabled == 0 ? 'disabled' : '' }}
+                                            value="{{ $temp != [] ? $temp->name_nha_thau : '' }}"
+                                            id="name_nha_thau_test" name="name_nha_thau">
                                     </div>
                                 </div>
                                 <div class="row">
-                                    <div class="col-md-2"></div>
+                                    <div class="col-md-3"></div>
                                     <div class="form-group col-md-6">
                                         <label for="dia_chi_nha_thau">Địa chỉ nhà thầu:</label>
-                                        <input type="text" class="form-control" value="{{ $temp != [] ? $temp->dia_chi_nha_thau : '' }}" id="dia_chi_nha_thau_test"
-                                            name="dia_chi_nha_thau">
+                                        <input type="text" class="form-control" {{ $detail->enabled == 0 ? 'disabled' : '' }}
+                                            value="{{ $temp != [] ? $temp->dia_chi_nha_thau : '' }}"
+                                            id="dia_chi_nha_thau_test" name="dia_chi_nha_thau">
                                     </div>
                                 </div>
                             </div>
@@ -96,7 +117,7 @@
                             <div class="tab-pane fade" id="nav-profile" role="tabpanel"
                                 aria-labelledby="nav-profile-tab">
                                 <div class="row">
-                                    <div class="col-md-2"></div>
+                                    <div class="col-md-3"></div>
                                     <div class="form-group col-md-6">
                                         <label for="thong_tin_nguoi_duoc_uy_quyen_test">Tên, số CMND hoặc số hộ chiếu,
                                             chức
@@ -104,32 +125,36 @@
                                             của người được ủy quyền:</label>
 
                                         <textarea style="" name="thong_tin_nguoi_duoc_uy_quyen" class="form-control"
-                                            id="thong_tin_nguoi_duoc_uy_quyen_test" cols="90" rows="5">{{ $temp != [] ? $temp->thong_tin_nguoi_duoc_uy_quyen : '' }}</textarea>
+                                            id="thong_tin_nguoi_duoc_uy_quyen_test" cols="90" {{ $detail->enabled == 0 ? 'disabled' : '' }}
+                                            rows="5">{{ $temp != [] ? $temp->thong_tin_nguoi_duoc_uy_quyen : '' }}</textarea>
 
                                     </div>
                                 </div>
                                 <div class="row">
-                                    <div class="col-md-2"></div>
+                                    <div class="col-md-3"></div>
                                     <div class="form-group col-md-6">
                                         <label for="name_goi_thau_test">Tên gói thầu:</label>
-                                        <input type="text" class="form-control" value="{{ $detail->name_goi_thau }}" id="name_goi_thau_test"
-                                            name="name_goi_thau">
+                                        <input type="text" class="form-control" value="{{ $detail->name_goi_thau }}" {{ $detail->enabled == 0 ? 'disabled' : '' }}
+                                            id="name_goi_thau_test" name="name_goi_thau">
                                     </div>
                                 </div>
                                 <div class="row">
-                                    <div class="col-md-2"></div>
+                                    <div class="col-md-3"></div>
                                     <div class="form-group col-md-6">
                                         <label for="name_du_an_test">Tên dự án:</label>
-                                        <input type="text" class="form-control" value="{{ $detail->name_du_an }}" id="name_du_an_test" name="name_du_an">
+                                        <input type="text" class="form-control" value="{{ $detail->name_du_an }}" {{ $detail->enabled == 0 ? 'disabled' : '' }}
+                                            id="name_du_an_test" name="name_du_an">
                                     </div>
                                 </div>
                                 <div class="row">
-                                    <div class="col-md-2"></div>
+                                    <div class="col-md-3"></div>
                                     <div class="form-group col-md-6">
                                         <label for="name_moi_thau_test">Tên của Bên mời thầu:</label>
 
-                                        <input type="text" class="form-control" value="{{ $detail->name_moi_thau }}" id="name_moi_thau_test"
-                                            name="name_moi_thau">
+                                        <input type="text" class="form-control"
+                                        {{ $detail->enabled == 0 ? 'disabled' : '' }}
+                                        value="{{ $detail->name_moi_thau }}"
+                                            id="name_moi_thau_test" name="name_moi_thau">
                                     </div>
                                 </div>
                                 {{-- <div class="row">
@@ -157,72 +182,94 @@
                                     </div>
                                 </div> --}}
                                 <div class="row">
-                                    <div class="col-md-2"></div>
+                                    <div class="col-md-3"></div>
                                     <div class="form-group col-md-6">
                                         <label for="name_dai_dien_test">Tên người đại diện theo pháp luật của nhà
                                             thầu:</label>
-                                        <input type="text" class="form-control" value="{{ $temp != [] ? $temp->name_dai_dien : '' }}" id="name_dai_dien_test"
-                                            name="name_dai_dien">
+                                        <input type="text" class="form-control"
+                                        {{ $detail->enabled == 0 ? 'disabled' : '' }}
+                                            value="{{ $temp != [] ? $temp->name_dai_dien : '' }}"
+                                            id="name_dai_dien_test" name="name_dai_dien">
                                     </div>
                                 </div>
                                 <div class="row">
-                                    <div class="col-md-2"></div>
+                                    <div class="col-md-3"></div>
                                     <div class="form-group col-md-6">
                                         <label for="name_uy_quyen_test">Tên người được uỷ quyền:</label>
-                                        <input type="text" class="form-control" value="{{ $temp != [] ? $temp->name_uy_quyen : '' }}" id="name_uy_quyen_test"
-                                            name="name_uy_quyen">
+                                        <input type="text" class="form-control"
+                                        {{ $detail->enabled == 0 ? 'disabled' : '' }}
+                                            value="{{ $temp != [] ? $temp->name_uy_quyen : '' }}"
+                                            id="name_uy_quyen_test" name="name_uy_quyen">
                                     </div>
                                 </div>
                             </div>
                             <div class="tab-pane fade" id="nav-contact" role="tabpanel"
                                 aria-labelledby="nav-contact-tab">
                                 <div class="row">
-                                    <div class="col-md-2"></div>
-                                    <div class="form-group col-md-3">
+                                    <div class="col-md-3"></div>
+                                    <div class="form-group date-container col-md-3">
                                         <label for="from_date_test">Kể từ ngày:</label>
-                                        <input type="date" name="from_date" value="{{ $temp != [] ? $temp->from_date : 0 }}" id="from_date_test" class="form-control">
+                                        <i class="date-icon from_date fas fa-calendar-alt" aria-hidden="true"></i>
+                                        <input type="text" {{ $detail->enabled == 0 ? 'disabled' : '' }}
+                                        class="form-control" id="from_date">
+                                        <input type="hidden" name="from_date"
+                                            value="{{ $temp != [] ? $temp->from_date : '' }}" id="from_date_test"
+                                            class="form-control">
                                     </div>
-                                    <div class="form-group col-md-3">
+                                    <div class="form-group date-container col-md-3">
                                         <label for="to_date_test">Đến ngày:</label>
-                                        <input type="date" name="to_date" value="{{ $temp != [] ? $temp->to_date : 0 }}" id="to_date_test" class="form-control">
+                                        <i class="date-icon to_date fas fa-calendar-alt" aria-hidden="true"></i>
+                                        <input type="text" {{ $detail->enabled == 0 ? 'disabled' : '' }}
+                                        class="form-control" id="to_date">
+                                        <input type="hidden" name="to_date" value="{{ $temp != [] ? $temp->to_date : '' }}"
+                                            id="to_date_test" class="form-control">
                                     </div>
                                 </div>
 
                                 <div class="row">
-                                    <div class="col-md-2"></div>
+                                    <div class="col-md-3"></div>
                                     <div class="form-group col-md-3">
                                         <label for="total_test">Tổng (bản):</label>
-                                        <input type="text" name="total" value="{{ $temp != [] ? $temp->total : '' }}" class="form-control" id="total_test">
+                                        <input type="text" name="total" value="{{ $temp != [] ? $temp->total : '' }}"
+                                            class="form-control" {{ $detail->enabled == 0 ? 'disabled' : '' }} id="total_test">
                                     </div>
                                     <div class="form-group col-md-3">
                                         <label for="uq_giu_test">Uỷ quyền giữ (bản):</label>
-                                        <input type="text" name="uq_giu" value="{{ $temp != [] ? $temp->uq_giu : '' }}" class="form-control" id="uq_giu_test">
+                                        <input type="text" name="uq_giu" value="{{ $temp != [] ? $temp->uq_giu : '' }}"
+                                            class="form-control" {{ $detail->enabled == 0 ? 'disabled' : '' }} id="uq_giu_test">
                                     </div>
 
                                 </div>
                                 <div class="row">
-                                    <div class="col-md-2"></div>
+                                    <div class="col-md-3"></div>
                                     <div class="form-group col-md-3">
                                         <label for="duq_giu_test">Được uỷ quyền giữ (bản):</label>
-                                        <input type="text" name="duq_giu" value="{{ $temp != [] ? $temp->duq_giu : '' }}" class="form-control" id="duq_giu_test">
+                                        <input type="text" name="duq_giu"
+                                        {{ $detail->enabled == 0 ? 'disabled' : '' }}
+                                            value="{{ $temp != [] ? $temp->duq_giu : '' }}" class="form-control"
+                                            id="duq_giu_test">
                                     </div>
                                     <div class="form-group col-md-3">
                                         <label for="moi_thau_giu_test">Mời thầu giữ (bản):</label>
-                                        <input type="text" name="moi_thau_giu" value="{{ $temp != [] ? $temp->moi_thau_giu : '' }}" class="form-control"
+                                        <input type="text" name="moi_thau_giu"
+                                        {{ $detail->enabled == 0 ? 'disabled' : '' }}
+                                            value="{{ $temp != [] ? $temp->moi_thau_giu : '' }}" class="form-control"
                                             id="moi_thau_giu_test">
                                     </div>
                                 </div>
 
                                 <div class="row">
-                                    <div class="col-md-2"></div>
+                                    <div class="col-md-3"></div>
                                     <div class="form-group col-md-3">
                                         <label for="chu_ky_duq_test">Ghi tên, chức danh người được uỷ quyền:</label>
                                         <textarea name="chu_ky_duq" class="form-control" id="chu_ky_duq_test" cols="30"
+                                        {{ $detail->enabled == 0 ? 'disabled' : '' }}
                                             rows="3">{{ $temp != [] ? $temp->chu_ky_duq : '' }}</textarea>
                                     </div>
                                     <div class="form-group col-md-3">
                                         <label for="chu_ky_uq_test">Ghi tên, chức danh người uỷ quyền:</label>
                                         <textarea name="chu_ky_uq" class="form-control" id="chu_ky_uq_test" cols="30"
+                                        {{ $detail->enabled == 0 ? 'disabled' : '' }}
                                             rows="3">{{ $temp != [] ? $temp->chu_ky_uq : '' }}</textarea>
                                     </div>
 
@@ -232,14 +279,16 @@
 
 
                         <div class="row">
-                            <div class="col-md-2"></div>
+                            <div class="col-md-3"></div>
                             <div class="form-group col-md-3">
                                 <button type="submit" class="btn btn-outline-primary">Export Word</button>
                                 {{-- <a href="javascript:void(0)" class="btn btn-primary">Export word</a> --}}
                             </div>
                             <div class="form-group col-md-3 text-right">
                                 {{-- <button type="submit" class="btn btn-primary">Export Word</button> --}}
-                                <a href="javascript:void(0)" id="save" class="btn btn-outline-primary">Lưu</a>
+                                @if ($detail->enabled != 0)
+                                    <a href="javascript:void(0)" id="save" class="btn btn-outline-primary">Lưu</a>
+                                @endif
                             </div>
                         </div>
 
@@ -266,7 +315,8 @@
                                 style="font-family:&quot;Times New Roman&quot;,serif"><span lang="VI"
                                     style="font-size:14.0pt"><span style="line-height:110%">H&ocirc;m nay, ng&agrave;y
                                     </span></span><span lang="VI" style="font-size:14.0pt"><span
-                                        style="line-height:110%"><span id="d">___</span> th&aacute;ng <span id="m">___</span> năm <span id="y">___</span>, tại
+                                        style="line-height:110%"><span id="d">___</span> th&aacute;ng <span
+                                            id="m">___</span> năm <span id="y">___</span>, tại
                                         <span id="address1">____</span></span></span></span></span></span></p>
 
                 <p style="margin-top:8px; margin-bottom:8px; text-indent:28.35pt; text-align:justify">&nbsp;</p>

@@ -25,12 +25,7 @@
             <div class="main-card mb-3 card">
                 <div class="row">
                     <div class="col-md-3">
-                        <form class="d-inline" action="./template/cancel/{{ $id }}" method="post">
-                            @csrf
-                            <button class="btn btn-hover-shine btn-outline-danger border-0 btn-sm" type="submit"
-                                data-placement="bottom">&times;
-                            </button>
-                        </form>
+
                     </div>
                     <div class="col-md-6">
                         <form action="./template" method="POST">
@@ -55,7 +50,7 @@
                                 <li class="list-group-item">
                                     {{ $tem->name }}
                                     <label class="checkbox">
-                                        <input name="list_tem[]" type="checkbox" value="{{ $tem->id }}" />
+                                        <input name="list_tem[]"  type="checkbox" value="{{ $tem->id }}" />
                                         <span class="primary"></span>
                                     </label>
                                 </li>
@@ -92,5 +87,4 @@
 @endsection
 @section('script')
 <script type="text/javascript" src="./dashboard/assets/scripts/selectTemp.js"></script>
-
 @endsection
