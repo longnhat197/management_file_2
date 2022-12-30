@@ -313,7 +313,7 @@
                                     <div class="form-group col-md-6">
                                         <textarea name="table_content"
                                             class="{{ $detail->enabled == 0 ? 'disabled' : '' }}" id="table_content">
-                                            @if ($temp == [])
+                                            @if ($temp == []  || $temp->table_content == '')
                                             <table style="border-collapse: collapse; font-family: 'times new roman', times, serif; width: 600px; border: 1px solid rgb(0, 0, 0); height: 134.344px;" border="1">
                                                 <tbody>
                                                     <tr style="height: 44.7812px;">

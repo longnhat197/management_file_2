@@ -304,7 +304,7 @@
                         style="font-size:14pt"><span style="line-height:110%"><span
                                 style="font-family:&quot;Times New Roman&quot;,serif"><span
                                     style="font-weight:bold"><span lang="ES-TRAD" style="line-height:110%">GIẤY ỦY QUYỀN
-                                        (1)</span></span></span></span></span></p>
+                                        </span></span></span></span></span></p>
 
                 <p style="margin-top:8px; margin-bottom:8px; text-indent:28.35pt; text-align:justify"><span
                         style="font-size:12pt"><span style="line-height:110%"><span

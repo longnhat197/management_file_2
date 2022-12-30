@@ -60,7 +60,7 @@ NHÀ THẦU LIÊN DANH
                                             value="{{ $temp != [] ? $temp->ngay_ke_khai : '' }}" id="ngay_ke_khai_test"
                                             name="ngay_ke_khai">
                                         <input type="hidden" value="{{ $detail_id }}" id="detail_id"
-                                            data-url="./template/51/save">
+                                            data-url="./template/51/save" name="detail_id">
                                     </div>
                                 </div>
 

@@ -53,7 +53,7 @@
                                         <i class="date-icon date_ttld fas fa-calendar-alt" aria-hidden="true"></i>
                                         <input class="form-control" type="text" id="datePick">
                                         <input type="hidden" class="form-control" {{ $detail->enabled == 0 ? 'disabled'
-                                        : '' }} value="{{ $temp != [] ? $temp->date_dang_ky : 0 }}" id="date_test"
+                                        : '' }} value="{{ $temp != [] ? $temp->date_dang_ky : '' }}" id="date_test"
                                         name="date">
                                         <input type="hidden" value="{{ $detail_id }}" id="detail_id"
                                             data-url="./template/1/save">

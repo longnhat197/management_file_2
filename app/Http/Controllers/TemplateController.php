@@ -5,10 +5,19 @@ namespace App\Http\Controllers;
 use App\Models\Detail;
 use App\Models\DetailTemp;
 use App\Models\Mau1;
+use App\Models\Mau10;
 use App\Models\Mau2;
 use App\Models\Mau3;
+use App\Models\Mau4;
 use App\Models\Mau41;
+use App\Models\Mau5;
 use App\Models\Mau51;
+use App\Models\Mau6;
+use App\Models\Mau61;
+use App\Models\Mau7;
+use App\Models\Mau71;
+use App\Models\Mau8;
+use App\Models\Mau91;
 use App\Models\Template0;
 use App\Models\UserDetail;
 use App\Services\Detail\DetailServiceInterface;
@@ -79,7 +88,7 @@ class TemplateController extends Controller
         $type = DetailTemp::where('detail_id', $detail_id)->first()->type;
         if ($type == 0) {
             $link = DetailTemp::where('detail_id', $detail_id)->first()->templates0->url . '/' . $detail_id;
-        } else if ($type == 1) {
+        } elseif ($type == 1) {
             $link = DetailTemp::where('detail_id', $detail_id)->first()->templates1->url . '/' . $detail_id;
         }
         return redirect($link);
@@ -87,7 +96,6 @@ class TemplateController extends Controller
 
     public function cancelTemp($id)
     {
-
         $this->detailService->delete($id);
         UserDetail::where('detail_id', $id)->delete();
         return redirect('home/add');
@@ -96,7 +104,6 @@ class TemplateController extends Controller
     //------------------Mẫu 01. ĐƠN DỰ THẦU (thuộc HSĐXKT)---------------------
     public function create1($detail_id)
     {
-
         $projects = $this->projectService->all();
         $packages = $this->packageService->all();
         $customers = $this->contractorService->all();
@@ -169,7 +176,7 @@ class TemplateController extends Controller
             'date' => $new_date ?? '[ghi ngày tháng năm ký đơn dự thầu]',
             'name_goi_thau' => $request->get('name_goi_thau') ?? '[ghi tên gói thầu theo thông báo mời thầu]',
             'name_du_an' => $request->get('name_du_an') ?? '[ghi tên dự án]',
-            'so_trich_yeu' => $request->get('so_trich_yeu') != '' ? '</w:t><w:br/><w:t>Thư mời thầu số: ' . $request->get('so_trich_yeu') . '.' : '',
+            // 'so_trich_yeu' => $request->get('so_trich_yeu') != '' ? '</w:t><w:br/><w:t>Thư mời thầu số: ' . $request->get('so_trich_yeu') . '.' : '',
             'name_moi_thau' => $request->get('name_moi_thau') ?? '[ghi đầy đủ và chính xác tên của Bên mời thầu]',
             'so_sua_doi' => $request->get('so_sua_doi') != '' ? 'số ' . $request->get('so_sua_doi') : '',
             'name_nha_thau' => $request->get('name_nha_thau') ?? '____ [ghi tên nhà thầu]',
@@ -181,6 +188,13 @@ class TemplateController extends Controller
             'y' => $y ?? '___',
             'ten_chuc_danh' => $request->get('ten_chuc_danh') ?? '[ghi tên, chức danh, ký tên và đóng dấu]'
         ));
+
+        if($request->get('so_trich_yeu') != ''){
+            $templateProcessor->cloneBlock('block_so_trich_yeu',0,true,false,array(
+                array('so_trich_yeu' => "Thư mời thầu số: $request->get('so_trich_yeu')")));
+        }elseif($request->get('so_trich_yeu') == ''){
+            $templateProcessor->cloneBlock('block_so_trich_yeu',0,true,false,null);
+        }
 
         header('Content-Disposition: attachment; filename="' . $file . '"');
         $templateProcessor->saveAs("php://output");
@@ -220,7 +234,6 @@ class TemplateController extends Controller
 
     public function save2(Request $request)
     {
-
         if ($request->ajax()) {
             $detail_id = $request->get('detail_id');
             $exist = Mau2::select("*")->where('detail_id', $detail_id)->exists();
@@ -397,7 +410,6 @@ class TemplateController extends Controller
     // ------------------Mẫu 03. THỎA THUẬN LIÊN DANH---------------------
     public function create3($detail_id)
     {
-
         $detail = $this->detailService->find($detail_id);
         $exist = Mau3::select("*")->where('detail_id', $detail_id)->exists();
         if ($exist) {
@@ -479,7 +491,6 @@ class TemplateController extends Controller
     }
     public function store3(Request $request)
     {
-
         $date = $request->get('date');
         $y = substr($date, 0, 4);
         $m = substr($date, 5, 2);
@@ -511,7 +522,7 @@ class TemplateController extends Controller
             'm1' => $m1,
             'y1' => $y1,
             'name_thanh_vien' => $request->get('ten_thanh_vien') ?? '____[ghi tên từng thành viên liên danh]',
-            'uy_quyen' => $request->get('so_uy_quyen') != '' ? '</w:t><w:br/><w:t>Giấy uỷ quyền số ' . $request->get('so_uy_quyen') . ' ngày ' . $d2 . ' tháng ' . $m2 . ' năm ' . $y2 . '.' : '',
+            // 'uy_quyen' => $request->get('so_uy_quyen') != '' ? '</w:t><w:br/><w:t>Giấy uỷ quyền số ' . $request->get('so_uy_quyen') . ' ngày ' . $d2 . ' tháng ' . $m2 . ' năm ' . $y2 . '.' : '',
             'name_dai_dien' => $request->get('name_dai_dien') ?? '______________________________________________________',
             'chuc_vu' => $request->get('chuc_vu') ?? '______________________________________________________________',
             'dia_chi' => $request->get('dia_chi') ?? '_______________________________________________________________',
@@ -521,15 +532,48 @@ class TemplateController extends Controller
             'tai_khoan' => $request->get('tai_khoan') ?? '_____________________________________________________________',
             'ma_so_thue' => $request->get('ma_so_thue') ?? '____________________________________________________________',
             'name_lien_danh' => $request->get('name_lien_danh') ?? '____[ghi tên của liên danh theo thỏa thuận].',
-            'hinh_thuc_khac' => $request->get('hinh_thuc_khac') != '' ? '</w:t><w:br/><w:t>- Hình thức xử lý khác ' . $request->get('hinh_thuc_khac') . '.' : '',
+            'hinh_thuc_khac' => $request->get('hinh_thuc_khac') != '' ? '- Hình thức xử lý khác ' . $request->get('hinh_thuc_khac') . '.' : '',
             'name_mot_ben' => $request->get('name_mot_ben') ?? '____[ghi tên một bên]',
-            'noi_dung_khac' => $request->get('noi_dung_khac') != '' ? '</w:t><w:br/><w:t>- Các công việc khác trừ việc ký kết hợp đồng ' . $request->get('noi_dung_khac') . '.</w:t>' : '',
+            'noi_dung_khac' => $request->get('noi_dung_khac') != '' ? '- Các công việc khác trừ việc ký kết hợp đồng ' . $request->get('noi_dung_khac'). '.'  : '',
             'total' => $request->get('total') ?? '___',
             'moi_ben_giu' => $request->get('moi_ben_giu') ?? '___',
             'chu_ky_dung_dau' => $request->get('chu_ky_dung_dau') ?? '[ghi tên, chức danh, ký tên và đóng dấu]',
             'chu_ky_thanh_vien' => $request->get('chu_ky_thanh_vien') ?? '[ghi tên từng thành viên, chức danh, ký tên và đóng dấu]',
 
         ));
+        if($request->get('so_uy_quyen') != ''){
+            // $uy_quyen = array(
+            //     'uy_quyen' => "Giấy uỷ quyền số $request->get('so_uy_quyen') ngày  $d2 tháng $m2 năm $y2."
+            // );
+            $so_uy_quyen = $request->get('so_uy_quyen');
+            $templateProcessor->cloneBlock('block_uy_quyen',0,true,false,array(
+                array('uy_quyen' => "Giấy uỷ quyền số $so_uy_quyen ngày $d2 tháng $m2 năm $y2.")));
+        }elseif($request->get('so_uy_quyen') == ''){
+            $templateProcessor->cloneBlock('block_uy_quyen',0,true,false,null);
+        }
+
+        if($request->get('hinh_thuc_khac') != ''){
+            // $uy_quyen = array(
+            //     'uy_quyen' => "Giấy uỷ quyền số $request->get('so_uy_quyen') ngày  $d2 tháng $m2 năm $y2."
+            // );
+            $hinh_thuc_khac = $request->get('hinh_thuc_khac');
+            $templateProcessor->cloneBlock('block_hinh_thuc_khac',0,true,false,array(
+                array('hinh_thuc_khac' => "- Hình thức xử lý khác $hinh_thuc_khac.")));
+        }elseif($request->get('hinh_thuc_khac') == ''){
+            $templateProcessor->cloneBlock('block_hinh_thuc_khac',0,true,false,null);
+        }
+
+        if($request->get('noi_dung_khac') != ''){
+            // $uy_quyen = array(
+            //     'uy_quyen' => "Giấy uỷ quyền số $request->get('so_uy_quyen') ngày  $d2 tháng $m2 năm $y2."
+            // );
+            $noi_dung_khac = $request->get('noi_dung_khac');
+            $templateProcessor->cloneBlock('block_noi_dung_khac',0,true,false,array(
+                array('noi_dung_khac' => "- Các công việc khác trừ việc ký kết hợp đồng $request->get('noi_dung_khac').")));
+        }elseif($request->get('noi_dung_khac') == ''){
+            $templateProcessor->cloneBlock('block_noi_dung_khac',0,true,false,null);
+        }
+
         $templateProcessor->setHtmlBlockValue('table_content', $request->get('table_content'));
 
         // dd($request->get('table_content'));
@@ -544,14 +588,59 @@ class TemplateController extends Controller
     // ------------------Mẫu 04 (a). BẢO LÃNH DỰ THẦU---------------------
 
 
-    public function create4()
+    public function create4($detail_id)
     {
-        $customers = $this->customerService->all();
-        $contractors = $this->contractorService->all();
-        $projects = $this->projectService->all();
-        $packages = $this->packageService->all();
+        $detail = $this->detailService->find($detail_id);
+        $exist = Mau4::select("*")->where('detail_id', $detail_id)->exists();
+        if ($exist) {
+            $temp = Mau4::where('detail_id', $detail_id)->first();
+        } else {
+            $temp = [];
+        }
 
-        return view('template.create4', compact('customers', 'contractors', 'packages', 'projects'));
+        return view('template.create4', compact('detail','temp','detail_id'));
+    }
+
+    public function save4(Request $request){
+        if ($request->ajax()) {
+            $detail_id = $request->get('detail_id');
+            $exist = Mau4::select("*")->where('detail_id', $detail_id)->exists();
+            if ($exist) {
+                Mau4::where('detail_id', $detail_id)
+                    ->update([
+                        'thong_tin_moi_thau' => $request->get('thong_tin_moi_thau'),
+                        'ngay_phat_hanh' => $request->get('ngay_phat_hanh'),
+                        'so_trich_yeu' => $request->get('so_trich_yeu'),
+                        'thong_tin_phat_hanh' => $request->get('thong_tin_phat_hanh'),
+                        'name_nha_thau' => $request->get('name_nha_thau'),
+                        'so_trich_yeu1' => $request->get('so_trich_yeu1'),
+                        'so_tien_bl' => $request->get('so_tien_bl'),
+                        'time' => $request->get('time'),
+                        'from_date' => $request->get('from_date'),
+                        'so_tien_tt' => $request->get('so_tien_tt'),
+                        'name_chuc_danh' => $request->get('name_chuc_danh'),
+                    ]);
+                $res = 'Đã cập nhật bản lưu';
+            } else {
+                Mau4::create([
+                    'detail_id' => $detail_id,
+                    'thong_tin_moi_thau' => $request->get('thong_tin_moi_thau'),
+                    'ngay_phat_hanh' => $request->get('ngay_phat_hanh'),
+                    'so_trich_yeu' => $request->get('so_trich_yeu'),
+                    'thong_tin_phat_hanh' => $request->get('thong_tin_phat_hanh'),
+                    'name_nha_thau' => $request->get('name_nha_thau'),
+                    'so_trich_yeu1' => $request->get('so_trich_yeu1'),
+                    'so_tien_bl' => $request->get('so_tien_bl'),
+                    'time' => $request->get('time'),
+                    'from_date' => $request->get('from_date'),
+                    'so_tien_tt' => $request->get('so_tien_tt'),
+                    'name_chuc_danh' => $request->get('name_chuc_danh'),
+
+                ]);
+                $res = 'Đã tạo bản lưu cho file';
+            }
+            echo json_encode($res);
+        }
     }
 
     public function ajaxMT(Request $request)
@@ -577,7 +666,6 @@ class TemplateController extends Controller
 
     public function store4(Request $request)
     {
-
         // return $request->all();
         $date = $request->get('ngay_phat_hanh');
         $y = substr($date, 0, 4);
@@ -608,7 +696,7 @@ class TemplateController extends Controller
             'd' => $d1,
             'm' => $m1,
             'y' => $y1,
-            'so_tien1' => $request->get('so_tien1') ?? '[ghi bằng chữ] [ghi bằng số]',
+            'so_tien_1' => $request->get('so_tien1') ?? '[ghi bằng chữ] [ghi bằng số]',
             'ten_chuc_danh' => $request->get('ten_chuc_danh') ?? '[ghi tên, chức danh, ký tên và đóng dấu]',
         ));
 
@@ -697,7 +785,6 @@ class TemplateController extends Controller
 
     public function store4_1(Request $request)
     {
-
         // return $request->all();
         $date = $request->get('ngay_phat_hanh');
         $y = substr($date, 0, 4);
@@ -741,6 +828,88 @@ class TemplateController extends Controller
 
 
     // ------------------ Mẫu 05 (a). BẢN KÊ KHAI THÔNG TIN VỀ NHÀ THẦU---------------------
+    public function create5($detail_id){
+        $detail = $this->detailService->find($detail_id);
+        $exist = Mau5::select("*")->where('detail_id', $detail_id)->exists();
+        if ($exist) {
+            $temp = Mau5::where('detail_id', $detail_id)->first();
+        } else {
+            $temp = [];
+        }
+        return view('template.create5', compact('detail', 'temp', 'detail_id'));
+    }
+    public function store5(Request $request)
+    {
+        // return $request->all();
+
+        $ngay_ke_khai = $request->get('ngay_ke_khai') != null ? substr($request->get('ngay_ke_khai'), 8, 2) . '/' . substr($request->get('ngay_ke_khai'), 5, 2) . '/' . substr($request->get('ngay_ke_khai'), 0, 4) : '_______________';
+        $templateProcessor = new \PhpOffice\PhpWord\Template('Mẫu 05 (a). BẢN KÊ KHAI THÔNG TIN VỀ NHÀ THẦU.docx');
+        $file = 'Mẫu 05 (a). BẢN KÊ KHAI THÔNG TIN VỀ NHÀ THẦU_' . date("Y-m-d") . '.docx';
+        $templateProcessor->setValues(
+            array(
+                'ngay_ke_khai' => $ngay_ke_khai,
+                'so_hieu' => $request->get('so_hieu') != null ? $request->get('so_hieu') . ', ' . $request->get('name_goi_thau') : '__________ ,' . $request->get('name_goi_thau'),
+                'trang' => $request->get('trang') ?? '_________',
+                'tren_trang' => $request->get('tren_trang') ?? '________',
+                'name_nha_thau' => $request->get('name_nha_thau') ?? '____________________________________',
+                'dia_chi_dang_ky' => $request->get('dia_chi_dang_ky') ?? '________________________________',
+                'nam_thanh_lap' => $request->get('nam_thanh_lap') ?? '____________________________________',
+                'dia_chi_hop_phap' => $request->get('dia_chi_hop_phap') ?? '_________________________',
+                'name' => $request->get('name') ?? '____________________________________',
+                'dia_chi' => $request->get('dia_chi') ?? '__________________________________',
+                'so_dien_thoai' => $request->get('so_dien_thoai') ?? '__________________________',
+                'email' => $request->get('email') ?? '_____________________________',
+            )
+        );
+
+        header('Content-Disposition: attachment; filename="' . $file . '"');
+        $templateProcessor->saveAs("php://output");
+    }
+
+    public function save5(Request $request)
+    {
+        if ($request->ajax()) {
+            $detail_id = $request->get('detail_id');
+            $exist = Mau5::select("*")->where('detail_id', $detail_id)->exists();
+            if ($exist) {
+                Mau5::where('detail_id', $detail_id)
+                    ->update([
+                        'ngay_ke_khai' => $request->get('ngay_ke_khai'),
+                        'so_hieu' => $request->get('so_hieu'),
+                        'trang' => $request->get('trang'),
+                        'tren_trang' => $request->get('tren_trang'),
+                        'name_nha_thau' => $request->get('name_nha_thau'),
+                        'dia_chi_dang_ky' => $request->get('dia_chi_dang_ky'),
+                        'nam_thanh_lap' => $request->get('nam_thanh_lap'),
+                        'dia_chi_hop_phap' => $request->get('dia_chi_hop_phap'),
+                        'name' => $request->get('name'),
+                        'dia_chi' => $request->get('dia_chi'),
+                        'so_dien_thoai' => $request->get('so_dien_thoai'),
+                        'email' => $request->get('email'),
+                    ]);
+                $res = 'Đã cập nhật bản lưu';
+            } else {
+                Mau5::create([
+                    'detail_id' => $detail_id,
+                    'ngay_ke_khai' => $request->get('ngay_ke_khai'),
+                    'so_hieu' => $request->get('so_hieu'),
+                    'trang' => $request->get('trang'),
+                    'tren_trang' => $request->get('tren_trang'),
+                    'name_nha_thau' => $request->get('name_nha_thau'),
+                    'dia_chi_dang_ky' => $request->get('dia_chi_dang_ky'),
+                    'nam_thanh_lap' => $request->get('nam_thanh_lap'),
+                    'dia_chi_hop_phap' => $request->get('dia_chi_hop_phap'),
+                    'name' => $request->get('name'),
+                    'dia_chi' => $request->get('dia_chi'),
+                    'so_dien_thoai' => $request->get('so_dien_thoai'),
+                    'email' => $request->get('email'),
+
+                ]);
+                $res = 'Đã tạo bản lưu cho file';
+            }
+            echo json_encode($res);
+        }
+    }
 
     public function create51($detail_id)
     {
@@ -756,7 +925,31 @@ class TemplateController extends Controller
 
     public function store51(Request $request)
     {
-        return $request->all();
+        // return $request->all();
+
+        $ngay_ke_khai = $request->get('ngay_ke_khai') != null ? substr($request->get('ngay_ke_khai'), 8, 2) . '/' . substr($request->get('ngay_ke_khai'), 5, 2) . '/' . substr($request->get('ngay_ke_khai'), 0, 4) : '_______________';
+        $templateProcessor = new \PhpOffice\PhpWord\Template('Mẫu 05 (b). BẢN KÊ KHAI THÔNG TIN VỀ CÁC THÀNH VIÊN LIÊN DANH.docx');
+        $file = 'Mẫu 05 (b). BẢN KÊ KHAI THÔNG TIN VỀ CÁC THÀNH VIÊN LIÊN DANH_' . date("Y-m-d") . '.docx';
+        $templateProcessor->setValues(
+            array(
+                'ngay_ke_khai' => $ngay_ke_khai,
+                'so_hieu' => $request->get('so_hieu') != null ? $request->get('so_hieu') . ', ' . $request->get('name_goi_thau') : '__________ ,' . $request->get('name_goi_thau'),
+                'trang' => $request->get('trang') ?? '_________',
+                'tren_trang' => $request->get('tren_trang') ?? '________',
+                'name_lien_danh' => $request->get('name_lien_danh') ?? '____________________________________',
+                'name_thanh_vien_lien_danh' => $request->get('name_thanh_vien_lien_danh') ?? '____________________________________',
+                'quoc_gia_dang_ky' => $request->get('quoc_gia_dang_ky') ?? '________________________________',
+                'nam_thanh_lap' => $request->get('nam_thanh_lap') ?? '____________________________________',
+                'dia_chi_hop_phap' => $request->get('dia_chi_hop_phap') ?? '_________________________',
+                'name_thanh_vien' => $request->get('name_thanh_vien') ?? '____________________________________',
+                'dia_chi' => $request->get('dia_chi') ?? '__________________________________',
+                'so_dien_thoai' => $request->get('so_dien_thoai') ?? '__________________________',
+                'email' => $request->get('email') ?? '_____________________________',
+            )
+        );
+
+        header('Content-Disposition: attachment; filename="' . $file . '"');
+        $templateProcessor->saveAs("php://output");
     }
 
     public function save51(Request $request)
@@ -808,4 +1001,543 @@ class TemplateController extends Controller
 
 
     // ------------------End Mẫu 05 (a). BẢN KÊ KHAI THÔNG TIN VỀ NHÀ THẦU---------------------
+
+    // ------------------Start Mẫu 06. HỢP ĐỒNG KHÔNG HOÀN THÀNH TRONG QUÁ KHỨ DO LỖI CỦA NHÀ THẦU---------------------
+
+    public function create6($detail_id)
+    {
+        $detail = $this->detailService->find($detail_id);
+        $exist = Mau6::select("*")->where('detail_id', $detail_id)->exists();
+        if ($exist) {
+            $temp = Mau6::where('detail_id', $detail_id)->first();
+        } else {
+            $temp = [];
+        }
+        return view('template.create6', compact('detail', 'temp', 'detail_id'));
+    }
+
+    public function save6(Request $request){
+        if ($request->ajax()) {
+            $detail_id = $request->get('detail_id');
+            $exist = Mau6::select("*")->where('detail_id', $detail_id)->exists();
+            if ($exist) {
+                Mau6::where('detail_id', $detail_id)
+                    ->update([
+                        'name_nha_thau' => $request->get('name_nha_thau'),
+                        'ngay_lam_giay' => $request->get('ngay_lam_giay'),
+                        'check' => $request->get('check'),
+                        'nam' => $request->get('nam'),
+                        'table_content' => $request->get('table_content'),
+                    ]);
+                $res = 'Đã cập nhật bản lưu';
+            } else {
+                Mau6::create([
+                    'detail_id' => $detail_id,
+                    'name_nha_thau' => $request->get('name_nha_thau'),
+                    'ngay_lam_giay' => $request->get('ngay_lam_giay'),
+                    'check' => $request->get('check'),
+                    'nam' => $request->get('nam'),
+                    'table_content' => $request->get('table_content'),
+
+                ]);
+                $res = 'Đã tạo bản lưu cho file';
+            }
+            echo json_encode($res);
+        }
+    }
+
+    public function store6(Request $request)
+    {
+        // return $request->all();
+        // $string1 = str_replace("<p>","</w:t><w:br/><w:t>",$request->get('table_content'));
+        // $string2 = str_replace("</p>", "", $string1);
+        // dd ($string2);
+        // return 1;
+        $date = $request->get('date');
+        $y = substr($date, 0, 4);
+        $m = substr($date, 5, 2);
+        $d = substr($date, 8, 2);
+        $new_date = $date != null ? $d . '/' . $m . '/' . $y : '______________________';
+
+        $templateProcessor = new \PhpOffice\PhpWord\Template('Mẫu 06. HỢP ĐỒNG KHÔNG HOÀN THÀNH TRONG QUÁ KHỨ DO LỖI CỦA NHÀ THẦU.docx');
+        $file = 'Mẫu 06. HỢP ĐỒNG KHÔNG HOÀN THÀNH TRONG QUÁ KHỨ DO LỖI CỦA NHÀ THẦU_' . date("Y-m-d") . '.docx';
+
+        $templateProcessor->setValues(
+            array(
+                'name_nha_thau' => $request->get('name_nha_thau') ?? '________________',
+                'date' => $new_date,
+                'check1' => $request->get('check') == 0 ? '<w:sym w:font="Wingdings" w:char="F0FE"/>' : '<w:sym w:font="Wingdings" w:char="F0A8"/>',
+                'check2' => $request->get('check') == 1 ? '<w:sym w:font="Wingdings" w:char="F0FE"/>' : '<w:sym w:font="Wingdings" w:char="F0A8"/>',
+                'year1' => $request->get('check') == 0 ? $request->get('nam') : '____',
+                'year2' => $request->get('check') == 1 ? $request->get('nam') : '____',
+
+            )
+        );
+
+        $templateProcessor->setHtmlBlockValue('table_content', $request->get('table_content'));
+
+        header('Content-Disposition: attachment; filename="' . $file . '"');
+        $templateProcessor->saveAs("php://output");
+    }
+
+    public function create61($detail_id)
+    {
+        $detail = $this->detailService->find($detail_id);
+        $exist = Mau61::select("*")->where('detail_id', $detail_id)->exists();
+        if ($exist) {
+            $temp = Mau61::where('detail_id', $detail_id)->first();
+        } else {
+            $temp = [];
+        }
+        return view('template.create61', compact('detail', 'temp', 'detail_id'));
+    }
+
+    public function store61(Request $request)
+    {
+        // return $request->all();
+        // $string1 = str_replace("<p>","</w:t><w:br/><w:t>",$request->get('table_content'));
+        // $string2 = str_replace("</p>", "", $string1);
+        // dd ($string2);
+        // return 1;
+        $date = $request->get('date');
+        $y = substr($date, 0, 4);
+        $m = substr($date, 5, 2);
+        $d = substr($date, 8, 2);
+        $new_date = $date != null ? $d . '/' . $m . '/' . $y : '______________________';
+
+        $templateProcessor = new \PhpOffice\PhpWord\Template('Mẫu 06 (b). HỢP ĐỒNG KHÔNG HOÀN THÀNH TRONG QUÁ KHỨ DO LỖI CỦA NHÀ THẦU.docx');
+        $file = 'Mẫu 06 (b). HỢP ĐỒNG KHÔNG HOÀN THÀNH TRONG QUÁ KHỨ DO LỖI CỦA NHÀ THẦU_' . date("Y-m-d") . '.docx';
+
+        $templateProcessor->setValues(
+            array(
+                'name_nha_thau' => $request->get('name_nha_thau') ?? '________________',
+                'date' => $new_date,
+                'name_thanh_vien_lien_danh' => $request->get('name_thanh_vien_lien_danh') ?? '_________________________',
+                'check1' => $request->get('check') == 0 ? '<w:sym w:font="Wingdings" w:char="F0FE"/>' : '<w:sym w:font="Wingdings" w:char="F0A8"/>',
+                'check2' => $request->get('check') == 1 ? '<w:sym w:font="Wingdings" w:char="F0FE"/>' : '<w:sym w:font="Wingdings" w:char="F0A8"/>',
+                'year1' => $request->get('check') == 0 ? $request->get('nam') : '____',
+                'year2' => $request->get('check') == 1 ? $request->get('nam') : '____',
+
+            )
+        );
+
+        $templateProcessor->setHtmlBlockValue('table_content', $request->get('table_content'));
+
+        header('Content-Disposition: attachment; filename="' . $file . '"');
+        $templateProcessor->saveAs("php://output");
+    }
+
+    public function save61(Request $request)
+    {
+        if ($request->ajax()) {
+            $detail_id = $request->get('detail_id');
+            $exist = Mau61::select("*")->where('detail_id', $detail_id)->exists();
+            if ($exist) {
+                Mau61::where('detail_id', $detail_id)
+                    ->update([
+                        'name_nha_thau' => $request->get('name_nha_thau'),
+                        'ngay_lam_giay' => $request->get('ngay_lam_giay'),
+                        'name_thanh_vien_lien_danh' => $request->get('name_thanh_vien_lien_danh'),
+                        'check' => $request->get('check'),
+                        'nam' => $request->get('nam'),
+                        'table_content' => $request->get('table_content'),
+                    ]);
+                $res = 'Đã cập nhật bản lưu';
+            } else {
+                Mau61::create([
+                    'detail_id' => $detail_id,
+                    'name_nha_thau' => $request->get('name_nha_thau'),
+                    'ngay_lam_giay' => $request->get('ngay_lam_giay'),
+                    'name_thanh_vien_lien_danh' => $request->get('name_thanh_vien_lien_danh'),
+                    'check' => $request->get('check'),
+                    'nam' => $request->get('nam'),
+                    'table_content' => $request->get('table_content'),
+
+                ]);
+                $res = 'Đã tạo bản lưu cho file';
+            }
+            echo json_encode($res);
+        }
+    }
+
+
+
+
+    // ------------------End Mẫu 06. HỢP ĐỒNG KHÔNG HOÀN THÀNH TRONG QUÁ KHỨ DO LỖI CỦA NHÀ THẦU---------------------
+
+
+    //-------------------Start Mẫu 07. KIỆN TỤNG ĐANG GIẢI QUYẾT
+
+    public function create7($detail_id)
+    {
+        $detail = $this->detailService->find($detail_id);
+        $exist = Mau7::select("*")->where('detail_id', $detail_id)->exists();
+        if ($exist) {
+            $temp = Mau7::where('detail_id', $detail_id)->first();
+        } else {
+            $temp = [];
+        }
+
+        return view('template.create7', compact('detail', 'temp', 'detail_id'));
+    }
+
+    public function store7(Request $request)
+    {
+        // return $request->all();
+        // $string1 = str_replace("<p>","</w:t><w:br/><w:t>",$request->get('table_content'));
+        // $string2 = str_replace("</p>", "", $string1);
+        // dd ($string2);
+        // return 1;
+        $date = $request->get('date');
+        $y = substr($date, 0, 4);
+        $m = substr($date, 5, 2);
+        $d = substr($date, 8, 2);
+        $new_date = $date != null ? $d . '/' . $m . '/' . $y : '______________________';
+
+        $templateProcessor = new \PhpOffice\PhpWord\Template('Mẫu 07 (a). KIỆN TỤNG ĐANG GIẢI QUYẾT.docx');
+        $file = 'Mẫu 07 (a). KIỆN TỤNG ĐANG GIẢI QUYẾT_' . date("Y-m-d") . '.docx';
+
+        $templateProcessor->setValues(
+            array(
+                'name_nha_thau' => $request->get('name_nha_thau') ?? '________________',
+                'date' => $new_date,
+                // 'ten' => $request->get('name_thanh_vien_lien_danh') ?? '_________________________',
+                'check1' => $request->get('check') == 0 ? '<w:sym w:font="Wingdings" w:char="F0FE"/>' : '<w:sym w:font="Wingdings" w:char="F0A8"/>',
+                'check2' => $request->get('check') == 1 ? '<w:sym w:font="Wingdings" w:char="F0FE"/>' : '<w:sym w:font="Wingdings" w:char="F0A8"/>',
+
+            )
+        );
+        if($request->get('name_thanh_vien_lien_danh') != ''){
+            $ten_thanh_vien = $request->get('name_thanh_vien_lien_danh');
+
+            $templateProcessor->cloneBlock('block_name',0,true,false,array(
+                array('ten' => "Tên thành viên của nhà thầu liên danh: $ten_thanh_vien")));
+        }elseif($request->get('name_thanh_vien_lien_danh') == ''){
+            $templateProcessor->cloneBlock('block_name',0,true,false,null);
+        }
+
+        $templateProcessor->setHtmlBlockValue('table_content', $request->get('table_content'));
+
+        header('Content-Disposition: attachment; filename="' . $file . '"');
+        $templateProcessor->saveAs("php://output");
+    }
+
+    public function save7(Request $request)
+    {
+        if ($request->ajax()) {
+            $detail_id = $request->get('detail_id');
+            $exist = Mau7::select("*")->where('detail_id', $detail_id)->exists();
+            if ($exist) {
+                Mau7::where('detail_id', $detail_id)
+                    ->update([
+                        'name_nha_thau' => $request->get('name_nha_thau'),
+                        'ngay_lam_giay' => $request->get('ngay_lam_giay'),
+                        'name_thanh_vien_lien_danh' => $request->get('name_thanh_vien_lien_danh'),
+                        'check' => $request->get('check'),
+                        'table_content' => $request->get('table_content'),
+                    ]);
+                $res = 'Đã cập nhật bản lưu';
+            } else {
+                Mau7::create([
+                    'detail_id' => $detail_id,
+                    'name_nha_thau' => $request->get('name_nha_thau'),
+                    'ngay_lam_giay' => $request->get('ngay_lam_giay'),
+                    'name_thanh_vien_lien_danh' => $request->get('name_thanh_vien_lien_danh'),
+                    'check' => $request->get('check'),
+                    'table_content' => $request->get('table_content'),
+
+                ]);
+                $res = 'Đã tạo bản lưu cho file';
+            }
+            echo json_encode($res);
+        }
+    }
+
+    public function create71($detail_id)
+    {
+        $detail = $this->detailService->find($detail_id);
+        $exist = Mau71::select("*")->where('detail_id', $detail_id)->exists();
+        if ($exist) {
+            $temp = Mau71::where('detail_id', $detail_id)->first();
+        } else {
+            $temp = [];
+        }
+
+        return view('template.create71', compact('detail', 'temp', 'detail_id'));
+    }
+
+    public function store71(Request $request)
+    {
+        // return $request->all();
+        // $string1 = str_replace("<p>","</w:t><w:br/><w:t>",$request->get('table_content'));
+        // $string2 = str_replace("</p>", "", $string1);
+        // dd ($string2);
+        // return 1;
+        $date = $request->get('date');
+        $y = substr($date, 0, 4);
+        $m = substr($date, 5, 2);
+        $d = substr($date, 8, 2);
+        $new_date = $date != null ? $d . '/' . $m . '/' . $y : '______________________';
+
+        $templateProcessor = new \PhpOffice\PhpWord\Template('Mẫu 07 (b). KIỆN TỤNG ĐANG GIẢI QUYẾT.docx');
+        $file = 'Mẫu 07 (b). KIỆN TỤNG ĐANG GIẢI QUYẾT_' . date("Y-m-d") . '.docx';
+
+        $templateProcessor->setValues(
+            array(
+                'name_nha_thau' => $request->get('name_nha_thau') ?? '________________',
+                'date' => $new_date,
+                'name_thanh_vien_lien_danh' => $request->get('name_thanh_vien_lien_danh') ?? '_________________________',
+                'check1' => $request->get('check') == 0 ? '<w:sym w:font="Wingdings" w:char="F0FE"/>' : '<w:sym w:font="Wingdings" w:char="F0A8"/>',
+                'check2' => $request->get('check') == 1 ? '<w:sym w:font="Wingdings" w:char="F0FE"/>' : '<w:sym w:font="Wingdings" w:char="F0A8"/>',
+
+            )
+        );
+
+        $templateProcessor->setHtmlBlockValue('table_content', $request->get('table_content'));
+
+        header('Content-Disposition: attachment; filename="' . $file . '"');
+        $templateProcessor->saveAs("php://output");
+    }
+
+    public function save71(Request $request)
+    {
+        if ($request->ajax()) {
+            $detail_id = $request->get('detail_id');
+            $exist = Mau71::select("*")->where('detail_id', $detail_id)->exists();
+            if ($exist) {
+                Mau71::where('detail_id', $detail_id)
+                    ->update([
+                        'name_nha_thau' => $request->get('name_nha_thau'),
+                        'ngay_lam_giay' => $request->get('ngay_lam_giay'),
+                        'name_thanh_vien_lien_danh' => $request->get('name_thanh_vien_lien_danh'),
+                        'check' => $request->get('check'),
+                        'table_content' => $request->get('table_content'),
+                    ]);
+                $res = 'Đã cập nhật bản lưu';
+            } else {
+                Mau71::create([
+                    'detail_id' => $detail_id,
+                    'name_nha_thau' => $request->get('name_nha_thau'),
+                    'ngay_lam_giay' => $request->get('ngay_lam_giay'),
+                    'name_thanh_vien_lien_danh' => $request->get('name_thanh_vien_lien_danh'),
+                    'check' => $request->get('check'),
+                    'table_content' => $request->get('table_content'),
+
+                ]);
+                $res = 'Đã tạo bản lưu cho file';
+            }
+            echo json_encode($res);
+        }
+    }
+
+
+    //-------------------End Mẫu 07. KIỆN TỤNG ĐANG GIẢI QUYẾT
+    //-------------------Start Mẫu 08. HỢP ĐỒNG TƯƠNG TỰ DO NHÀ THẦU THỰC HIỆN
+
+    public function create8($detail_id)
+    {
+        $detail = $this->detailService->find($detail_id);
+        $exist = Mau8::select("*")->where('detail_id', $detail_id)->exists();
+        if ($exist) {
+            $temp = Mau8::where('detail_id', $detail_id)->first();
+        } else {
+            $temp = [];
+        }
+
+        return view('template.create8', compact('detail', 'temp', 'detail_id'));
+    }
+
+    public function save8(Request $request)
+    {
+        if ($request->ajax()) {
+            $detail_id = $request->get('detail_id');
+            $exist = Mau8::select("*")->where('detail_id', $detail_id)->exists();
+            if ($exist) {
+                Mau8::where('detail_id', $detail_id)
+                    ->update([
+                        'name_nha_thau' => $request->get('name_nha_thau'),
+                        'date' => $request->get('date'),
+                        'address' => $request->get('address'),
+                        'table_content' => $request->get('table_content'),
+                    ]);
+                $res = 'Đã cập nhật bản lưu';
+            } else {
+                Mau8::create([
+                    'detail_id' => $detail_id,
+                    'name_nha_thau' => $request->get('name_nha_thau'),
+                    'date' => $request->get('date'),
+                    'address' => $request->get('address'),
+                    'table_content' => $request->get('table_content'),
+
+                ]);
+                $res = 'Đã tạo bản lưu cho file';
+            }
+            echo json_encode($res);
+        }
+    }
+
+    public function store8(Request $request)
+    {
+        // return $request->all();
+        // $string1 = str_replace("<p>","</w:t><w:br/><w:t>",$request->get('table_content'));
+        // $string2 = str_replace("</p>", "", $string1);
+        // dd ($string2);
+        // return 1;
+        $date = $request->get('date');
+        $y = $date != null ? substr($date, 0, 4) : '___';
+        $m = $date != null ? substr($date, 5, 2) : '___';
+        $d = $date != null ? substr($date, 8, 2) : '___';
+
+
+
+        $templateProcessor = new \PhpOffice\PhpWord\Template('Mẫu 08. HỢP ĐỒNG TƯƠNG TỰ DO NHÀ THẦU THỰC HIỆN.docx');
+        $file = 'Mẫu 08. HỢP ĐỒNG TƯƠNG TỰ DO NHÀ THẦU THỰC HIỆN_' . date("Y-m-d") . '.docx';
+
+        $templateProcessor->setValues(
+            array(
+                'name_nha_thau' => $request->get('name_nha_thau') ?? '____[ghi tên đầy đủ của nhà thầu]',
+                'd' => $d,
+                'm' => $m,
+                'y' => $y,
+                'address' => $request->get('address') ?? '____',
+
+            )
+        );
+
+        $templateProcessor->setHtmlBlockValue('table_content', $request->get('table_content'));
+
+        header('Content-Disposition: attachment; filename="' . $file . '"');
+        $templateProcessor->saveAs("php://output");
+    }
+
+    //-------------------End Mẫu 08. HỢP ĐỒNG TƯƠNG TỰ DO NHÀ THẦU THỰC HIỆN
+
+    //-------------------Start Mẫu 09 (b). TÌNH HÌNH TÀI CHÍNH CỦA NHÀ THẦU
+
+    public function create91($detail_id)
+    {
+        $detail = $this->detailService->find($detail_id);
+        $exist = Mau91::select("*")->where('detail_id', $detail_id)->exists();
+        if ($exist) {
+            $temp = Mau91::where('detail_id', $detail_id)->first();
+        } else {
+            $temp = [];
+        }
+
+        return view('template.create91', compact('detail', 'temp', 'detail_id'));
+    }
+
+    public function save91(Request $request)
+    {
+        if ($request->ajax()) {
+            $detail_id = $request->get('detail_id');
+            $exist = Mau91::select("*")->where('detail_id', $detail_id)->exists();
+            if ($exist) {
+                Mau91::where('detail_id', $detail_id)
+                    ->update([
+                        'name_nha_thau' => $request->get('name_nha_thau'),
+                        'date' => $request->get('date'),
+                        'name_thanh_vien_lien_danh' => $request->get('name_thanh_vien_lien_danh'),
+                        'table_content' => $request->get('table_content'),
+                    ]);
+                $res = 'Đã cập nhật bản lưu';
+            } else {
+                Mau91::create([
+                    'detail_id' => $detail_id,
+                    'name_nha_thau' => $request->get('name_nha_thau'),
+                    'date' => $request->get('date'),
+                    'name_thanh_vien_lien_danh' => $request->get('name_thanh_vien_lien_danh'),
+                    'table_content' => $request->get('table_content'),
+
+                ]);
+                $res = 'Đã tạo bản lưu cho file';
+            }
+            echo json_encode($res);
+        }
+    }
+
+    public function store91(Request $request)
+    {
+        // return $request->all();
+        // $string1 = str_replace("<p>","</w:t><w:br/><w:t>",$request->get('table_content'));
+        // $string2 = str_replace("</p>", "", $string1);
+        // dd ($string2);
+        // return 1;
+        $date = $request->get('date');
+        $y = substr($date, 0, 4);
+        $m = substr($date, 5, 2);
+        $d = substr($date, 8, 2);
+        $new_date = $date != null ? $d . '/' . $m . '/' . $y : '______________________';
+
+
+
+        $templateProcessor = new \PhpOffice\PhpWord\Template('Mẫu 09 (b). TÌNH HÌNH TÀI CHÍNH CỦA NHÀ THẦU.docx');
+        $file = 'Mẫu 09 (b). TÌNH HÌNH TÀI CHÍNH CỦA NHÀ THẦU_' . date("Y-m-d") . '.docx';
+
+        $templateProcessor->setValues(
+            array(
+                'name_nha_thau' => $request->get('name_nha_thau') ?? '________________',
+                'date' => $new_date,
+                'name_thanh_vien_lien_danh' => $request->get('name_thanh_vien_lien_danh') ?? '_________________________',
+
+            )
+        );
+
+        $templateProcessor->setHtmlBlockValue('table_content', $request->get('table_content'));
+
+        header('Content-Disposition: attachment; filename="' . $file . '"');
+        $templateProcessor->saveAs("php://output");
+    }
+
+    //-------------------End Mẫu 09 (b). TÌNH HÌNH TÀI CHÍNH CỦA NHÀ THẦU
+
+    //-------------------Start Mẫu 10. NGUỒN LỰC TÀI CHÍNH
+
+    public function create10($detail_id){
+        $detail = $this->detailService->find($detail_id);
+        $exist = Mau10::select("*")->where('detail_id', $detail_id)->exists();
+        if ($exist) {
+            $temp = Mau10::where('detail_id', $detail_id)->first();
+        } else {
+            $temp = [];
+        }
+        return view('template.create10',compact('temp','detail_id','detail'));
+    }
+
+    public function save10(Request $request)
+    {
+        if ($request->ajax()) {
+            $detail_id = $request->get('detail_id');
+            $exist = Mau10::select("*")->where('detail_id', $detail_id)->exists();
+            if ($exist) {
+                Mau10::where('detail_id', $detail_id)
+                    ->update([
+                        'table_content' => $request->get('table_content'),
+                    ]);
+                $res = 'Đã cập nhật bản lưu';
+            } else {
+                Mau10::create([
+                    'detail_id' => $detail_id,
+                    'table_content' => $request->get('table_content'),
+                ]);
+                $res = 'Đã tạo bản lưu cho file';
+            }
+            echo json_encode($res);
+        }
+    }
+
+    public function store10(Request $request)
+    {
+        $templateProcessor = new \PhpOffice\PhpWord\Template('Mẫu 10. NGUỒN LỰC TÀI CHÍNH.docx');
+        $file = 'Mẫu 10. NGUỒN LỰC TÀI CHÍNH_' . date("Y-m-d") . '.docx';
+
+
+        $templateProcessor->setHtmlBlockValue('table_content', $request->get('table_content'));
+
+        header('Content-Disposition: attachment; filename="' . $file . '"');
+        $templateProcessor->saveAs("php://output");
+    }
+
+    //-------------------End Mẫu 10. NGUỒN LỰC TÀI CHÍNH
+
 }

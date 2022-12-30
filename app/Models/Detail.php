@@ -39,11 +39,51 @@ class Detail extends Model
     }
     public function mau3()
     {
-        return $this->belongsTo(Mau2::class, 'detail_id', 'id');
+        return $this->belongsTo(Mau3::class, 'detail_id', 'id');
     }
 
     public function mau41()
     {
-        return $this->belongsTo(Mau2::class, 'detail_id', 'id');
+        return $this->belongsTo(Mau41::class, 'detail_id', 'id');
+    }
+    public function mau4()
+    {
+        return $this->belongsTo(Mau4::class, 'detail_id', 'id');
+    }
+    public function mau51()
+    {
+        return $this->belongsTo(Mau51::class, 'detail_id', 'id');
+    }
+    public function mau5()
+    {
+        return $this->belongsTo(Mau5::class, 'detail_id', 'id');
+    }
+    public function mau6()
+    {
+        return $this->belongsTo(Mau6::class, 'detail_id', 'id');
+    }
+    public function mau61()
+    {
+        return $this->belongsTo(Mau61::class, 'detail_id', 'id');
+    }
+    public function mau7()
+    {
+        return $this->belongsTo(Mau7::class, 'detail_id', 'id');
+    }
+    public function mau71()
+    {
+        return $this->belongsTo(Mau71::class, 'detail_id', 'id');
+    }
+    public function mau8()
+    {
+        return $this->belongsTo(Mau8::class, 'detail_id', 'id');
+    }
+    public function mau91()
+    {
+        return $this->belongsTo(Mau91::class, 'detail_id', 'id');
+    }
+    public function mau10()
+    {
+        return $this->belongsTo(Mau10::class, 'detail_id', 'id');
     }
 }

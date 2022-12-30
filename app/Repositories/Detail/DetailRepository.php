@@ -3,10 +3,19 @@ namespace App\Repositories\Detail;
 
 use App\Models\Detail;
 use App\Models\Mau1;
+use App\Models\Mau10;
 use App\Models\Mau2;
 use App\Models\Mau3;
+use App\Models\Mau4;
 use App\Models\Mau41;
+use App\Models\Mau5;
 use App\Models\Mau51;
+use App\Models\Mau6;
+use App\Models\Mau61;
+use App\Models\Mau7;
+use App\Models\Mau71;
+use App\Models\Mau8;
+use App\Models\Mau91;
 use App\Models\UserDetail;
 use App\Repositories\BaseRepository;
 use Illuminate\Support\Facades\Auth;
@@ -25,14 +34,41 @@ class DetailRepository extends BaseRepository implements DetailRepositoryInterfa
         if(Mau2::select("*")->where('detail_id', $id)->exists()){
             Mau2::where('detail_id', $id)->delete();
         }
-        if(Mau3::select("*")->where('detail_id', )->exists()){
+        if(Mau3::select("*")->where('detail_id', $id)->exists()){
             Mau3::where('detail_id', $id)->delete();
         }
-        if(Mau41::select("*")->where('detail_id', )->exists()){
+        if(Mau41::select("*")->where('detail_id', $id)->exists()){
             Mau41::where('detail_id', $id)->delete();
         }
-        if(Mau51::select("*")->where('detail_id', )->exists()){
+        if(Mau4::select("*")->where('detail_id', $id)->exists()){
+            Mau4::where('detail_id', $id)->delete();
+        }
+        if(Mau5::select("*")->where('detail_id', $id)->exists()){
+            Mau5::where('detail_id', $id)->delete();
+        }
+        if(Mau51::select("*")->where('detail_id', $id)->exists()){
             Mau51::where('detail_id', $id)->delete();
+        }
+        if (Mau6::select("*")->where('detail_id', $id)->exists()) {
+            Mau6::where('detail_id', $id)->delete();
+        }
+        if (Mau61::select("*")->where('detail_id', $id)->exists()) {
+            Mau61::where('detail_id', $id)->delete();
+        }
+        if (Mau7::select("*")->where('detail_id', $id)->exists()) {
+            Mau7::where('detail_id', $id)->delete();
+        }
+        if (Mau71::select("*")->where('detail_id', $id)->exists()) {
+            Mau71::where('detail_id', $id)->delete();
+        }
+        if (Mau8::select("*")->where('detail_id', $id)->exists()) {
+            Mau8::where('detail_id', $id)->delete();
+        }
+        if (Mau91::select("*")->where('detail_id', $id)->exists()) {
+            Mau91::where('detail_id', $id)->delete();
+        }
+        if (Mau10::select("*")->where('detail_id', $id)->exists()) {
+            Mau10::where('detail_id', $id)->delete();
         }
     }
 

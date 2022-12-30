@@ -280,7 +280,7 @@ $(document).ready(function () {
             'bold italic backcolor | alignleft aligncenter ' +
             'alignright alignjustify | bullist numlist outdent indent | ' +
             'removeformat | help',
-        content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:16px }',
+        content_style: 'body { font-family:Times New Roman,Times,serif; font-size:16px }',
         editor_selector: "mceEditor",
         table_use_colgroups: false,
         setup: function (editor) {

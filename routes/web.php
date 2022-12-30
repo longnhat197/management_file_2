@@ -90,17 +90,64 @@ Route::middleware('CheckLogin')->prefix('template')->group(function () {
     Route::post('3', [\App\Http\Controllers\TemplateController::class, 'store3']);
     Route::post('3/save',[\App\Http\Controllers\TemplateController::class, 'save3']);
 
+    //Template 4
     Route::get('4/{detail_id}', [\App\Http\Controllers\TemplateController::class, 'create4']);
     Route::post('4', [\App\Http\Controllers\TemplateController::class, 'store4']);
-    Route::post('4/ajaxMT', [\App\Http\Controllers\TemplateController::class, 'ajaxMT']);
+    Route::post('4/save',[\App\Http\Controllers\TemplateController::class, 'save4']);
 
     Route::get('41/{detail_id}', [\App\Http\Controllers\TemplateController::class, 'create4_1']);
     Route::post('41', [\App\Http\Controllers\TemplateController::class, 'store4_1']);
     Route::post('41/save',[\App\Http\Controllers\TemplateController::class, 'save41']);
     // Route::post('41/ajaxMT41', [\App\Http\Controllers\TemplateController::class, 'ajaxMT41']);
 
+    //Template 5
+    Route::get('5/{detail_id}',[\App\Http\Controllers\TemplateController::class, 'create5']);
+    Route::post('5',[\App\Http\Controllers\TemplateController::class, 'store5']);
+    Route::post('5/save',[\App\Http\Controllers\TemplateController::class, 'save5']);
+
     Route::get('51/{detail_id}',[\App\Http\Controllers\TemplateController::class, 'create51']);
     Route::post('51',[\App\Http\Controllers\TemplateController::class, 'store51']);
     Route::post('51/save',[\App\Http\Controllers\TemplateController::class, 'save51']);
+
+
+    //Template 6
+
+    Route::get('6/{detail_id}',[\App\Http\Controllers\TemplateController::class, 'create6']);
+    Route::post('6',[\App\Http\Controllers\TemplateController::class, 'store6']);
+    Route::post('6/save',[\App\Http\Controllers\TemplateController::class, 'save6']);
+
+    Route::get('61/{detail_id}',[\App\Http\Controllers\TemplateController::class, 'create61']);
+    Route::post('61',[\App\Http\Controllers\TemplateController::class, 'store61']);
+    Route::post('61/save',[\App\Http\Controllers\TemplateController::class, 'save61']);
+
+
+
+
+    //Template 7
+    Route::get('7/{detail_id}',[\App\Http\Controllers\TemplateController::class, 'create7']);
+    Route::post('7',[\App\Http\Controllers\TemplateController::class, 'store7']);
+    Route::post('7/save',[\App\Http\Controllers\TemplateController::class, 'save7']);
+
+    Route::get('71/{detail_id}',[\App\Http\Controllers\TemplateController::class, 'create71']);
+    Route::post('71',[\App\Http\Controllers\TemplateController::class, 'store71']);
+    Route::post('71/save',[\App\Http\Controllers\TemplateController::class, 'save71']);
+
+
+
+    //Template 8
+    Route::get('8/{detail_id}',[\App\Http\Controllers\TemplateController::class, 'create8']);
+    Route::post('8',[\App\Http\Controllers\TemplateController::class, 'store8']);
+    Route::post('8/save',[\App\Http\Controllers\TemplateController::class, 'save8']);
+
+
+    //Template 9
+    Route::get('91/{detail_id}',[\App\Http\Controllers\TemplateController::class, 'create91']);
+    Route::post('91',[\App\Http\Controllers\TemplateController::class, 'store91']);
+    Route::post('91/save',[\App\Http\Controllers\TemplateController::class, 'save91']);
+
+    //Template 10
+    Route::get('10/{detail_id}',[\App\Http\Controllers\TemplateController::class, 'create10']);
+    Route::post('10',[\App\Http\Controllers\TemplateController::class, 'store10']);
+    Route::post('10/save',[\App\Http\Controllers\TemplateController::class, 'save10']);
 
 });
