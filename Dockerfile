@@ -12,6 +12,6 @@ WORKDIR /usr/src/myapp
 
 CMD [ "php", "./server.php" ]
 
-EXPOSE 9093
+# EXPOSE 9093
 
 
