@@ -68,7 +68,7 @@
                     <table class="align-middle mb-0 table table-borderless table-striped table-hover">
                         <thead>
                             <tr>
-                                <th class="text-center">ID</th>
+                                <th class="text-center">STT</th>
                                 <th>Tên gói thầu</th>
                                 <th>Tên dự án</th>
                                 <th>Tên bên mời thầu</th>
@@ -79,9 +79,15 @@
                             </tr>
                         </thead>
                         <tbody>
+                            @php
+                                $k =0;
+                            @endphp
                             @foreach ($details as $detail)
+                            @php
+                                $k++;
+                            @endphp
                             <tr>
-                                <td class="text-center text-muted">#{{ $detail->id }}</td>
+                                <td class="text-center text-muted">{{ $k }}</td>
                                 <td>
                                     <div class="widget-content p-0">
                                         <div class="widget-content-wrapper">

@@ -87,6 +87,24 @@
                                 <div class="row">
                                     <div class="col-md-3"></div>
                                     <div class="form-group col-md-6">
+                                        <label for="customer">Chủ đầu tư:</label>
+                                        <div class="btn-actions-pane-right">
+                                            <div class="input-group ">
+                                                <select value="{{ old('customer') }}" id="customer" name="customer"
+                                                    class="form-control">
+                                                    <option value="">--Tên chủ đầu tư--</option>
+                                                    @foreach ($customers as $customer)
+                                                    <option {{ $detail->customer == $customer->name ? 'selected' : '' }} value="{{ $customer->name }}">{{ $customer->name }}</option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-3"></div>
+                                    <div class="form-group col-md-6">
                                         <label for="so_tbmt">Số thông báo mời thầu:</label>
                                         <input type="text" class="form-control" id="so_tbmt" name="so_tbmt" value="{{ $detail->so_thong_bao }}">
 

@@ -64,8 +64,9 @@ class HomeController extends Controller
 
         // $id = Auth::user()->userDetails[0]->detail_id;
         $detail = $this->detailService->find($id);
+        $customers = $this->customerService->all();
 
-        return view('home.edit', compact('detail'));
+        return view('home.edit', compact('detail','customers'));
     }
 
     public function editStore(Request $request)
