@@ -4,6 +4,8 @@ namespace App\Repositories\Detail;
 use App\Models\Detail;
 use App\Models\Mau1;
 use App\Models\Mau10;
+use App\Models\Mau11;
+use App\Models\Mau12;
 use App\Models\Mau2;
 use App\Models\Mau3;
 use App\Models\Mau4;
@@ -15,6 +17,7 @@ use App\Models\Mau61;
 use App\Models\Mau7;
 use App\Models\Mau71;
 use App\Models\Mau8;
+use App\Models\Mau9;
 use App\Models\Mau91;
 use App\Models\UserDetail;
 use App\Repositories\BaseRepository;
@@ -64,11 +67,20 @@ class DetailRepository extends BaseRepository implements DetailRepositoryInterfa
         if (Mau8::select("*")->where('detail_id', $id)->exists()) {
             Mau8::where('detail_id', $id)->delete();
         }
+        if (Mau9::select("*")->where('detail_id', $id)->exists()) {
+            Mau9::where('detail_id', $id)->delete();
+        }
         if (Mau91::select("*")->where('detail_id', $id)->exists()) {
             Mau91::where('detail_id', $id)->delete();
         }
         if (Mau10::select("*")->where('detail_id', $id)->exists()) {
             Mau10::where('detail_id', $id)->delete();
+        }
+        if (Mau11::select("*")->where('detail_id', $id)->exists()) {
+            Mau11::where('detail_id', $id)->delete();
+        }
+        if (Mau12::select("*")->where('detail_id', $id)->exists()) {
+            Mau12::where('detail_id', $id)->delete();
         }
     }
 

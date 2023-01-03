@@ -12,6 +12,9 @@ ul {
     margin-top: 0.5rem;
     margin-bottom: 0.5rem;
 }
+th td{
+    padding: 5px 0px;
+}
 
 /* form */
 .display_data p {

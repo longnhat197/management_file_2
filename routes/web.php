@@ -141,6 +141,10 @@ Route::middleware('CheckLogin')->prefix('template')->group(function () {
 
 
     //Template 9
+    Route::get('9/{detail_id}',[\App\Http\Controllers\TemplateController::class, 'create9']);
+    Route::post('9',[\App\Http\Controllers\TemplateController::class, 'store9']);
+    Route::post('9/save',[\App\Http\Controllers\TemplateController::class, 'save9']);
+
     Route::get('91/{detail_id}',[\App\Http\Controllers\TemplateController::class, 'create91']);
     Route::post('91',[\App\Http\Controllers\TemplateController::class, 'store91']);
     Route::post('91/save',[\App\Http\Controllers\TemplateController::class, 'save91']);
@@ -149,5 +153,15 @@ Route::middleware('CheckLogin')->prefix('template')->group(function () {
     Route::get('10/{detail_id}',[\App\Http\Controllers\TemplateController::class, 'create10']);
     Route::post('10',[\App\Http\Controllers\TemplateController::class, 'store10']);
     Route::post('10/save',[\App\Http\Controllers\TemplateController::class, 'save10']);
+
+    //Template 11
+    Route::get('11/{detail_id}',[\App\Http\Controllers\TemplateController::class, 'create11']);
+    Route::post('11',[\App\Http\Controllers\TemplateController::class, 'store11']);
+    Route::post('11/save',[\App\Http\Controllers\TemplateController::class, 'save11']);
+
+    //Template 12
+    Route::get('12/{detail_id}',[\App\Http\Controllers\TemplateController::class, 'create12']);
+    Route::post('12',[\App\Http\Controllers\TemplateController::class, 'store12']);
+    Route::post('12/save',[\App\Http\Controllers\TemplateController::class, 'save12']);
 
 });

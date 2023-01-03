@@ -6,6 +6,8 @@ use App\Models\Detail;
 use App\Models\DetailTemp;
 use App\Models\Mau1;
 use App\Models\Mau10;
+use App\Models\Mau11;
+use App\Models\Mau12;
 use App\Models\Mau2;
 use App\Models\Mau3;
 use App\Models\Mau4;
@@ -17,6 +19,7 @@ use App\Models\Mau61;
 use App\Models\Mau7;
 use App\Models\Mau71;
 use App\Models\Mau8;
+use App\Models\Mau9;
 use App\Models\Mau91;
 use App\Models\Template0;
 use App\Models\UserDetail;
@@ -83,7 +86,7 @@ class TemplateController extends Controller
         } catch (\Exception $err) {
             return $err->getMessage();
         }
-        $detail_id = Auth::user()->userDetails[0]->detail_id;
+        $detail_id = $request->get('detail_id');
 
         $type = DetailTemp::where('detail_id', $detail_id)->first()->type;
         if ($type == 0) {
@@ -1414,6 +1417,19 @@ class TemplateController extends Controller
 
     //-------------------Start Mẫu 09 (b). TÌNH HÌNH TÀI CHÍNH CỦA NHÀ THẦU
 
+    public function create9($detail_id)
+    {
+        $detail = $this->detailService->find($detail_id);
+        $exist = Mau9::select("*")->where('detail_id', $detail_id)->exists();
+        if ($exist) {
+            $temp = Mau9::where('detail_id', $detail_id)->first();
+        } else {
+            $temp = [];
+        }
+
+        return view('template.create9', compact('detail', 'temp', 'detail_id'));
+    }
+
     public function create91($detail_id)
     {
         $detail = $this->detailService->find($detail_id);
@@ -1426,6 +1442,63 @@ class TemplateController extends Controller
 
         return view('template.create91', compact('detail', 'temp', 'detail_id'));
     }
+    public function save9(Request $request)
+    {
+        if ($request->ajax()) {
+            $detail_id = $request->get('detail_id');
+            $exist = Mau9::select("*")->where('detail_id', $detail_id)->exists();
+            if ($exist) {
+                Mau9::where('detail_id', $detail_id)
+                    ->update([
+                        'name_nha_thau' => $request->get('name_nha_thau'),
+                        'date' => $request->get('date'),
+                        'table_content' => $request->get('table_content'),
+                    ]);
+                $res = 'Đã cập nhật bản lưu';
+            } else {
+                Mau9::create([
+                    'detail_id' => $detail_id,
+                    'name_nha_thau' => $request->get('name_nha_thau'),
+                    'date' => $request->get('date'),
+                    'table_content' => $request->get('table_content'),
+
+                ]);
+                $res = 'Đã tạo bản lưu cho file';
+            }
+            echo json_encode($res);
+        }
+    }
+    public function store9(Request $request)
+    {
+        // return $request->all();
+        // $string1 = str_replace("<p>","</w:t><w:br/><w:t>",$request->get('table_content'));
+        // $string2 = str_replace("</p>", "", $string1);
+        // dd ($string2);
+        // return 1;
+        $date = $request->get('date');
+        $y = substr($date, 0, 4);
+        $m = substr($date, 5, 2);
+        $d = substr($date, 8, 2);
+        $new_date = $date != null ? $d . '/' . $m . '/' . $y : '______________________';
+
+
+
+        $templateProcessor = new \PhpOffice\PhpWord\Template('Mẫu 09 (a). TÌNH HÌNH TÀI CHÍNH CỦA NHÀ THẦU.docx');
+        $file = 'Mẫu 09 (a). TÌNH HÌNH TÀI CHÍNH CỦA NHÀ THẦU_' . date("Y-m-d") . '.docx';
+
+        $templateProcessor->setValues(
+            array(
+                'name_nha_thau' => $request->get('name_nha_thau') ?? '________________',
+                'date' => $new_date,
+            )
+        );
+
+        $templateProcessor->setHtmlBlockValue('table_content', $request->get('table_content'));
+
+        header('Content-Disposition: attachment; filename="' . $file . '"');
+        $templateProcessor->saveAs("php://output");
+    }
+
 
     public function save91(Request $request)
     {
@@ -1540,4 +1613,99 @@ class TemplateController extends Controller
 
     //-------------------End Mẫu 10. NGUỒN LỰC TÀI CHÍNH
 
+    //-------------------Start Mẫu 11. NGUỒN LỰC TÀI CHÍNH HÀNG THÁNG CHO CÁC HỢP ĐỒNG ĐANG THỰC HIỆN
+
+    public function create11($detail_id){
+        $detail = $this->detailService->find($detail_id);
+        $exist = Mau11::select("*")->where('detail_id', $detail_id)->exists();
+        if ($exist) {
+            $temp = Mau11::where('detail_id', $detail_id)->first();
+        } else {
+            $temp = [];
+        }
+        return view('template.create11',compact('temp','detail_id','detail'));
+    }
+
+    public function save11(Request $request)
+    {
+        if ($request->ajax()) {
+            $detail_id = $request->get('detail_id');
+            $exist = Mau11::select("*")->where('detail_id', $detail_id)->exists();
+            if ($exist) {
+                Mau11::where('detail_id', $detail_id)
+                    ->update([
+                        'table_content' => $request->get('table_content'),
+                    ]);
+                $res = 'Đã cập nhật bản lưu';
+            } else {
+                Mau11::create([
+                    'detail_id' => $detail_id,
+                    'table_content' => $request->get('table_content'),
+                ]);
+                $res = 'Đã tạo bản lưu cho file';
+            }
+            echo json_encode($res);
+        }
+    }
+
+    public function store11(Request $request)
+    {
+        $templateProcessor = new \PhpOffice\PhpWord\Template('Mẫu 11. NGUỒN LỰC TÀI CHÍNH HÀNG THÁNG CHO CÁC HỢP ĐỒNG ĐANG THỰC HIỆN.docx');
+        $file = 'Mẫu 11. NGUỒN LỰC TÀI CHÍNH HÀNG THÁNG CHO CÁC HỢP ĐỒNG ĐANG THỰC HIỆN_' . date("Y-m-d") . '.docx';
+
+
+        $templateProcessor->setHtmlBlockValue('table_content', $request->get('table_content'));
+
+        header('Content-Disposition: attachment; filename="' . $file . '"');
+        $templateProcessor->saveAs("php://output");
+    }
+    //-------------------End Mẫu 11. NGUỒN LỰC TÀI CHÍNH HÀNG THÁNG CHO CÁC HỢP ĐỒNG ĐANG THỰC HIỆN
+
+    //-------------------Start Mẫu 12. BẢNG ĐỀ XUẤT NHÂN SỰ CHỦ CHỐT
+
+    public function create12($detail_id){
+        $detail = $this->detailService->find($detail_id);
+        $exist = Mau12::select("*")->where('detail_id', $detail_id)->exists();
+        if ($exist) {
+            $temp = Mau12::where('detail_id', $detail_id)->first();
+        } else {
+            $temp = [];
+        }
+        return view('template.create12',compact('temp','detail_id','detail'));
+    }
+
+    public function save12(Request $request)
+    {
+        if ($request->ajax()) {
+            $detail_id = $request->get('detail_id');
+            $exist = Mau12::select("*")->where('detail_id', $detail_id)->exists();
+            if ($exist) {
+                Mau12::where('detail_id', $detail_id)
+                    ->update([
+                        'table_content' => $request->get('table_content'),
+                    ]);
+                $res = 'Đã cập nhật bản lưu';
+            } else {
+                Mau12::create([
+                    'detail_id' => $detail_id,
+                    'table_content' => $request->get('table_content'),
+                ]);
+                $res = 'Đã tạo bản lưu cho file';
+            }
+            echo json_encode($res);
+        }
+    }
+
+    public function store12(Request $request)
+    {
+        $templateProcessor = new \PhpOffice\PhpWord\Template('Mẫu 12. BẢNG ĐỀ XUẤT NHÂN SỰ CHỦ CHỐT.docx');
+        $file = 'Mẫu 12. BẢNG ĐỀ XUẤT NHÂN SỰ CHỦ CHỐT_' . date("Y-m-d") . '.docx';
+
+
+        $templateProcessor->setHtmlBlockValue('table_content', $request->get('table_content'));
+
+        header('Content-Disposition: attachment; filename="' . $file . '"');
+        $templateProcessor->saveAs("php://output");
+    }
+    //-------------------End Mẫu 12. BẢNG ĐỀ XUẤT NHÂN SỰ CHỦ CHỐT
 }

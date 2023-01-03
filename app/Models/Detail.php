@@ -78,6 +78,10 @@ class Detail extends Model
     {
         return $this->belongsTo(Mau8::class, 'detail_id', 'id');
     }
+    public function mau9()
+    {
+        return $this->belongsTo(Mau9::class, 'detail_id', 'id');
+    }
     public function mau91()
     {
         return $this->belongsTo(Mau91::class, 'detail_id', 'id');
@@ -85,5 +89,13 @@ class Detail extends Model
     public function mau10()
     {
         return $this->belongsTo(Mau10::class, 'detail_id', 'id');
+    }
+    public function mau11()
+    {
+        return $this->belongsTo(Mau11::class, 'detail_id', 'id');
+    }
+    public function mau12()
+    {
+        return $this->belongsTo(Mau12::class, 'detail_id', 'id');
     }
 }
