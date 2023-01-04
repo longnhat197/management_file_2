@@ -12,7 +12,7 @@ COPY .env.example $APP_DIR/.env
 # Essentials
 RUN echo "UTC" > /etc/timezone
 RUN apk add --no-cache zip unzip curl
-RUN apk add --update nodejs npm
+# RUN apk add --update nodejs npm
 # Installing bash
 RUN apk add bash
 RUN sed -i 's/bin\/ash/bin\/bash/g' /etc/passwd
@@ -53,12 +53,13 @@ RUN apk add --no-cache php7 \
     php7-sodium
 
 # Installing npm install
-RUN npm install
+# RUN npm install
 
 # Installing composer
 RUN curl -sS https://getcomposer.org/installer -o composer-setup.php
 RUN php composer-setup.php --install-dir=/usr/local/bin --filename=composer
 RUN rm -rf composer-setup.php
+
 RUN composer install
 # generate an APP_KEY
 RUN php artisan key:generate
