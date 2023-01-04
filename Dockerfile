@@ -18,26 +18,38 @@ RUN sed -i 's/bin\/ash/bin\/bash/g' /etc/passwd
 
 # Installing PHP
 RUN apk add --no-cache php7 \
+    php7-amqp \
+    php7-dev \
     php7-common \
-    # php7.4-fpm \
-    # php7.4-pdo \
-    # php7.4-opcache \
-    php7-zip \
-    # php7.4-phar \
-    # php7.4-iconv \
-    # php7.4-cli \
+    php7-apcu \
+    php7-gd \
+    php7-xmlreader \
+    php7-bcmath \
+    php7-ctype \
     php7-curl \
+    php7-exif \
+    php7-iconv \
+    php7-intl \
+    php7-json \
+    php7-mbstring \
+    php7-opcache \
     php7-openssl \
-    # php7.4-mbstring \
-    php7-fileinfo
-    # php7.4-json
-    # php7.4-xml \
-    # php7.4-xmlwriter \
-    # php7.4-simplexml \
-    # php7.4-dom \
-    # php7.4-pdo_mysql \
-    # php7.4-pdo_sqlite \
-    # php7.4-tokenizer
+    php7-pcntl \
+    php7-pdo \
+    php7-mysqlnd \
+    php7-pdo_mysql \
+    php7-pdo_pgsql \
+    php7-phar \
+    php7-posix \
+    php7-session \
+    php7-xml \
+    php7-xsl \
+    php7-zip \
+    php7-zlib \
+    php7-dom \
+    php7-redis \
+    php7-fpm \
+    php7-sodium
 
 
 # Installing composer
