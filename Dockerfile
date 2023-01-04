@@ -38,7 +38,7 @@ RUN apk add --no-cache php7.4 \
     php7.4-dom \
     php7.4-pdo_mysql \
     php7.4-pdo_sqlite \
-    php7.4-tokenizer \
+    php7.4-tokenizer
 
 # Installing composer
 RUN curl -sS https://getcomposer.org/installer -o composer-setup.php
