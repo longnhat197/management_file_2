@@ -1,4 +1,4 @@
-FROM alpine:latest
+FROM alpine:3.14 as builders
 
 ENV \
   APP_DIR="/app" \
