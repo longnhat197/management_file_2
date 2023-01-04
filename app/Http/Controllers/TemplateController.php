@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Detail;
+
 use App\Models\DetailTemp;
 use App\Models\Mau1;
 use App\Models\Mau10;
@@ -21,7 +21,6 @@ use App\Models\Mau71;
 use App\Models\Mau8;
 use App\Models\Mau9;
 use App\Models\Mau91;
-use App\Models\Template0;
 use App\Models\UserDetail;
 use App\Services\Detail\DetailServiceInterface;
 use App\Services\Contractor\ContractorServiceInterface;
@@ -30,15 +29,11 @@ use App\Services\File\FileServiceInterface;
 use App\Services\ListUser\ListUserServiceInterface;
 use App\Services\Package\PackageServiceInterface;
 use App\Services\Project\ProjectServiceInterface;
-use Illuminate\Support\Facades\Auth;
-use PhpOffice\PhpWord\Template1;
-use DOCXTemplate;
 use Illuminate\Http\Request;
-
-use TheSeer\Tokenizer\Exception;
-use function Psy\debug;
+use TemplateProcessor;
 
 include('docxtemplate.class.php');
+include('TemplateProcessor.php');
 
 class TemplateController extends Controller
 {
@@ -173,7 +168,7 @@ class TemplateController extends Controller
         $m = substr($date, 5, 2);
         $d = substr($date, 8, 2);
 
-        $templateProcessor = new \PhpOffice\PhpWord\Template('Mẫu 01. ĐƠN DỰ THẦU (thuộc HSĐXKT).docx');
+        $templateProcessor = new TemplateProcessor('Mẫu 01. ĐƠN DỰ THẦU (thuộc HSĐXKT).docx');
         $file = 'Mẫu 01. ĐƠN DỰ THẦU (thuộc HSĐXKT)_' . date("Y-m-d") . '.docx';
         $templateProcessor->setValues(array(
             'date' => $new_date ?? '[ghi ngày tháng năm ký đơn dự thầu]',
@@ -312,7 +307,7 @@ class TemplateController extends Controller
 
 
 
-        $templateProcessor = new \PhpOffice\PhpWord\Template('Mẫu 02. GIẤY ỦY QUYỀN.docx');
+        $templateProcessor = new TemplateProcessor('Mẫu 02. GIẤY ỦY QUYỀN.docx');
         $file = 'Mẫu 02. GIẤY ỦY QUYỀN_' . date("Y-m-d") . '.docx';
 
         $templateProcessor->setValues(array(
@@ -509,7 +504,7 @@ class TemplateController extends Controller
         $m2 = $date1 != null ? substr($date2, 5, 2) : '___';
         $d2 = $date1 != null ? substr($date2, 8, 2) : '___';
         // return $request->all();
-        $templateProcessor = new \PhpOffice\PhpWord\Template('Mẫu 03. THỎA THUẬN LIÊN DANH.docx');
+        $templateProcessor = new TemplateProcessor('Mẫu 03. THỎA THUẬN LIÊN DANH.docx');
         $file = 'Mẫu 03. THỎA THUẬN LIÊN DANH_' . date("Y-m-d") . '.docx';
 
         $templateProcessor->setValues(array(
@@ -682,7 +677,7 @@ class TemplateController extends Controller
         $m1 = $date1 != null ? substr($date1, 5, 2) : '___';
         $d1 = $date1 != null ? substr($date1, 8, 2) : '___';
 
-        $templateProcessor = new \PhpOffice\PhpWord\Template('Mẫu 04 (a). BẢO LÃNH DỰ THẦU.docx');
+        $templateProcessor = new TemplateProcessor('Mẫu 04 (a). BẢO LÃNH DỰ THẦU.docx');
         $file = 'Mẫu 04 (a). BẢO LÃNH DỰ THẦU_' . date("Y-m-d") . '.docx';
 
         $templateProcessor->setValues(array(
@@ -801,7 +796,7 @@ class TemplateController extends Controller
         $m1 = $date1 != null ? substr($date1, 5, 2) : '___';
         $d1 = $date1 != null ? substr($date1, 8, 2) : '___';
 
-        $templateProcessor = new \PhpOffice\PhpWord\Template('Mẫu 04 (b). BẢO LÃNH DỰ THẦU.docx');
+        $templateProcessor = new TemplateProcessor('Mẫu 04 (b). BẢO LÃNH DỰ THẦU.docx');
         $file = 'Mẫu 04 (b). BẢO LÃNH DỰ THẦU_' . date("Y-m-d") . '.docx';
 
         $templateProcessor->setValues(array(
@@ -846,7 +841,7 @@ class TemplateController extends Controller
         // return $request->all();
 
         $ngay_ke_khai = $request->get('ngay_ke_khai') != null ? substr($request->get('ngay_ke_khai'), 8, 2) . '/' . substr($request->get('ngay_ke_khai'), 5, 2) . '/' . substr($request->get('ngay_ke_khai'), 0, 4) : '_______________';
-        $templateProcessor = new \PhpOffice\PhpWord\Template('Mẫu 05 (a). BẢN KÊ KHAI THÔNG TIN VỀ NHÀ THẦU.docx');
+        $templateProcessor = new TemplateProcessor('Mẫu 05 (a). BẢN KÊ KHAI THÔNG TIN VỀ NHÀ THẦU.docx');
         $file = 'Mẫu 05 (a). BẢN KÊ KHAI THÔNG TIN VỀ NHÀ THẦU_' . date("Y-m-d") . '.docx';
         $templateProcessor->setValues(
             array(
@@ -931,7 +926,7 @@ class TemplateController extends Controller
         // return $request->all();
 
         $ngay_ke_khai = $request->get('ngay_ke_khai') != null ? substr($request->get('ngay_ke_khai'), 8, 2) . '/' . substr($request->get('ngay_ke_khai'), 5, 2) . '/' . substr($request->get('ngay_ke_khai'), 0, 4) : '_______________';
-        $templateProcessor = new \PhpOffice\PhpWord\Template('Mẫu 05 (b). BẢN KÊ KHAI THÔNG TIN VỀ CÁC THÀNH VIÊN LIÊN DANH.docx');
+        $templateProcessor = new TemplateProcessor('Mẫu 05 (b). BẢN KÊ KHAI THÔNG TIN VỀ CÁC THÀNH VIÊN LIÊN DANH.docx');
         $file = 'Mẫu 05 (b). BẢN KÊ KHAI THÔNG TIN VỀ CÁC THÀNH VIÊN LIÊN DANH_' . date("Y-m-d") . '.docx';
         $templateProcessor->setValues(
             array(
@@ -1062,7 +1057,7 @@ class TemplateController extends Controller
         $d = substr($date, 8, 2);
         $new_date = $date != null ? $d . '/' . $m . '/' . $y : '______________________';
 
-        $templateProcessor = new \PhpOffice\PhpWord\Template('Mẫu 06. HỢP ĐỒNG KHÔNG HOÀN THÀNH TRONG QUÁ KHỨ DO LỖI CỦA NHÀ THẦU.docx');
+        $templateProcessor = new TemplateProcessor('Mẫu 06. HỢP ĐỒNG KHÔNG HOÀN THÀNH TRONG QUÁ KHỨ DO LỖI CỦA NHÀ THẦU.docx');
         $file = 'Mẫu 06. HỢP ĐỒNG KHÔNG HOÀN THÀNH TRONG QUÁ KHỨ DO LỖI CỦA NHÀ THẦU_' . date("Y-m-d") . '.docx';
 
         $templateProcessor->setValues(
@@ -1108,7 +1103,7 @@ class TemplateController extends Controller
         $d = substr($date, 8, 2);
         $new_date = $date != null ? $d . '/' . $m . '/' . $y : '______________________';
 
-        $templateProcessor = new \PhpOffice\PhpWord\Template('Mẫu 06 (b). HỢP ĐỒNG KHÔNG HOÀN THÀNH TRONG QUÁ KHỨ DO LỖI CỦA NHÀ THẦU.docx');
+        $templateProcessor = new TemplateProcessor('Mẫu 06 (b). HỢP ĐỒNG KHÔNG HOÀN THÀNH TRONG QUÁ KHỨ DO LỖI CỦA NHÀ THẦU.docx');
         $file = 'Mẫu 06 (b). HỢP ĐỒNG KHÔNG HOÀN THÀNH TRONG QUÁ KHỨ DO LỖI CỦA NHÀ THẦU_' . date("Y-m-d") . '.docx';
 
         $templateProcessor->setValues(
@@ -1197,7 +1192,7 @@ class TemplateController extends Controller
         $d = substr($date, 8, 2);
         $new_date = $date != null ? $d . '/' . $m . '/' . $y : '______________________';
 
-        $templateProcessor = new \PhpOffice\PhpWord\Template('Mẫu 07 (a). KIỆN TỤNG ĐANG GIẢI QUYẾT.docx');
+        $templateProcessor = new TemplateProcessor('Mẫu 07 (a). KIỆN TỤNG ĐANG GIẢI QUYẾT.docx');
         $file = 'Mẫu 07 (a). KIỆN TỤNG ĐANG GIẢI QUYẾT_' . date("Y-m-d") . '.docx';
 
         $templateProcessor->setValues(
@@ -1282,7 +1277,7 @@ class TemplateController extends Controller
         $d = substr($date, 8, 2);
         $new_date = $date != null ? $d . '/' . $m . '/' . $y : '______________________';
 
-        $templateProcessor = new \PhpOffice\PhpWord\Template('Mẫu 07 (b). KIỆN TỤNG ĐANG GIẢI QUYẾT.docx');
+        $templateProcessor = new TemplateProcessor('Mẫu 07 (b). KIỆN TỤNG ĐANG GIẢI QUYẾT.docx');
         $file = 'Mẫu 07 (b). KIỆN TỤNG ĐANG GIẢI QUYẾT_' . date("Y-m-d") . '.docx';
 
         $templateProcessor->setValues(
@@ -1393,7 +1388,7 @@ class TemplateController extends Controller
 
 
 
-        $templateProcessor = new \PhpOffice\PhpWord\Template('Mẫu 08. HỢP ĐỒNG TƯƠNG TỰ DO NHÀ THẦU THỰC HIỆN.docx');
+        $templateProcessor = new TemplateProcessor('Mẫu 08. HỢP ĐỒNG TƯƠNG TỰ DO NHÀ THẦU THỰC HIỆN.docx');
         $file = 'Mẫu 08. HỢP ĐỒNG TƯƠNG TỰ DO NHÀ THẦU THỰC HIỆN_' . date("Y-m-d") . '.docx';
 
         $templateProcessor->setValues(
@@ -1483,7 +1478,7 @@ class TemplateController extends Controller
 
 
 
-        $templateProcessor = new \PhpOffice\PhpWord\Template('Mẫu 09 (a). TÌNH HÌNH TÀI CHÍNH CỦA NHÀ THẦU.docx');
+        $templateProcessor = new TemplateProcessor('Mẫu 09 (a). TÌNH HÌNH TÀI CHÍNH CỦA NHÀ THẦU.docx');
         $file = 'Mẫu 09 (a). TÌNH HÌNH TÀI CHÍNH CỦA NHÀ THẦU_' . date("Y-m-d") . '.docx';
 
         $templateProcessor->setValues(
@@ -1544,7 +1539,7 @@ class TemplateController extends Controller
 
 
 
-        $templateProcessor = new \PhpOffice\PhpWord\Template('Mẫu 09 (b). TÌNH HÌNH TÀI CHÍNH CỦA NHÀ THẦU.docx');
+        $templateProcessor = new TemplateProcessor('Mẫu 09 (b). TÌNH HÌNH TÀI CHÍNH CỦA NHÀ THẦU.docx');
         $file = 'Mẫu 09 (b). TÌNH HÌNH TÀI CHÍNH CỦA NHÀ THẦU_' . date("Y-m-d") . '.docx';
 
         $templateProcessor->setValues(
@@ -1601,7 +1596,7 @@ class TemplateController extends Controller
 
     public function store10(Request $request)
     {
-        $templateProcessor = new \PhpOffice\PhpWord\Template('Mẫu 10. NGUỒN LỰC TÀI CHÍNH.docx');
+        $templateProcessor = new TemplateProcessor('Mẫu 10. NGUỒN LỰC TÀI CHÍNH.docx');
         $file = 'Mẫu 10. NGUỒN LỰC TÀI CHÍNH_' . date("Y-m-d") . '.docx';
 
 
@@ -1650,7 +1645,7 @@ class TemplateController extends Controller
 
     public function store11(Request $request)
     {
-        $templateProcessor = new \PhpOffice\PhpWord\Template('Mẫu 11. NGUỒN LỰC TÀI CHÍNH HÀNG THÁNG CHO CÁC HỢP ĐỒNG ĐANG THỰC HIỆN.docx');
+        $templateProcessor = new TemplateProcessor('Mẫu 11. NGUỒN LỰC TÀI CHÍNH HÀNG THÁNG CHO CÁC HỢP ĐỒNG ĐANG THỰC HIỆN.docx');
         $file = 'Mẫu 11. NGUỒN LỰC TÀI CHÍNH HÀNG THÁNG CHO CÁC HỢP ĐỒNG ĐANG THỰC HIỆN_' . date("Y-m-d") . '.docx';
 
 
@@ -1698,7 +1693,7 @@ class TemplateController extends Controller
 
     public function store12(Request $request)
     {
-        $templateProcessor = new \PhpOffice\PhpWord\Template('Mẫu 12. BẢNG ĐỀ XUẤT NHÂN SỰ CHỦ CHỐT.docx');
+        $templateProcessor = new TemplateProcessor('Mẫu 12. BẢNG ĐỀ XUẤT NHÂN SỰ CHỦ CHỐT.docx');
         $file = 'Mẫu 12. BẢNG ĐỀ XUẤT NHÂN SỰ CHỦ CHỐT_' . date("Y-m-d") . '.docx';
 
 
