@@ -1,8 +1,8 @@
 FROM alpine:3.14 as builders
 
 ENV \
-  APP_DIR="/app" \
-  APP_PORT="8000"
+    APP_DIR="/app" \
+    APP_PORT="8000"
 
 WORKDIR $APP_DIR
 COPY . $APP_DIR
@@ -44,20 +44,25 @@ RUN apk add --no-cache php7 \
     php7-posix \
     php7-session \
     php7-xml \
+    php7-xmlwriter \
+    php7-simplexml \
     php7-xsl \
     php7-zip \
     php7-zlib \
     php7-dom \
     php7-redis \
     php7-fpm \
-    php7-sodium
+    php7-sodium \
+    php7-ldap \
+    php7-fileinfo \
+    php7-tokenizer
 
-# Installing npm install
-# RUN npm install
+    # Installing npm install
+    # RUN npm install
 
-# Installing composer
-RUN curl -sS https://getcomposer.org/installer -o composer-setup.php
-RUN php composer-setup.php --install-dir=/usr/local/bin --filename=composer
+    # Installing composer
+    RUN curl -sS https://getcomposer.org/installer -o composer-setup.php
+RUN php composer-setup.php --version=1.7.3 --install-dir=/usr/local/bin --filename=composer
 RUN rm -rf composer-setup.php
 
 RUN composer install
