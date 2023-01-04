@@ -16,10 +16,6 @@ COPY .env.example $APP_DIR/.env
 # Essentials
 RUN echo "UTC" > /etc/timezone
 RUN apk add --no-cache zip unzip curl
-# Installing bash
-RUN apk add bash
-RUN sed -i 's/bin\/ash/bin\/bash/g' /etc/passwd
-
 
 # Installing composer
 RUN curl -sS https://getcomposer.org/installer -o composer-setup.php
