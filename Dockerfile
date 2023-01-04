@@ -54,10 +54,9 @@ RUN apk add --no-cache php7 \
 
 # Installing composer
 RUN curl -sS https://getcomposer.org/installer -o composer-setup.php
-RUN php composer-setup.php --install-dir=/usr/local/bin --filename=composer
+RUN php composer-setup.php --version=1.7.3 --install-dir=/usr/local/bin --filename=composer
 RUN rm -rf composer-setup.php
 
-RUN composer update
 RUN composer install
 # generate an APP_KEY
 RUN php artisan key:generate
