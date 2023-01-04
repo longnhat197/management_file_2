@@ -2,7 +2,7 @@ FROM alpine:latest
 
 ENV \
   APP_DIR="/app" \
-  APP_PORT="80"
+  APP_PORT="8000"
 
 WORKDIR $APP_DIR
 COPY . $APP_DIR
