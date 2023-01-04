@@ -164,4 +164,8 @@ Route::middleware('CheckLogin')->prefix('template')->group(function () {
     Route::post('12',[\App\Http\Controllers\TemplateController::class, 'store12']);
     Route::post('12/save',[\App\Http\Controllers\TemplateController::class, 'save12']);
 
+    //Template 13
+    Route::get('13/{detail_id}',[\App\Http\Controllers\TemplateController::class, 'create13']);
+    Route::post('13',[\App\Http\Controllers\TemplateController::class, 'store13']);
+    Route::post('13/save',[\App\Http\Controllers\TemplateController::class, 'save13']);
 });

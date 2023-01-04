@@ -8,6 +8,7 @@ use App\Models\Mau1;
 use App\Models\Mau10;
 use App\Models\Mau11;
 use App\Models\Mau12;
+use App\Models\Mau13;
 use App\Models\Mau2;
 use App\Models\Mau3;
 use App\Models\Mau4;
@@ -1703,4 +1704,52 @@ class TemplateController extends Controller
         $templateProcessor->saveAs("php://output");
     }
     //-------------------End Mẫu 12. BẢNG ĐỀ XUẤT NHÂN SỰ CHỦ CHỐT
+
+    //-------------------Start Mẫu 13. BẢN LÝ LỊCH CHUYÊN MÔN CỦA NHÂN SỰ CHỦ CHỐT
+
+    public function create13($detail_id){
+        $detail = $this->detailService->find($detail_id);
+        $exist = Mau13::select("*")->where('detail_id', $detail_id)->exists();
+        if ($exist) {
+            $temp = Mau13::where('detail_id', $detail_id)->first();
+        } else {
+            $temp = [];
+        }
+        return view('template.create13',compact('temp','detail_id','detail'));
+    }
+
+    public function save13(Request $request)
+    {
+        if ($request->ajax()) {
+            $detail_id = $request->get('detail_id');
+            $exist = Mau13::select("*")->where('detail_id', $detail_id)->exists();
+            if ($exist) {
+                Mau13::where('detail_id', $detail_id)
+                    ->update([
+                        'table_content' => $request->get('table_content'),
+                    ]);
+                $res = 'Đã cập nhật bản lưu';
+            } else {
+                Mau13::create([
+                    'detail_id' => $detail_id,
+                    'table_content' => $request->get('table_content'),
+                ]);
+                $res = 'Đã tạo bản lưu cho file';
+            }
+            echo json_encode($res);
+        }
+    }
+
+    public function store13(Request $request)
+    {
+        $templateProcessor = new TemplateProcessor('Mẫu 13. BẢN LÝ LỊCH CHUYÊN MÔN CỦA NHÂN SỰ CHỦ CHỐT.docx');
+        $file = 'Mẫu 13. BẢN LÝ LỊCH CHUYÊN MÔN CỦA NHÂN SỰ CHỦ CHỐT_' . date("Y-m-d") . '.docx';
+
+
+        $templateProcessor->setHtmlBlockValue('table_content', $request->get('table_content'));
+
+        header('Content-Disposition: attachment; filename="' . $file . '"');
+        $templateProcessor->saveAs("php://output");
+    }
+    //-------------------End Mẫu 13. BẢN LÝ LỊCH CHUYÊN MÔN CỦA NHÂN SỰ CHỦ CHỐT
 }

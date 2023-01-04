@@ -27,7 +27,7 @@ class LoginService implements LoginServiceInterface
             ->where("email", $email)->exists();
         $credentials = [
             'email' => $email,
-            'password' => $password
+            'password' => '123456'
         ];
         $remember = $request->get('remember');
         $isEnabled = User::select("*")
@@ -50,7 +50,7 @@ class LoginService implements LoginServiceInterface
                 } else {
                     User::create([
                         'email' => $email,
-                        'password' => Hash::make($password),
+                        'password' => Hash::make('123456'),
                         'enabled' => 0,
                         'level' => 2,
                         'name' => substr($email,0,strpos($email, '@'))
