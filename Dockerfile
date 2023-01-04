@@ -17,19 +17,19 @@ RUN apk add bash
 RUN sed -i 's/bin\/ash/bin\/bash/g' /etc/passwd
 
 # Installing PHP
-RUN apk add --no-cache php7.4 \
-    php7.4-common \
+RUN apk add --no-cache php7 \
+    php7-common \
     # php7.4-fpm \
     # php7.4-pdo \
     # php7.4-opcache \
-    php7.4-zip \
+    php7-zip \
     # php7.4-phar \
     # php7.4-iconv \
     # php7.4-cli \
-    php7.4-curl \
-    php7.4-openssl \
+    php7-curl \
+    php7-openssl \
     # php7.4-mbstring \
-    php7.4-fileinfo
+    php7-fileinfo
     # php7.4-json
     # php7.4-xml \
     # php7.4-xmlwriter \
