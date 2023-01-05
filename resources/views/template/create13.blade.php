@@ -49,22 +49,19 @@
                                     data-url="./template/13/save">
                                 <div class="row">
 
-                                    <div class="col-md-3"></div>
-                                    <div class="form-group col-md-6">
+                                    <div class="col-md-2"></div>
+                                    <div class="form-group col-md-8">
                                         <textarea name="table_content"
                                             class="{{ $detail->enabled == 0 ? 'disabled' : '' }}" id="table_content">
 
                                             @if ($temp == []  || $temp->table_content == '')
-                                            <table class="MsoNormalTable" style="border-collapse: collapse; width: 100%; border: 1pt solid #000000;" border="1">
+                                            <table class="MsoNormalTable" style="border-collapse: collapse; width: 100%; border: 1pt solid #000000; color: #000000" border="1">
                                                 <tbody>
                                                 <tr style="mso-yfti-irow: 0; mso-yfti-firstrow: yes; height: 49.5pt;">
                                                 <td style="width: 46.331%; border: 1pt solid rgb(0, 0, 0); background: rgb(234, 241, 221); padding: 0in 5.4pt; height: 49.5pt;" colspan="6" width="456">
                                                 <p class="MsoNormal" style="text-align: center;" align="center"><strong><span style="mso-bidi-font-size: 12.0pt;">Th&ocirc;ng tin nh&acirc;n sự</span></strong></p>
                                                 </td>
-                                                <td style="width: 0.639386%; border-width: 1pt; border-style: solid none; border-color: rgb(0, 0, 0); background: rgb(234, 241, 221); padding: 0in 5.4pt; height: 49.5pt;" valign="top" width="76">
-                                                <p class="MsoNormal" style="text-align: center;" align="center"><strong><span style="mso-bidi-font-size: 12.0pt;">&nbsp;</span></strong></p>
-                                                </td>
-                                                <td style="width: 52.998%; border-width: 1pt; border-style: solid solid solid none; border-color: rgb(0, 0, 0); border-image: initial; background: rgb(234, 241, 221); padding: 0in 5.4pt; height: 49.5pt;" colspan="6" nowrap="nowrap" width="457">
+                                                <td style="width: 52.998%; border-width: 1pt; border-style: solid solid solid none; border-color: rgb(0, 0, 0); border-image: initial; background: rgb(234, 241, 221); padding: 0in 5.4pt; height: 49.5pt;" colspan="7" nowrap="nowrap" width="457">
                                                 <p class="MsoNormal" style="text-align: center;" align="center"><strong><span style="mso-bidi-font-size: 12.0pt;">C&ocirc;ng việc hiện tại</span></strong></p>
                                                 </td>
                                                 </tr>
@@ -212,11 +209,11 @@
                         </div>
 
                         <div class="row">
-                            <div class="col-md-3"></div>
-                            <div class="form-group col-md-3">
+                            <div class="col-md-2"></div>
+                            <div class="form-group col-md-4">
                                 <button type="submit" class="btn btn-outline-primary">Export Word</button>
                             </div>
-                            <div class="form-group col-md-3 text-right">
+                            <div class="form-group col-md-4 text-right">
                                 @if ($detail->enabled != 0)
                                 <a href="javascript:void(0)" id="save" class="btn btn-outline-primary">Lưu</a>
                                 @endif

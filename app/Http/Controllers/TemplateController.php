@@ -9,6 +9,7 @@ use App\Models\Mau10;
 use App\Models\Mau11;
 use App\Models\Mau12;
 use App\Models\Mau13;
+use App\Models\Mau14;
 use App\Models\Mau2;
 use App\Models\Mau3;
 use App\Models\Mau4;
@@ -1752,4 +1753,52 @@ class TemplateController extends Controller
         $templateProcessor->saveAs("php://output");
     }
     //-------------------End Mẫu 13. BẢN LÝ LỊCH CHUYÊN MÔN CỦA NHÂN SỰ CHỦ CHỐT
+
+    //-------------------Start Mẫu 14. BẢN KINH NGHIỆM CHUYÊN MÔN CỦA NHÂN SỰ
+
+    public function create14($detail_id){
+        $detail = $this->detailService->find($detail_id);
+        $exist = Mau14::select("*")->where('detail_id', $detail_id)->exists();
+        if ($exist) {
+            $temp = Mau14::where('detail_id', $detail_id)->first();
+        } else {
+            $temp = [];
+        }
+        return view('template.create14',compact('temp','detail_id','detail'));
+    }
+
+    public function save14(Request $request)
+    {
+        if ($request->ajax()) {
+            $detail_id = $request->get('detail_id');
+            $exist = Mau14::select("*")->where('detail_id', $detail_id)->exists();
+            if ($exist) {
+                Mau14::where('detail_id', $detail_id)
+                    ->update([
+                        'table_content' => $request->get('table_content'),
+                    ]);
+                $res = 'Đã cập nhật bản lưu';
+            } else {
+                Mau14::create([
+                    'detail_id' => $detail_id,
+                    'table_content' => $request->get('table_content'),
+                ]);
+                $res = 'Đã tạo bản lưu cho file';
+            }
+            echo json_encode($res);
+        }
+    }
+
+    public function store14(Request $request)
+    {
+        $templateProcessor = new TemplateProcessor('Mẫu 14. BẢN KINH NGHIỆM CHUYÊN MÔN CỦA NHÂN SỰ.docx');
+        $file = 'Mẫu 14. BẢN KINH NGHIỆM CHUYÊN MÔN CỦA NHÂN SỰ_' . date("Y-m-d") . '.docx';
+
+
+        $templateProcessor->setHtmlBlockValue('table_content', $request->get('table_content'));
+
+        header('Content-Disposition: attachment; filename="' . $file . '"');
+        $templateProcessor->saveAs("php://output");
+    }
+    //-------------------End Mẫu 14. BẢN KINH NGHIỆM CHUYÊN MÔN CỦA NHÂN SỰ
 }
