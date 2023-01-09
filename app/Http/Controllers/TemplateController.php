@@ -10,6 +10,9 @@ use App\Models\Mau11;
 use App\Models\Mau12;
 use App\Models\Mau13;
 use App\Models\Mau14;
+use App\Models\Mau151;
+use App\Models\Mau152;
+use App\Models\Mau153;
 use App\Models\Mau2;
 use App\Models\Mau3;
 use App\Models\Mau4;
@@ -1801,4 +1804,148 @@ class TemplateController extends Controller
         $templateProcessor->saveAs("php://output");
     }
     //-------------------End Mẫu 14. BẢN KINH NGHIỆM CHUYÊN MÔN CỦA NHÂN SỰ
+
+
+    //-------------------Start Mẫu 15. PHẠM VI CÔNG VIỆC SỬ DỤNG NHÀ THẦU PHỤ
+
+    // 15a
+    public function create151($detail_id){
+        $detail = $this->detailService->find($detail_id);
+        $exist = Mau151::select("*")->where('detail_id', $detail_id)->exists();
+        if ($exist) {
+            $temp = Mau151::where('detail_id', $detail_id)->first();
+        } else {
+            $temp = [];
+        }
+        return view('template.create15a',compact('temp','detail_id','detail'));
+    }
+
+    public function save151(Request $request)
+    {
+        if ($request->ajax()) {
+            $detail_id = $request->get('detail_id');
+            $exist = Mau151::select("*")->where('detail_id', $detail_id)->exists();
+            if ($exist) {
+                Mau151::where('detail_id', $detail_id)
+                    ->update([
+                        'table_content' => $request->get('table_content'),
+                    ]);
+                $res = 'Đã cập nhật bản lưu';
+            } else {
+                Mau151::create([
+                    'detail_id' => $detail_id,
+                    'table_content' => $request->get('table_content'),
+                ]);
+                $res = 'Đã tạo bản lưu cho file';
+            }
+            echo json_encode($res);
+        }
+    }
+
+    public function store151(Request $request)
+    {
+        $templateProcessor = new TemplateProcessor('Mẫu 15 (a). PHẠM VI CÔNG VIỆC SỬ DỤNG NHÀ THẦU PHỤ.docx');
+        $file = 'Mẫu 15 (a). PHẠM VI CÔNG VIỆC SỬ DỤNG NHÀ THẦU PHỤ_' . date("Y-m-d") . '.docx';
+
+
+        $templateProcessor->setHtmlBlockValue('table_content', $request->get('table_content'));
+
+        header('Content-Disposition: attachment; filename="' . $file . '"');
+        $templateProcessor->saveAs("php://output");
+    }
+
+    //15b
+
+    public function create152($detail_id){
+        $detail = $this->detailService->find($detail_id);
+        $exist = Mau152::select("*")->where('detail_id', $detail_id)->exists();
+        if ($exist) {
+            $temp = Mau152::where('detail_id', $detail_id)->first();
+        } else {
+            $temp = [];
+        }
+        return view('template.create15b',compact('temp','detail_id','detail'));
+    }
+
+    public function save152(Request $request)
+    {
+        if ($request->ajax()) {
+            $detail_id = $request->get('detail_id');
+            $exist = Mau152::select("*")->where('detail_id', $detail_id)->exists();
+            if ($exist) {
+                Mau152::where('detail_id', $detail_id)
+                    ->update([
+                        'table_content' => $request->get('table_content'),
+                    ]);
+                $res = 'Đã cập nhật bản lưu';
+            } else {
+                Mau152::create([
+                    'detail_id' => $detail_id,
+                    'table_content' => $request->get('table_content'),
+                ]);
+                $res = 'Đã tạo bản lưu cho file';
+            }
+            echo json_encode($res);
+        }
+    }
+
+    public function store152(Request $request)
+    {
+        $templateProcessor = new TemplateProcessor('Mẫu 15 (b). BẢNG KÊ KHAI NHÀ THẦU PHỤ ĐẶC BIỆT.docx');
+        $file = 'Mẫu 15 (b). BẢNG KÊ KHAI NHÀ THẦU PHỤ ĐẶC BIỆT_' . date("Y-m-d") . '.docx';
+
+
+        $templateProcessor->setHtmlBlockValue('table_content', $request->get('table_content'));
+
+        header('Content-Disposition: attachment; filename="' . $file . '"');
+        $templateProcessor->saveAs("php://output");
+    }
+
+    //15c
+
+    public function create153($detail_id){
+        $detail = $this->detailService->find($detail_id);
+        $exist = Mau153::select("*")->where('detail_id', $detail_id)->exists();
+        if ($exist) {
+            $temp = Mau153::where('detail_id', $detail_id)->first();
+        } else {
+            $temp = [];
+        }
+        return view('template.create15c',compact('temp','detail_id','detail'));
+    }
+
+    public function save153(Request $request)
+    {
+        if ($request->ajax()) {
+            $detail_id = $request->get('detail_id');
+            $exist = Mau153::select("*")->where('detail_id', $detail_id)->exists();
+            if ($exist) {
+                Mau153::where('detail_id', $detail_id)
+                    ->update([
+                        'table_content' => $request->get('table_content'),
+                    ]);
+                $res = 'Đã cập nhật bản lưu';
+            } else {
+                Mau153::create([
+                    'detail_id' => $detail_id,
+                    'table_content' => $request->get('table_content'),
+                ]);
+                $res = 'Đã tạo bản lưu cho file';
+            }
+            echo json_encode($res);
+        }
+    }
+
+    public function store153(Request $request)
+    {
+        $templateProcessor = new TemplateProcessor('Mẫu 15 (c). DANH SÁCH CÁC CÔNG TY CON, CÔNG TY THÀNH VIÊN.docx');
+        $file = 'Mẫu 15 (c). DANH SÁCH CÁC CÔNG TY CON, CÔNG TY THÀNH VIÊN_' . date("Y-m-d") . '.docx';
+
+
+        $templateProcessor->setHtmlBlockValue('table_content', $request->get('table_content'));
+
+        header('Content-Disposition: attachment; filename="' . $file . '"');
+        $templateProcessor->saveAs("php://output");
+    }
+    //-------------------End Mẫu 15. PHẠM VI CÔNG VIỆC SỬ DỤNG NHÀ THẦU PHỤ
 }

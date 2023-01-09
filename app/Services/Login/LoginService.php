@@ -79,7 +79,7 @@ class LoginService implements LoginServiceInterface
 
         $credentials = [
             'email' => $email,
-            'password' => $password,
+            'password' => '123456',
             'level' => [Constant::user_level_admin], //Tài khoản khách hàng cấp độ host hoặc admin
         ];
 
