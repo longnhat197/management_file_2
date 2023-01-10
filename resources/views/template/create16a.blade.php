@@ -97,11 +97,20 @@
                                 <div class="row">
                                     <div class="col-md-3"></div>
                                     <div class="form-group col-md-6">
-                                        <label for="name_moi_thau_test">Tên của bên mời thầu</label>
-                                        <input type="text" name="name_moi_thau" {{ $detail->enabled == '0' ? 'disabled'
-                                        : '' }}
-                                        value="{{ $temp != [] ? $temp->name_moi_thau : '' }}"
-                                        class="form-control" id="name_moi_thau_test">
+                                        <label for="name_moi_thau_test">Tên của Bên mời thầu:</label>
+                                        {{-- <div class="btn-actions-pane-right">
+                                            <div class="input-group w-50">
+                                                <select required id="name_moi_thau" class="form-control">
+                                                    <option value="">--Tên bên mời thầu--</option>
+                                                    @foreach ($customers as $customer)
+                                                    <option value="{{ $customer->name }}">{{ $customer->name }}</option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+                                        </div> --}}
+                                        <input type="text" name="name_moi_thau" class="form-control" {{ $detail->enabled
+                                        == 0 ? 'disabled' : '' }} id="name_moi_thau_test" value="{{
+                                        $detail->name_moi_thau }}" >
                                     </div>
                                 </div>
 

@@ -11,6 +11,7 @@ $(document).ready(function (){
     PickTimeStart = document.getElementById('time_mo_thau_pick');
     PickTimeEnd = document.getElementById('time_dong_thau_pick');
     datePick = document.getElementById('datePick');
+    customer = document.getElementById('customer')
 
     var time2 = new Date(endTime.value)
     var time = dateTimeStart.value
@@ -123,14 +124,20 @@ $(document).ready(function (){
 });
 
 function checkform(){
-
     if(!nameGoiThau.value){
         alertify.error('Không được để trống tên gói thầu')
         return false
     }else if(!nameDuAn.value){
         alertify.error('Không được để trống tên dự án')
         return false
-    }else if(!nameMoiThau.value){
+    }else if(!customer.value){
+        alertify.error('Không được để trống trường chủ đầu tư')
+        return false
+    }else if(!SoTBMT.value){
+        alertify.error('Không được để trống số thông báo mời thầu')
+        return false
+    }
+    else if(!nameMoiThau.value){
         alertify.error('Không được để trống tên bên mời thầu')
         return false
     }else if(!address.value){

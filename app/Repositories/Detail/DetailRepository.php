@@ -136,8 +136,6 @@ class DetailRepository extends BaseRepository implements DetailRepositoryInterfa
 
     public function searchNoActive($searches, $perPage = 5){
         $searches = explode(',', $searches);
-        $isExit = UserDetail::select("*")
-        ->where("user_id",Auth::user()->id)->exists();
 
         $query = Detail::select("details.*")
         ->join('users', 'details.user_id', '=', 'users.id');

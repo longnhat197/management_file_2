@@ -18,7 +18,6 @@ class CreateMau161Table extends Migration
             $table->integer('detail_id');
             $table->string('so_trich_yeu')->nullable();
             $table->date('date')->nullable();
-            $table->string('name_moi_thau')->nullable();
             $table->string('name_nha_thau')->nullable();
             $table->text('so_tien')->nullable();
             $table->string('time')->nullable();

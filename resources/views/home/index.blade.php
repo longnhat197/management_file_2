@@ -14,7 +14,7 @@
                     <i class="pe-7s-display2 icon-gradient bg-mean-fruit"></i>
                 </div>
                 <div>
-                    Bản kê khai thông tin về nhà thầu
+                    Bản kê khai thông tin về dự án
                 </div>
             </div>
         </div>
