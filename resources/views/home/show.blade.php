@@ -73,6 +73,7 @@
                                 <th>Tên dự án</th>
                                 <th>Tên bên mời thầu</th>
                                 <th>Hình thức tham dự</th>
+                                <th>Hình thức thầu</th>
                                 <th>Chủ đầu tư</th>
                                 <th>Người tạo</th>
                                 <th class="text-center">Actions</th>
@@ -126,6 +127,22 @@
                                                     Độc lập
                                                     @else
                                                     Liên danh
+                                                    @endif
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </td>
+                                <td>
+                                    <div class="widget-content p-0">
+                                        <div class="widget-content-wrapper">
+                                            <div class="widget-content-left flex2">
+                                                <div class="widget-heading">
+                                                    @if ($detail->hinh_thuc_thau == 0)
+                                                    E-HSDT
+                                                    @else
+                                                    HSDT
                                                     @endif
                                                 </div>
                                             </div>

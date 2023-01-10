@@ -135,12 +135,12 @@
                                             <div class="form-check form-check-inline">
                                                 <input class="form-check-input" type="radio" name="hinh_thuc_thau"
                                                     id="hinh_thuc_thau1" checked value="0">
-                                                <label class="form-check-label" for="hinh_thuc_thau1">HSDT</label>
+                                                <label class="form-check-label" for="hinh_thuc_thau1">E-HSDT</label>
                                             </div>
                                             <div class="form-check form-check-inline">
                                                 <input class="form-check-input" type="radio" name="hinh_thuc_thau"
                                                     id="hinh_thuc_thau2" value="1">
-                                                <label class="form-check-label" for="hinh_thuc_thau2">E-HSDT</label>
+                                                <label class="form-check-label" for="hinh_thuc_thau2">HSDT</label>
                                             </div>
                                         </div>
 

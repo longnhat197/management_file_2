@@ -61,7 +61,7 @@
                     <table class="align-middle mb-0 table table-borderless table-striped table-hover">
                         <thead>
                             <tr>
-                                <th class="text-center">ID</th>
+                                <th class="text-center">STT</th>
                                 <th class="text-center">Tài khoản</th>
                                 <th class="text-center">Dự án</th>
                                 <th class="text-center">Created</th>
@@ -69,9 +69,13 @@
                             </tr>
                         </thead>
                         <tbody>
+                            @php
+                                $k = 0;
+                            @endphp
                             @foreach ($userDetails as $item)
+
                             <tr>
-                                <td class="text-center text-muted">#{{ $item->id }}</td>
+                                <td class="text-center text-muted">{{ ++$k }}</td>
                                 <td class="text-center">
                                     {{ $item->user->email }}
                                 </td>

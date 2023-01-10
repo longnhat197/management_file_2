@@ -52,9 +52,8 @@ class UserDetailController extends Controller
         $userDetails = UserDetail::select("user_details.*")
             ->join('users', 'user_details.user_id', '=', 'users.id')
             ->where('users.email', 'like', '%' . $search . '%')
+            ->orderByDesc('created_at')
             ->paginate(8);
-
-
         return view('admin.userDetail.index', compact('userDetails'));
     }
 
