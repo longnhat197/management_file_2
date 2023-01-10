@@ -11,6 +11,7 @@ use App\Models\Mau14;
 use App\Models\Mau151;
 use App\Models\Mau152;
 use App\Models\Mau153;
+use App\Models\Mau161;
 use App\Models\Mau2;
 use App\Models\Mau3;
 use App\Models\Mau4;
@@ -101,6 +102,9 @@ class DetailRepository extends BaseRepository implements DetailRepositoryInterfa
         }
         if (Mau153::select("*")->where('detail_id', $id)->exists()) {
             Mau153::where('detail_id', $id)->delete();
+        }
+        if (Mau161::select("*")->where('detail_id', $id)->exists()) {
+            Mau161::where('detail_id', $id)->delete();
         }
     }
 

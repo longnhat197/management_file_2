@@ -1545,7 +1545,7 @@
                                     @endphp
                                     @foreach ( $detail0s as $detail0 )
                                     <li class="{{ $detail0->id == request()->segment(3)  ? 'mm-active' : ''}}">
-                                        <a href="#" data-placement="right" data-toggle="tooltip" title="{{ $detail->name_goi_thau }}">
+                                        <a href="#" data-placement="right" data-toggle="tooltip" title="{{ $detail0->name_goi_thau }}">
                                             <i class="metismenu-icon pe-7s-plugin"></i>{{ Str::of($detail0->name_goi_thau)->limit(15) }}
                                             <i class="metismenu-state-icon pe-7s-angle-down caret-left"></i>
                                         </a>

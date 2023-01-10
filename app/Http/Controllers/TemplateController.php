@@ -13,6 +13,7 @@ use App\Models\Mau14;
 use App\Models\Mau151;
 use App\Models\Mau152;
 use App\Models\Mau153;
+use App\Models\Mau161;
 use App\Models\Mau2;
 use App\Models\Mau3;
 use App\Models\Mau4;
@@ -192,11 +193,12 @@ class TemplateController extends Controller
             'ten_chuc_danh' => $request->get('ten_chuc_danh') ?? '[ghi tên, chức danh, ký tên và đóng dấu]'
         ));
 
-        if($request->get('so_trich_yeu') != ''){
-            $templateProcessor->cloneBlock('block_so_trich_yeu',0,true,false,array(
-                array('so_trich_yeu' => "Thư mời thầu số: $request->get('so_trich_yeu')")));
-        }elseif($request->get('so_trich_yeu') == ''){
-            $templateProcessor->cloneBlock('block_so_trich_yeu',0,true,false,null);
+        if ($request->get('so_trich_yeu') != '') {
+            $templateProcessor->cloneBlock('block_so_trich_yeu', 0, true, false, array(
+                array('so_trich_yeu' => "Thư mời thầu số: $request->get('so_trich_yeu')")
+            ));
+        } elseif ($request->get('so_trich_yeu') == '') {
+            $templateProcessor->cloneBlock('block_so_trich_yeu', 0, true, false, null);
         }
 
         header('Content-Disposition: attachment; filename="' . $file . '"');
@@ -537,44 +539,47 @@ class TemplateController extends Controller
             'name_lien_danh' => $request->get('name_lien_danh') ?? '____[ghi tên của liên danh theo thỏa thuận].',
             'hinh_thuc_khac' => $request->get('hinh_thuc_khac') != '' ? '- Hình thức xử lý khác ' . $request->get('hinh_thuc_khac') . '.' : '',
             'name_mot_ben' => $request->get('name_mot_ben') ?? '____[ghi tên một bên]',
-            'noi_dung_khac' => $request->get('noi_dung_khac') != '' ? '- Các công việc khác trừ việc ký kết hợp đồng ' . $request->get('noi_dung_khac'). '.'  : '',
+            'noi_dung_khac' => $request->get('noi_dung_khac') != '' ? '- Các công việc khác trừ việc ký kết hợp đồng ' . $request->get('noi_dung_khac') . '.'  : '',
             'total' => $request->get('total') ?? '___',
             'moi_ben_giu' => $request->get('moi_ben_giu') ?? '___',
             'chu_ky_dung_dau' => $request->get('chu_ky_dung_dau') ?? '[ghi tên, chức danh, ký tên và đóng dấu]',
             'chu_ky_thanh_vien' => $request->get('chu_ky_thanh_vien') ?? '[ghi tên từng thành viên, chức danh, ký tên và đóng dấu]',
 
         ));
-        if($request->get('so_uy_quyen') != ''){
+        if ($request->get('so_uy_quyen') != '') {
             // $uy_quyen = array(
             //     'uy_quyen' => "Giấy uỷ quyền số $request->get('so_uy_quyen') ngày  $d2 tháng $m2 năm $y2."
             // );
             $so_uy_quyen = $request->get('so_uy_quyen');
-            $templateProcessor->cloneBlock('block_uy_quyen',0,true,false,array(
-                array('uy_quyen' => "Giấy uỷ quyền số $so_uy_quyen ngày $d2 tháng $m2 năm $y2.")));
-        }elseif($request->get('so_uy_quyen') == ''){
-            $templateProcessor->cloneBlock('block_uy_quyen',0,true,false,null);
+            $templateProcessor->cloneBlock('block_uy_quyen', 0, true, false, array(
+                array('uy_quyen' => "Giấy uỷ quyền số $so_uy_quyen ngày $d2 tháng $m2 năm $y2.")
+            ));
+        } elseif ($request->get('so_uy_quyen') == '') {
+            $templateProcessor->cloneBlock('block_uy_quyen', 0, true, false, null);
         }
 
-        if($request->get('hinh_thuc_khac') != ''){
+        if ($request->get('hinh_thuc_khac') != '') {
             // $uy_quyen = array(
             //     'uy_quyen' => "Giấy uỷ quyền số $request->get('so_uy_quyen') ngày  $d2 tháng $m2 năm $y2."
             // );
             $hinh_thuc_khac = $request->get('hinh_thuc_khac');
-            $templateProcessor->cloneBlock('block_hinh_thuc_khac',0,true,false,array(
-                array('hinh_thuc_khac' => "- Hình thức xử lý khác $hinh_thuc_khac.")));
-        }elseif($request->get('hinh_thuc_khac') == ''){
-            $templateProcessor->cloneBlock('block_hinh_thuc_khac',0,true,false,null);
+            $templateProcessor->cloneBlock('block_hinh_thuc_khac', 0, true, false, array(
+                array('hinh_thuc_khac' => "- Hình thức xử lý khác $hinh_thuc_khac.")
+            ));
+        } elseif ($request->get('hinh_thuc_khac') == '') {
+            $templateProcessor->cloneBlock('block_hinh_thuc_khac', 0, true, false, null);
         }
 
-        if($request->get('noi_dung_khac') != ''){
+        if ($request->get('noi_dung_khac') != '') {
             // $uy_quyen = array(
             //     'uy_quyen' => "Giấy uỷ quyền số $request->get('so_uy_quyen') ngày  $d2 tháng $m2 năm $y2."
             // );
             $noi_dung_khac = $request->get('noi_dung_khac');
-            $templateProcessor->cloneBlock('block_noi_dung_khac',0,true,false,array(
-                array('noi_dung_khac' => "- Các công việc khác trừ việc ký kết hợp đồng $request->get('noi_dung_khac').")));
-        }elseif($request->get('noi_dung_khac') == ''){
-            $templateProcessor->cloneBlock('block_noi_dung_khac',0,true,false,null);
+            $templateProcessor->cloneBlock('block_noi_dung_khac', 0, true, false, array(
+                array('noi_dung_khac' => "- Các công việc khác trừ việc ký kết hợp đồng $request->get('noi_dung_khac').")
+            ));
+        } elseif ($request->get('noi_dung_khac') == '') {
+            $templateProcessor->cloneBlock('block_noi_dung_khac', 0, true, false, null);
         }
 
         $templateProcessor->setHtmlBlockValue('table_content', $request->get('table_content'));
@@ -601,10 +606,11 @@ class TemplateController extends Controller
             $temp = [];
         }
 
-        return view('template.create4', compact('detail','temp','detail_id'));
+        return view('template.create4', compact('detail', 'temp', 'detail_id'));
     }
 
-    public function save4(Request $request){
+    public function save4(Request $request)
+    {
         if ($request->ajax()) {
             $detail_id = $request->get('detail_id');
             $exist = Mau4::select("*")->where('detail_id', $detail_id)->exists();
@@ -831,7 +837,8 @@ class TemplateController extends Controller
 
 
     // ------------------ Mẫu 05 (a). BẢN KÊ KHAI THÔNG TIN VỀ NHÀ THẦU---------------------
-    public function create5($detail_id){
+    public function create5($detail_id)
+    {
         $detail = $this->detailService->find($detail_id);
         $exist = Mau5::select("*")->where('detail_id', $detail_id)->exists();
         if ($exist) {
@@ -1019,7 +1026,8 @@ class TemplateController extends Controller
         return view('template.create6', compact('detail', 'temp', 'detail_id'));
     }
 
-    public function save6(Request $request){
+    public function save6(Request $request)
+    {
         if ($request->ajax()) {
             $detail_id = $request->get('detail_id');
             $exist = Mau6::select("*")->where('detail_id', $detail_id)->exists();
@@ -1210,13 +1218,14 @@ class TemplateController extends Controller
 
             )
         );
-        if($request->get('name_thanh_vien_lien_danh') != ''){
+        if ($request->get('name_thanh_vien_lien_danh') != '') {
             $ten_thanh_vien = $request->get('name_thanh_vien_lien_danh');
 
-            $templateProcessor->cloneBlock('block_name',0,true,false,array(
-                array('ten' => "Tên thành viên của nhà thầu liên danh: $ten_thanh_vien")));
-        }elseif($request->get('name_thanh_vien_lien_danh') == ''){
-            $templateProcessor->cloneBlock('block_name',0,true,false,null);
+            $templateProcessor->cloneBlock('block_name', 0, true, false, array(
+                array('ten' => "Tên thành viên của nhà thầu liên danh: $ten_thanh_vien")
+            ));
+        } elseif ($request->get('name_thanh_vien_lien_danh') == '') {
+            $templateProcessor->cloneBlock('block_name', 0, true, false, null);
         }
 
         $templateProcessor->setHtmlBlockValue('table_content', $request->get('table_content'));
@@ -1566,7 +1575,8 @@ class TemplateController extends Controller
 
     //-------------------Start Mẫu 10. NGUỒN LỰC TÀI CHÍNH
 
-    public function create10($detail_id){
+    public function create10($detail_id)
+    {
         $detail = $this->detailService->find($detail_id);
         $exist = Mau10::select("*")->where('detail_id', $detail_id)->exists();
         if ($exist) {
@@ -1574,7 +1584,7 @@ class TemplateController extends Controller
         } else {
             $temp = [];
         }
-        return view('template.create10',compact('temp','detail_id','detail'));
+        return view('template.create10', compact('temp', 'detail_id', 'detail'));
     }
 
     public function save10(Request $request)
@@ -1615,7 +1625,8 @@ class TemplateController extends Controller
 
     //-------------------Start Mẫu 11. NGUỒN LỰC TÀI CHÍNH HÀNG THÁNG CHO CÁC HỢP ĐỒNG ĐANG THỰC HIỆN
 
-    public function create11($detail_id){
+    public function create11($detail_id)
+    {
         $detail = $this->detailService->find($detail_id);
         $exist = Mau11::select("*")->where('detail_id', $detail_id)->exists();
         if ($exist) {
@@ -1623,7 +1634,7 @@ class TemplateController extends Controller
         } else {
             $temp = [];
         }
-        return view('template.create11',compact('temp','detail_id','detail'));
+        return view('template.create11', compact('temp', 'detail_id', 'detail'));
     }
 
     public function save11(Request $request)
@@ -1663,7 +1674,8 @@ class TemplateController extends Controller
 
     //-------------------Start Mẫu 12. BẢNG ĐỀ XUẤT NHÂN SỰ CHỦ CHỐT
 
-    public function create12($detail_id){
+    public function create12($detail_id)
+    {
         $detail = $this->detailService->find($detail_id);
         $exist = Mau12::select("*")->where('detail_id', $detail_id)->exists();
         if ($exist) {
@@ -1671,7 +1683,7 @@ class TemplateController extends Controller
         } else {
             $temp = [];
         }
-        return view('template.create12',compact('temp','detail_id','detail'));
+        return view('template.create12', compact('temp', 'detail_id', 'detail'));
     }
 
     public function save12(Request $request)
@@ -1711,7 +1723,8 @@ class TemplateController extends Controller
 
     //-------------------Start Mẫu 13. BẢN LÝ LỊCH CHUYÊN MÔN CỦA NHÂN SỰ CHỦ CHỐT
 
-    public function create13($detail_id){
+    public function create13($detail_id)
+    {
         $detail = $this->detailService->find($detail_id);
         $exist = Mau13::select("*")->where('detail_id', $detail_id)->exists();
         if ($exist) {
@@ -1719,7 +1732,7 @@ class TemplateController extends Controller
         } else {
             $temp = [];
         }
-        return view('template.create13',compact('temp','detail_id','detail'));
+        return view('template.create13', compact('temp', 'detail_id', 'detail'));
     }
 
     public function save13(Request $request)
@@ -1759,7 +1772,8 @@ class TemplateController extends Controller
 
     //-------------------Start Mẫu 14. BẢN KINH NGHIỆM CHUYÊN MÔN CỦA NHÂN SỰ
 
-    public function create14($detail_id){
+    public function create14($detail_id)
+    {
         $detail = $this->detailService->find($detail_id);
         $exist = Mau14::select("*")->where('detail_id', $detail_id)->exists();
         if ($exist) {
@@ -1767,7 +1781,7 @@ class TemplateController extends Controller
         } else {
             $temp = [];
         }
-        return view('template.create14',compact('temp','detail_id','detail'));
+        return view('template.create14', compact('temp', 'detail_id', 'detail'));
     }
 
     public function save14(Request $request)
@@ -1809,7 +1823,8 @@ class TemplateController extends Controller
     //-------------------Start Mẫu 15. PHẠM VI CÔNG VIỆC SỬ DỤNG NHÀ THẦU PHỤ
 
     // 15a
-    public function create151($detail_id){
+    public function create151($detail_id)
+    {
         $detail = $this->detailService->find($detail_id);
         $exist = Mau151::select("*")->where('detail_id', $detail_id)->exists();
         if ($exist) {
@@ -1817,7 +1832,7 @@ class TemplateController extends Controller
         } else {
             $temp = [];
         }
-        return view('template.create15a',compact('temp','detail_id','detail'));
+        return view('template.create15a', compact('temp', 'detail_id', 'detail'));
     }
 
     public function save151(Request $request)
@@ -1856,7 +1871,8 @@ class TemplateController extends Controller
 
     //15b
 
-    public function create152($detail_id){
+    public function create152($detail_id)
+    {
         $detail = $this->detailService->find($detail_id);
         $exist = Mau152::select("*")->where('detail_id', $detail_id)->exists();
         if ($exist) {
@@ -1864,7 +1880,7 @@ class TemplateController extends Controller
         } else {
             $temp = [];
         }
-        return view('template.create15b',compact('temp','detail_id','detail'));
+        return view('template.create15b', compact('temp', 'detail_id', 'detail'));
     }
 
     public function save152(Request $request)
@@ -1903,7 +1919,8 @@ class TemplateController extends Controller
 
     //15c
 
-    public function create153($detail_id){
+    public function create153($detail_id)
+    {
         $detail = $this->detailService->find($detail_id);
         $exist = Mau153::select("*")->where('detail_id', $detail_id)->exists();
         if ($exist) {
@@ -1911,7 +1928,7 @@ class TemplateController extends Controller
         } else {
             $temp = [];
         }
-        return view('template.create15c',compact('temp','detail_id','detail'));
+        return view('template.create15c', compact('temp', 'detail_id', 'detail'));
     }
 
     public function save153(Request $request)
@@ -1948,4 +1965,57 @@ class TemplateController extends Controller
         $templateProcessor->saveAs("php://output");
     }
     //-------------------End Mẫu 15. PHẠM VI CÔNG VIỆC SỬ DỤNG NHÀ THẦU PHỤ
+
+    //-------------------Start Mẫu 16. ĐƠN DỰ THẦU (thuộc HSĐXTC)
+    public function create161($detail_id)
+    {
+        $detail = $this->detailService->find($detail_id);
+        $exist = Mau161::select("*")->where('detail_id', $detail_id)->exists();
+        if ($exist) {
+            $temp = Mau161::where('detail_id', $detail_id)->first();
+        } else {
+            $temp = [];
+        }
+        return view('template.create16a', compact('temp', 'detail_id', 'detail'));
+    }
+
+    public function save161(Request $request)
+    {
+        if ($request->ajax()) {
+            $detail_id = $request->get('detail_id');
+            $exist = Mau161::select("*")->where('detail_id', $detail_id)->exists();
+            if ($exist) {
+                Mau161::where('detail_id', $detail_id)
+                    ->update([
+                        'name_nha_thau' => $request->get('name_nha_thau'),
+                        'so_trich_yeu' => $request->get('so_trich_yeu'),
+                        'date' => $request->get('date'),
+                        'name_moi_thau' => $request->get('name_moi_thau'),
+                        'so_tien' => $request->get('so_tien'),
+                        'dateStart' => $request->get('dateStart'),
+                        'time' => $request->get('time'),
+                        'so_sua_doi' => $request->get('so_sua_doi'),
+                        'name_chuc_danh' => $request->get('name_chuc_danh'),
+                    ]);
+                $res = 'Đã cập nhật bản lưu';
+            } else {
+                Mau161::create([
+                    'detail_id' => $detail_id,
+                    'name_nha_thau' => $request->get('name_nha_thau'),
+                    'so_trich_yeu' => $request->get('so_trich_yeu'),
+                    'date' => $request->get('date'),
+                    'name_moi_thau' => $request->get('name_moi_thau'),
+                    'so_tien' => $request->get('so_tien'),
+                    'dateStart' => $request->get('dateStart'),
+                    'time' => $request->get('time'),
+                    'so_sua_doi' => $request->get('so_sua_doi'),
+                    'name_chuc_danh' => $request->get('name_chuc_danh'),
+                ]);
+                $res = 'Đã tạo bản lưu cho file';
+            }
+            echo json_encode($res);
+        }
+    }
+
+    //-------------------End Mẫu 16. ĐƠN DỰ THẦU (thuộc HSĐXTC)
 }

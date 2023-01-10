@@ -106,7 +106,7 @@ $(document).ready(function () {
 
 
     nameLienDanh.onkeyup = function (){
-        document.getElementById('name_lien_danh1').innerText = nameLienDanh.value
+        document.getElementById('name_lien_danh1').innerText = nameLienDanh.value != '' ? nameLienDanh.value : '_____ [ghi đầy đủ tên của nhà thầu liên danh]'
         if(nameLienDanh.value == ''){
             document.getElementById('name_lien_danh1').innerText = '_____ [ghi đầy đủ tên của nhà thầu liên danh]'
         }
@@ -117,10 +117,10 @@ $(document).ready(function () {
     tenChucDanh.onkeyup = function (){
         document.getElementById('ten_chuc_danh1').innerText = tenChucDanh.value
         if(tenChucDanh.value == ''){
-            document.getElementById('ten_chuc_danh1').innerText = '_____ [ghi đầy đủ tên của nhà thầu liên danh]'
+            document.getElementById('ten_chuc_danh1').innerText = '[ghi tên, chức danh, ký tên và đóng dấu]'
         }
     }
-    document.getElementById('ten_chuc_danh1').innerText = tenChucDanh.value
+    document.getElementById('ten_chuc_danh1').innerText = tenChucDanh.value != '' ? tenChucDanh.value : '[ghi tên, chức danh, ký tên và đóng dấu]'
 
 
 
