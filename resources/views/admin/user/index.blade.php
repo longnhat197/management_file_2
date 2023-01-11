@@ -61,7 +61,7 @@
                     <table class="align-middle mb-0 table table-borderless table-striped table-hover">
                         <thead>
                             <tr>
-                                <th class="text-center">ID</th>
+                                <th class="text-center">STT</th>
                                 <th> Name</th>
                                 <th class="text-center">Email</th>
                                 <th class="text-center">Level</th>
@@ -70,9 +70,12 @@
                             </tr>
                         </thead>
                         <tbody>
+                            @php
+                                $k = 0
+                            @endphp
                             @foreach ($users as $user)
                             <tr>
-                                <td class="text-center text-muted">#{{ $user->id }}</td>
+                                <td class="text-center text-muted">{{ ++$k }}</td>
                                 <td>
                                     <div class="widget-content p-0">
                                         <div class="widget-content-wrapper">

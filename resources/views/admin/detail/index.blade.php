@@ -60,7 +60,7 @@
                         <table class="align-middle mb-0 table table-borderless table-striped table-hover">
                             <thead>
                                 <tr>
-                                    <th class="text-center">ID</th>
+                                    <th class="text-center">STT</th>
                                     <th>Tên gói thầu</th>
                                     <th>Tên dự án</th>
                                     <th>Tên bên mời thầu</th>
@@ -70,9 +70,12 @@
                                 </tr>
                             </thead>
                             <tbody>
+                                @php
+                                    $k =0;
+                                @endphp
                                 @foreach ($details as $detail)
                                     <tr>
-                                        <td class="text-center text-muted">#{{ $detail->id }}</td>
+                                        <td class="text-center text-muted">{{ ++$k }}</td>
                                         <td>
                                             <div class="widget-content p-0">
                                                 <div class="widget-content-wrapper">
@@ -118,12 +121,14 @@
                                                     class="fas fa-check-circle"></i></a>' !!}
                                         </td>
                                         <td class="text-center">
+                                            @if ($detail->enabled == 1)
                                             <a href="./admin/home/detail/{{ $detail->id }}/edit" data-toggle="tooltip" title="Edit"
                                                 data-placement="bottom" class="btn btn-outline-warning border-0 btn-sm">
                                                 <span class="btn-icon-wrapper opacity-8">
                                                     <i class="fa fa-edit fa-w-20"></i>
                                                 </span>
                                             </a>
+                                            @endif
                                             <form class="d-inline" action="./admin/home/detail/{{ $detail->id }}/delete" method="post">
                                                 @csrf
                                                 <button class="btn btn-hover-shine btn-outline-danger border-0 btn-sm"

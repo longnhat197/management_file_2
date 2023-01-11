@@ -76,9 +76,12 @@
                             </tr>
                         </thead>
                         <tbody>
+                            @php
+                                $k = 0
+                            @endphp
                             @foreach ($customers as $customer)
                             <tr>
-                                <td class="text-center text-muted">#{{ $customer->id }}</td>
+                                <td class="text-center text-muted">{{ ++$k }}</td>
                                 <td>
                                     <div class="widget-content p-0">
                                         <div class="widget-content-wrapper">

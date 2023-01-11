@@ -167,17 +167,17 @@ class TemplateController extends Controller
         $m1 = substr($date1, 5, 2);
         $d1 = substr($date1, 8, 2);
 
-        $new_date = $d1 . '/' . $m1 . '/' . $y1;
+        $new_date = $date1 != '' ?  $d1 . '/' . $m1 . '/' . $y1 : '[ghi ngày tháng năm ký đơn dự thầu]';
 
         $date = $request->get('d');
-        $y = substr($date, 0, 4);
-        $m = substr($date, 5, 2);
-        $d = substr($date, 8, 2);
+        $y = $date != '' ? substr($date, 0, 4) : '___';
+        $m = $date != '' ? substr($date, 5, 2) : '___';
+        $d = $date != '' ? substr($date, 8, 2) : '___';
 
         $templateProcessor = new TemplateProcessor('Mẫu 01. ĐƠN DỰ THẦU (thuộc HSĐXKT).docx');
         $file = 'Mẫu 01. ĐƠN DỰ THẦU (thuộc HSĐXKT)_' . date("Y-m-d") . '.docx';
         $templateProcessor->setValues(array(
-            'date' => $new_date ?? '[ghi ngày tháng năm ký đơn dự thầu]',
+            'date' => $new_date,
             'name_goi_thau' => $request->get('name_goi_thau') ?? '[ghi tên gói thầu theo thông báo mời thầu]',
             'name_du_an' => $request->get('name_du_an') ?? '[ghi tên dự án]',
             // 'so_trich_yeu' => $request->get('so_trich_yeu') != '' ? '</w:t><w:br/><w:t>Thư mời thầu số: ' . $request->get('so_trich_yeu') . '.' : '',
@@ -187,15 +187,16 @@ class TemplateController extends Controller
             'name_goi_thau1' => $request->get('name_goi_thau1') ?? '____ [ghi tên gói thầu]',
             'date_thuc_hien' => $request->get('date_thuc_hien') ?? '___[ghi thời gian thực hiện tất cả các công việc theo yêu cầu của gói thầu]',
             'time' => $request->get('time') ?? '___',
-            'd' => $d ?? '___',
-            'm' => $m ?? '___',
-            'y' => $y ?? '___',
+            'd' => $d ,
+            'm' => $m ,
+            'y' => $y ,
             'ten_chuc_danh' => $request->get('ten_chuc_danh') ?? '[ghi tên, chức danh, ký tên và đóng dấu]'
         ));
 
         if ($request->get('so_trich_yeu') != '') {
+            $so_trich_yeu = $request->get('so_trich_yeu');
             $templateProcessor->cloneBlock('block_so_trich_yeu', 0, true, false, array(
-                array('so_trich_yeu' => "Thư mời thầu số: $request->get('so_trich_yeu')")
+                array('so_trich_yeu' => "Thư mời thầu số: $so_trich_yeu")
             ));
         } elseif ($request->get('so_trich_yeu') == '') {
             $templateProcessor->cloneBlock('block_so_trich_yeu', 0, true, false, null);

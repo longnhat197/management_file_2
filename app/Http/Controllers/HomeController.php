@@ -18,6 +18,7 @@ use App\Services\Package\PackageServiceInterface;
 use App\Services\Project\ProjectServiceInterface;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
 
 class HomeController extends Controller
 {
@@ -122,6 +123,7 @@ class HomeController extends Controller
 
     public function logout()
     {
+        Session::flush();
         Auth::logout();
         return redirect('login');
     }

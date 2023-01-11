@@ -117,14 +117,11 @@ class DetailRepository extends BaseRepository implements DetailRepositoryInterfa
             ->where('users.id', '=', Auth::user()->id);
         foreach ($searches as $search) {
             $query
-            ->where(function($q) use ($search)
-            {
-                $q->where('name_du_an','like','%' . $search . '%')
-                ->orWhere('users.email', 'like', '%' . $search . '%')
-                ->orWhere('customer','like','%' . $search . '%')
-                ->orWhere('so_thong_bao','like','%' . $search . '%')
-                ->orWhere('name_moi_thau','like','%' . $search . '%')
-                ->orWhere('address','like','%' . $search . '%');
+                ->where(function ($q) use ($search) {
+                    $q->where('name_du_an', 'like', '%' . $search . '%')
+                        ->orWhere('users.email', 'like', '%' . $search . '%')
+                        ->orWhere('customer', 'like', '%' . $search . '%')
+                        ->orWhere('name_moi_thau', 'like', '%' . $search . '%');
             });
 
         }
@@ -147,9 +144,7 @@ class DetailRepository extends BaseRepository implements DetailRepositoryInterfa
                 $q->where('name_du_an','like','%' . $search . '%')
                 ->orWhere('users.email', 'like', '%' . $search . '%')
                 ->orWhere('customer','like','%' . $search . '%')
-                ->orWhere('so_thong_bao','like','%' . $search . '%')
-                ->orWhere('name_moi_thau','like','%' . $search . '%')
-                ->orWhere('address','like','%' . $search . '%');
+                ->orWhere('name_moi_thau','like','%' . $search . '%');
             });
 
         }

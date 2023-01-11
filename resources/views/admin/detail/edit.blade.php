@@ -11,7 +11,7 @@
                     <i class="pe-7s-home icon-gradient bg-mean-fruit"></i>
                 </div>
                 <div>
-                    Sửa dự án hiện tại đang nhận
+                    Sửa dự án {{ $detail->name_du_an }}
                 </div>
             </div>
         </div>
@@ -52,7 +52,7 @@
                                 aria-labelledby="nav-home-tab">
                                 <div class="row">
                                     <div class="col-md-3"></div>
-                                    <div class="form-group col-md-5">
+                                    <div class="form-group col-md-6">
                                         <label for="nguoi_thuc_hien">Người thực hiện:</label>
                                         <input type="text" class="form-control" value="{{ $detail->userDetails[0]->user->email }}"
                                             id="nguoi_thuc_hien" disabled>
@@ -61,7 +61,7 @@
                                 </div>
                                 <div class="row">
                                     <div class="col-md-3"></div>
-                                    <div class="form-group col-md-5">
+                                    <div class="form-group col-md-6">
                                         {{-- <label for="name_goi_thau">Tên gói thầu:</label> --}}
                                         <input type="text" class="form-control" id="name_goi_thau"
                                             placeholder="Tên gói thầu" name="name_goi_thau" value="{{ $detail->name_goi_thau }}">
@@ -74,7 +74,7 @@
 
                                 <div class="row">
                                     <div class="col-md-3"></div>
-                                    <div class="form-group col-md-5">
+                                    <div class="form-group col-md-6">
                                         <label for="name_du_an">Tên dự án:</label>
                                         <input type="text" class="form-control" id="name_du_an" name="name_du_an" value="{{ $detail->name_du_an }}">
                                         @if ($errors->has('name_du_an'))
@@ -85,7 +85,25 @@
 
                                 <div class="row">
                                     <div class="col-md-3"></div>
-                                    <div class="form-group col-md-5">
+                                    <div class="form-group col-md-6">
+                                        <label for="customer">Chủ đầu tư:</label>
+                                        <div class="btn-actions-pane-right">
+                                            <div class="input-group ">
+                                                <select value="{{ old('customer') }}" id="customer" name="customer"
+                                                    class="form-control">
+                                                    <option value="">--Tên chủ đầu tư--</option>
+                                                    @foreach ($customers as $customer)
+                                                    <option {{ $detail->customer == $customer->name ? 'selected' : '' }} value="{{ $customer->name }}">{{ $customer->name }}</option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-3"></div>
+                                    <div class="form-group col-md-6">
                                         <label for="so_tbmt">Số thông báo mời thầu:</label>
                                         <input type="text" class="form-control" id="so_tbmt" name="so_tbmt" value="{{ $detail->so_thong_bao }}">
                                         @if ($errors->has('so_tbmt'))
@@ -96,7 +114,7 @@
 
                                 <div class="row">
                                     <div class="col-md-3"></div>
-                                    <div class="form-group col-md-5">
+                                    <div class="form-group col-md-6">
                                         <label for="name_moi_thau">Bên mời thầu:</label>
                                         <input type="text" class="form-control" id="name_moi_thau" name="name_moi_thau" value="{{ $detail->name_moi_thau }}">
                                         @if ($errors->has('name_moi_thau'))
@@ -106,7 +124,7 @@
                                 </div>
                                 <div class="row">
                                     <div class="col-md-3"></div>
-                                    <div class="form-group col-md-5">
+                                    <div class="form-group col-md-6">
                                         <label for="address">Địa chỉ:</label>
                                         <input type="text" class="form-control" id="address" name="address" value="{{ $detail->address }}">
                                         @if ($errors->has('address'))
@@ -181,7 +199,7 @@
                                 aria-labelledby="nav-contact-tab">
                                 <div class="row">
                                     <div class="col-md-3"></div>
-                                    <div class="form-group col-md-5">
+                                    <div class="form-group col-md-6">
                                         <label for="time_phat_hanh">Thời gian phát hành hồ sơ:</label>
                                         <input type="date" class="form-control" id="time_phat_hanh"
                                             name="time_phat_hanh" value="{{ $detail->time_phat_hanh }}">
@@ -193,7 +211,7 @@
 
                                 <div class="row">
                                     <div class="col-md-3"></div>
-                                    <div class="form-group col-md-5">
+                                    <div class="form-group col-md-6">
                                         <label for="time_mo_thau">Thời gian mở thầu:</label>
                                         <input type="datetime-local" class="form-control" id="time_mo_thau"
                                             name="time_mo_thau" value="{{ $detail->time_mo_thau }}">
@@ -205,7 +223,7 @@
 
                                 <div class="row">
                                     <div class="col-md-3"></div>
-                                    <div class="form-group col-md-5">
+                                    <div class="form-group col-md-6">
                                         <label for="time_dong_thau">Thời gian đóng thầu:</label>
                                         <input type="datetime-local" class="form-control" id="time_dong_thau"
                                             name="time_dong_thau" value="{{ $detail->time_dong_thau }}">
@@ -217,29 +235,9 @@
                             </div>
                         </div>
 
-
-                        {{-- <div class="row">
-                            <div class="col-md-3"></div>
-                            <div class="col-md-5">
-                                <label><strong>Nhà thầu tham dự:</strong></label>
-                                <div class="form-group">
-                                    <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="radio" name="nha_thau_tham_du"
-                                            id="nha_thau_tham_du1" checked value="0">
-                                        <label class="form-check-inline" for="nha_thau_tham_du1">Sản xuất</label>
-                                    </div>
-                                    <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="radio" name="nha_thau_tham_du"
-                                            id="nha_thau_tham_du2" value="1">
-                                        <label class="form-check-label" for="nha_thau_tham_du2">Thương mại</label>
-                                    </div>
-                                </div>
-
-                            </div>
-                        </div> --}}
                         <div class="row">
                             <div class="col-md-3"></div>
-                            <div class="form-group col-md-5">
+                            <div class="form-group col-md-6">
                                 <button type="submit" class="btn btn-primary">Update</button>
                             </div>
                         </div>
