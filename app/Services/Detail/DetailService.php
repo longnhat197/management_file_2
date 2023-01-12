@@ -23,4 +23,7 @@ class DetailService extends BaseService implements DetailServiceInterface{
     public function searchNoActive($searches, $perPage){
         return $this->repository->searchNoActive($searches, $perPage);
     }
+    public function searchAdmin($searches, $perPage){
+        return $this->repository->searchAdmin($searches, $perPage);
+    }
 }

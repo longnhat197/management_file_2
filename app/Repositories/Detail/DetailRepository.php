@@ -120,6 +120,7 @@ class DetailRepository extends BaseRepository implements DetailRepositoryInterfa
                 ->where(function ($q) use ($search) {
                     $q->where('name_du_an', 'like', '%' . $search . '%')
                         ->orWhere('users.email', 'like', '%' . $search . '%')
+                        ->orWhere('name_goi_thau','like', '%' . $search.'%')
                         ->orWhere('customer', 'like', '%' . $search . '%')
                         ->orWhere('name_moi_thau', 'like', '%' . $search . '%');
             });
@@ -131,6 +132,27 @@ class DetailRepository extends BaseRepository implements DetailRepositoryInterfa
         return $data;
     }
 
+    public function searchAdmin($searches, $perPage = 5){
+        $searches = explode(',', $searches);
+        $query = Detail::select("details.*")
+        ->join('users', 'details.user_id', '=', 'users.id');
+        foreach ($searches as $search) {
+            $query
+            ->where(function($q) use ($search)
+            {
+                $q->where('name_du_an','like','%' . $search . '%')
+                ->orWhere('users.email', 'like', '%' . $search . '%')
+                ->orWhere('name_goi_thau','like', '%' . $search.'%')
+                ->orWhere('customer','like','%' . $search . '%')
+                ->orWhere('name_moi_thau','like','%' . $search . '%');
+            });
+
+        }
+        $data = $query->orderBy('id', 'desc')
+            ->paginate($perPage)
+            ->appends(['search' => $search]);
+        return $data;
+    }
     public function searchNoActive($searches, $perPage = 5){
         $searches = explode(',', $searches);
 
@@ -143,6 +165,7 @@ class DetailRepository extends BaseRepository implements DetailRepositoryInterfa
             {
                 $q->where('name_du_an','like','%' . $search . '%')
                 ->orWhere('users.email', 'like', '%' . $search . '%')
+                ->orWhere('name_goi_thau','like', '%' . $search.'%')
                 ->orWhere('customer','like','%' . $search . '%')
                 ->orWhere('name_moi_thau','like','%' . $search . '%');
             });

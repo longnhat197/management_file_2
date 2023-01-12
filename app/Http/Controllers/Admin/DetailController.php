@@ -20,7 +20,7 @@ class DetailController extends Controller
     }
     public function index(Request $request){
 
-        $details = $this->detailService->searchAndPaginate('name_goi_thau',$request->get('search'),5);
+        $details = $this->detailService->searchAdmin($request->get('search'),7);
         return view('admin.detail.index',compact('details'));
     }
 

@@ -36,8 +36,8 @@
                         @csrf
                         <div class="position-relative row form-group">
                             <label for="image" class="col-md-3 text-md-right col-form-label">Avatar</label>
-                            <div class="col-md-9 col-xl-8">
-                                <img style="height: 200px; cursor: pointer;" class="thumbnail rounded-circle"
+                            <div class="col-md-6 ">
+                                <img style="height: 250px; cursor: pointer; aspect-ratio: 1 / 1; border-radius: 50%; object-fit: cover;" class="thumbnail"
                                     data-toggle="tooltip" title="Click to change the image" data-placement="bottom"
                                     src="img/user/{{ $user->avatar ?? '_default-user.png' }}" alt="Avatar">
                                 <input name="image" type="file" onchange="changeImg(this)"
@@ -50,7 +50,7 @@
                         </div>
                         <div class="position-relative row form-group">
                             <label for="name" class="col-md-3 text-md-right col-form-label">Tên hiển thị</label>
-                            <div class="col-md-9 col-xl-8">
+                            <div class="col-md-6">
                                 <input required name="name" id="name" placeholder="Name" type="text"
                                     class="form-control" value="{{ $user->name }}">
                                 {{-- <input type="hidden" name="id" value="{{ $user->id }}"> --}}
@@ -59,7 +59,7 @@
 
                         <div class="position-relative row form-group">
                             <label for="address" class="col-md-3 text-md-right col-form-label">Email</label>
-                            <div class="col-md-9 col-xl-8">
+                            <div class="col-md-6">
                                 <input readonly id="address" type="text" class="form-control"
                                     value="{{ $user->email }}">
                             </div>
@@ -67,14 +67,14 @@
 
                         <div class="position-relative row form-group">
                             <label for="address" class="col-md-3 text-md-right col-form-label">Level</label>
-                            <div class="col-md-9 col-xl-8">
+                            <div class="col-md-6 ">
                                 <input readonly id="address" type="text" class="form-control"
                                     value="{{ \App\Utilities\Constant::$user_level[$user->level]}}">
                             </div>
                         </div>
 
                         <div class="position-relative row form-group mb-1">
-                            <div class="col-md-9 col-xl-8 offset-md-2">
+                            <div class="col-md-6 offset-md-2">
                                 <a href="javascript:history.back()" class="border-0 btn btn-outline-danger mr-1">
                                     <span class="btn-icon-wrapper pr-1 opacity-8">
                                         <i class="fa fa-times fa-w-20"></i>

@@ -10,7 +10,7 @@
                         <i class="pe-7s-ticket icon-gradient bg-mean-fruit"></i>
                     </div>
                     <div>
-                        Quản lý nhà thầu
+                        Danh sách dự án
                         <div class="page-title-subheading">
                             View, create, update, delete and manage.
                         </div>
@@ -38,7 +38,7 @@
                         <form>
                             <div class="input-group">
                                 <input type="search" name="search" id="search" value="{{ request('search') }}"
-                                    placeholder="Search by name" class="form-control">
+                                    placeholder="Search" class="form-control">
                                 <span class="input-group-append">
                                     <button type="submit" class="btn btn-primary">
                                         <i class="fa fa-search"></i>&nbsp;
@@ -64,6 +64,7 @@
                                     <th>Tên gói thầu</th>
                                     <th>Tên dự án</th>
                                     <th>Tên bên mời thầu</th>
+                                    <th>Chủ đầu tư</th>
                                     <th>Người tạo</th>
                                     <th class="text-center">Tình trạng</th>
                                     <th class="text-center">Actions</th>
@@ -109,6 +110,15 @@
                                             <div class="widget-content p-0">
                                                 <div class="widget-content-wrapper">
                                                     <div class="widget-content-left flex2">
+                                                        <div class="widget-heading">{{ $detail->customer }}</div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="widget-content p-0">
+                                                <div class="widget-content-wrapper">
+                                                    <div class="widget-content-left flex2">
                                                         <div class="widget-heading">{{ $detail->userDetails[0]->user->email }}</div>
                                                     </div>
                                                 </div>
@@ -134,7 +144,7 @@
                                                 <button class="btn btn-hover-shine btn-outline-danger border-0 btn-sm"
                                                     type="submit" data-toggle="tooltip" title="Delete"
                                                     data-placement="bottom"
-                                                    onclick="return confirm('Do you really want to delete this item?')">
+                                                    onclick="return confirm('Bạn có chắc chắn muốn xoá dự án này?')">
                                                     <span class="btn-icon-wrapper opacity-8">
                                                         <i class="fa fa-trash fa-w-20"></i>
                                                     </span>

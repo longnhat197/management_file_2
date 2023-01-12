@@ -7,4 +7,5 @@ interface DetailRepositoryInterface extends RepositoryInterface{
 
     public function searchActive($searches, $perPage);
     public function searchNoActive($searches, $perPage);
+    public function searchAdmin($searches, $perPage);
 }

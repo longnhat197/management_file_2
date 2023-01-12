@@ -56,6 +56,9 @@ class HomeController extends Controller
     }
     public function postLogin(Request $request)
     {
+        if($request->get('email') == '' || $request->get('password') == ''){
+            return back()->with('error','Không được để trống dữ liệu');
+        }
         $this->loginService->checkOverTime();
         return $this->loginService->loginExpert($request);
     }
