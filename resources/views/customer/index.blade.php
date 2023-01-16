@@ -10,7 +10,7 @@
                     <i class="pe-7s-ticket icon-gradient bg-mean-fruit"></i>
                 </div>
                 <div>
-                    Quản lý danh sách khách hàng
+                    Quản lý danh sách chủ đầu tư
                     <div class="page-title-subheading">
                         View, create, update, delete and manage.
                     </div>

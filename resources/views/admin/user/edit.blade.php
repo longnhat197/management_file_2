@@ -36,7 +36,7 @@
                         @csrf
                         <div class="position-relative row form-group">
                             <label for="image" class="col-md-3 text-md-right col-form-label">Avatar</label>
-                            <div class="col-md-9 col-xl-8">
+                            <div class="col-md-6">
                                 <img style="height: 200px;" class="thumbnail rounded-circle"
                                     src="img/user/{{ $user->avatar ?? '_default-user.png' }}" alt="Avatar">
                                 <input disabled type="file" onchange="changeImg(this)"
@@ -49,7 +49,7 @@
                         </div>
                         <div class="position-relative row form-group">
                             <label for="name" class="col-md-3 text-md-right col-form-label">Tên hiển thị</label>
-                            <div class="col-md-9 col-xl-8">
+                            <div class="col-md-6">
                                 <input disabled id="name" placeholder="Name" type="text"
                                     class="form-control" value="{{ $user->name }}">
                                 {{-- <input type="hidden" name="id" value="{{ $user->id }}"> --}}
@@ -58,7 +58,7 @@
 
                         <div class="position-relative row form-group">
                             <label for="address" class="col-md-3 text-md-right col-form-label">Email</label>
-                            <div class="col-md-9 col-xl-8">
+                            <div class="col-md-6">
                                 <input readonly id="address" type="text" class="form-control"
                                     value="{{ $user->email }}">
                             </div>
@@ -67,7 +67,7 @@
                         <div class="position-relative row form-group">
                             <label for="level"
                                 class="col-md-3 text-md-right col-form-label">Level</label>
-                            <div class="col-md-9 col-xl-8">
+                            <div class="col-md-6">
                                 <select name="level" id="level" class="form-control">
                                     <option value="">-- Level --</option>
                                     @foreach (\App\Utilities\Constant::$user_level as $key => $value)
@@ -81,7 +81,7 @@
                         </div>
 
                         <div class="position-relative row form-group mb-1">
-                            <div class="col-md-9 col-xl-8 offset-md-2">
+                            <div class="col-md-6 offset-md-2">
                                 <a href="javascript:history.back()" class="border-0 btn btn-outline-danger mr-1">
                                     <span class="btn-icon-wrapper pr-1 opacity-8">
                                         <i class="fa fa-times fa-w-20"></i>

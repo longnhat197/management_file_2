@@ -36,14 +36,14 @@ class UserDetailController extends Controller
             ->where('detail_id', $request->get('detail_id'))
             ->exists();
         if ($isExit) {
-            return redirect('admin/home/userDetail')->with('error', 'Tài khoản này đã được gán công việc này rồi');
+            return redirect('admin/home/userDetail')->with('error', 'Tài khoản này đã được gán dự án này rồi');
         } else {
             try {
                 UserDetail::create($data);
             } catch (\Exception $e) {
                 return redirect('admin/home/userDetail')->with('error', $e->getMessage());
             }
-            return redirect('admin/home/userDetail')->with('success', 'Thêm mới thành công');
+            return redirect('admin/home/userDetail')->with('success', 'Đã thêm đành công user vào dự án');
         }
     }
     public function index(Request $request)

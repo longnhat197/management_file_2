@@ -11,10 +11,8 @@
                         <i class="pe-7s-ticket icon-gradient bg-mean-fruit"></i>
                     </div>
                     <div>
-                        Customer
-                        <div class="page-title-subheading">
-                            View, create, update, delete and manage.
-                        </div>
+                        Sửa tên chủ đầu tư
+
                     </div>
                 </div>
             </div>
@@ -28,8 +26,8 @@
                             @csrf
                             @method('PUT')
                             <div class="position-relative row form-group">
-                                <label for="name" class="col-md-3 text-md-right col-form-label">Tên bên mời thầu(Khách hàng)</label>
-                                <div class="col-md-9 col-xl-8">
+                                <label for="name" class="col-md-3 text-md-right col-form-label">Tên chủ đầu tư</label>
+                                <div class="col-md-6">
                                     <input required name="name" id="name" placeholder="Name" type="text"
                                         class="form-control" value="{{ $customer->name }}">
                                 </div>
@@ -44,7 +42,7 @@
                             </div> --}}
 
                             <div class="position-relative row form-group mb-1">
-                                <div class="col-md-9 col-xl-8 offset-md-2">
+                                <div class="col-md-6 offset-md-2">
                                     <a href="javascript:history.back()" class="border-0 btn btn-outline-danger mr-1">
                                         <span class="btn-icon-wrapper pr-1 opacity-8">
                                             <i class="fa fa-times fa-w-20"></i>

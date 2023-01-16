@@ -10,9 +10,9 @@
                     <i class="pe-7s-ticket icon-gradient bg-mean-fruit"></i>
                 </div>
                 <div>
-                    User
+                    Danh sách người dùng
                     <div class="page-title-subheading">
-                        View, create, update, delete and manage.
+                        View, update.
                     </div>
                 </div>
             </div>
@@ -46,7 +46,7 @@
                     <form>
                         <div class="input-group">
                             <input type="search" name="search" id="search" value="{{ request('search') }}"
-                                placeholder="Search everything" class="form-control">
+                                placeholder="Search by name" class="form-control">
                             <span class="input-group-append">
                                 <button type="submit" class="btn btn-primary">
                                     <i class="fa fa-search"></i>&nbsp;

@@ -46,7 +46,7 @@
                             <div class="position-relative row form-group">
                                 <label for="detail_id"
                                     class="col-md-3 text-md-right col-form-label">Dự án</label>
-                                <div class="col-md-6 ">
+                                <div class="col-md-6">
                                     <select name="detail_id" id="detail_id" class="form-control">
                                         <option value="">-- Dự án --</option>
                                         @foreach ($details as $detail)
@@ -85,6 +85,14 @@
         </div>
     </div>
     <!-- End Main -->
+@endsection
+@section('script')
+<script >
+    $(document).ready(function() {
+    $("#user_id,#detail_id").select2();
+});
+</script>
+
 @endsection
 
 

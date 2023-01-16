@@ -10,7 +10,7 @@
                     <i class="pe-7s-ticket icon-gradient bg-mean-fruit"></i>
                 </div>
                 <div>
-                    Quản lý danh sách khách hàng
+                    Quản lý danh sách chủ đầu tư
                     <div class="page-title-subheading">
                         View, create, update, delete and manage.
                     </div>
@@ -69,7 +69,7 @@
                         <thead>
                             <tr>
                                 <th class="text-center">ID</th>
-                                <th>Tên khách hàng</th>
+                                <th>Tên chủ đầu tư</th>
                                 {{-- <th>Địa chỉ</th> --}}
                                 <th>Updated at</th>
                                 <th class="text-center">Actions</th>
@@ -125,7 +125,7 @@
                                         @method('DELETE')
                                         <button class="btn btn-hover-shine btn-outline-danger border-0 btn-sm"
                                             type="submit" data-toggle="tooltip" title="Delete" data-placement="bottom"
-                                            onclick="return confirm('Do you really want to delete this item?')">
+                                            onclick="return confirm('Bạn có muốn xoá chủ đầu tư {{ $customer->name }}?')">
                                             <span class="btn-icon-wrapper opacity-8">
                                                 <i class="fa fa-trash fa-w-20"></i>
                                             </span>
