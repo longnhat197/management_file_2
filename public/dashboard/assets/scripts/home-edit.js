@@ -1,3 +1,5 @@
+
+
 var b,c;
     dateTimeStart = document.getElementById('time_mo_thau');
     endTime = document.getElementById('time_dong_thau')
@@ -23,6 +25,8 @@ var b,c;
             PickTimeEnd.value =''
         }
     }
+    var time_condition= Date.now() - b
+
 
     endTime.onchange = function(){
 
@@ -138,6 +142,9 @@ var b,c;
             return false
         }else if(!endTime.value){
             alertify.error('Không được để trống thời gian đóng thầu')
+            return false
+        }else if(time_condition > 0){
+            alertify.error('Đã quá thời gian đóng thầu không update được')
             return false
         }
     }
