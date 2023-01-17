@@ -9,6 +9,24 @@ $(document).ready(function () {
     nameChucDanh = document.getElementById('name_chuc_danh_test')
     detail_id = document.getElementById('detail_id')
     nameNhaThau = document.getElementById('name_nha_thau_test')
+    soTienGiamGia = document.getElementById('so_tien_giam_gia_test')
+    giaTriGiamGia = document.getElementById('gia_tri_giam_gia_test')
+
+    soTienGiamGia.onkeyup = function (){
+        document.getElementById('so_tien_giam_gia1').innerText = soTienGiamGia.value
+        if(soTienGiamGia.value == ''){
+            document.getElementById('so_tien_giam_gia1').innerText = '____[ghi giá trị giảm giá bằng số, bằng chữ và đồng tiền]'
+        }
+    }
+    document.getElementById('so_tien_giam_gia1').innerText = soTienGiamGia.value != '' ? soTienGiamGia.value : '____[ghi giá trị giảm giá bằng số, bằng chữ và đồng tiền]'
+
+    giaTriGiamGia.onkeyup = function (){
+        document.getElementById('gia_tri_giam_gia1').innerText = giaTriGiamGia.value
+        if(giaTriGiamGia.value == ''){
+            document.getElementById('gia_tri_giam_gia1').innerText = '_____[ ghi giá trị bằng số, bằng chữ và đồng tiền]'
+        }
+    }
+    document.getElementById('gia_tri_giam_gia1').innerText = giaTriGiamGia.value != '' ? giaTriGiamGia.value : '_____[ ghi giá trị bằng số, bằng chữ và đồng tiền]'
 
     soTrichYeu.onkeyup = function (){
         document.getElementById('so_trich_yeu1').innerText = soTrichYeu.value
@@ -132,6 +150,8 @@ $(document).ready(function () {
             detail_id: detail_id.value,
             name_chuc_danh: nameChucDanh.value,
             so_tien:soTien.value,
+            so_tien_giam_gia: soTienGiamGia.value,
+            gia_tri_giam_gia:giaTriGiamGia.value
         }
         console.log(data);
 

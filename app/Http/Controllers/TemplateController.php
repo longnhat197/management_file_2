@@ -14,6 +14,7 @@ use App\Models\Mau151;
 use App\Models\Mau152;
 use App\Models\Mau153;
 use App\Models\Mau161;
+use App\Models\Mau162;
 use App\Models\Mau2;
 use App\Models\Mau3;
 use App\Models\Mau4;
@@ -187,9 +188,9 @@ class TemplateController extends Controller
             'name_goi_thau1' => $request->get('name_goi_thau1') ?? '____ [ghi tên gói thầu]',
             'date_thuc_hien' => $request->get('date_thuc_hien') ?? '___[ghi thời gian thực hiện tất cả các công việc theo yêu cầu của gói thầu]',
             'time' => $request->get('time') ?? '___',
-            'd' => $d ,
-            'm' => $m ,
-            'y' => $y ,
+            'd' => $d,
+            'm' => $m,
+            'y' => $y,
             'ten_chuc_danh' => $request->get('ten_chuc_danh') ?? '[ghi tên, chức danh, ký tên và đóng dấu]'
         ));
 
@@ -1968,6 +1969,8 @@ class TemplateController extends Controller
     //-------------------End Mẫu 15. PHẠM VI CÔNG VIỆC SỬ DỤNG NHÀ THẦU PHỤ
 
     //-------------------Start Mẫu 16. ĐƠN DỰ THẦU (thuộc HSĐXTC)
+
+    //16a
     public function create161($detail_id)
     {
         $detail = $this->detailService->find($detail_id);
@@ -1991,7 +1994,6 @@ class TemplateController extends Controller
                         'name_nha_thau' => $request->get('name_nha_thau'),
                         'so_trich_yeu' => $request->get('so_trich_yeu'),
                         'date' => $request->get('date'),
-                        'name_moi_thau' => $request->get('name_moi_thau'),
                         'so_tien' => $request->get('so_tien'),
                         'dateStart' => $request->get('dateStart'),
                         'time' => $request->get('time'),
@@ -2005,7 +2007,6 @@ class TemplateController extends Controller
                     'name_nha_thau' => $request->get('name_nha_thau'),
                     'so_trich_yeu' => $request->get('so_trich_yeu'),
                     'date' => $request->get('date'),
-                    'name_moi_thau' => $request->get('name_moi_thau'),
                     'so_tien' => $request->get('so_tien'),
                     'dateStart' => $request->get('dateStart'),
                     'time' => $request->get('time'),
@@ -2016,6 +2017,146 @@ class TemplateController extends Controller
             }
             echo json_encode($res);
         }
+    }
+    public function store161(Request $request)
+    {
+        // return $request->all();
+        $date = $request->get('date');
+
+        $y = substr($date, 0, 4);
+        $m = substr($date, 5, 2);
+        $d = substr($date, 8, 2);
+        $new_date = $date != null ? $d . '/' . $m . '/' . $y : '__ [ghi ngày tháng năm ký đơn dự thầu]';
+
+        $dateStart = $request->get('dateStart');
+        $y = $dateStart != null ? substr($dateStart, 0, 4) : '___';
+        $m = $dateStart != null ? substr($dateStart, 5, 2) : '___';
+        $d = $dateStart != null ? substr($dateStart, 8, 2) : '___';
+
+        $templateProcessor = new TemplateProcessor('Mẫu 16 (a). ĐƠN DỰ THẦU (thuộc HSĐXTC).docx');
+        $file = 'Mẫu 16 (a). ĐƠN DỰ THẦU (thuộc HSĐXTC)_' . date("Y-m-d") . '.docx';
+
+        $templateProcessor->setValues(
+            array(
+                'date' => $new_date,
+                'name_goi_thau' => $request->get('name_goi_thau') ?? '__ [ghi tên gói thầu theo thông báo mời thầu]',
+                'name_du_an' => $request->get('name_du_an') ?? '__ [ghi tên dự án]',
+                'so_trich_yeu' => $request->get('so_trich_yeu') ?? '__[ghi số trích yếu của Thư mời thầu đối với đấu thầu hạn chế]',
+                'name_moi_thau' => $request->get('name_moi_thau') ?? '__ [ghi đầy đủ và chính xác tên của Bên mời thầu]',
+                'so_sua_doi' => $request->get('so_sua_doi') != '' ? 'và văn bản sửa đổi hồ sơ mời thầu số ' . $request->get('so_sua_doi') : '',
+                'so_tien' => $request->get('so_tien') ?? '____[ghi giá trị bằng số, bằng chữ và đồng tiền dự thầu]',
+                'time' => $request->get('time') ?? '_____',
+                'y' => $y,
+                'm' => $m,
+                'd' => $d,
+                'name_chuc_danh' => $request->get('name_chuc_danh') ?? '[ghi tên, chức danh, ký tên và đóng dấu]',
+                'name_nha_thau' => $request->get('name_nha_thau') ?? '____ [ghi tên nhà thầu]'
+
+            )
+        );
+
+        $templateProcessor->setHtmlBlockValue('table_content', $request->get('table_content'));
+
+        header('Content-Disposition: attachment; filename="' . $file . '"');
+        $templateProcessor->saveAs("php://output");
+    }
+
+    //16 b
+    public function create162($detail_id)
+    {
+        $detail = $this->detailService->find($detail_id);
+        $exist = Mau162::select("*")->where('detail_id', $detail_id)->exists();
+        if ($exist) {
+            $temp = Mau162::where('detail_id', $detail_id)->first();
+        } else {
+            $temp = [];
+        }
+        return view('template.create16b', compact('temp', 'detail_id', 'detail'));
+    }
+
+    public function save162(Request $request)
+    {
+        if ($request->ajax()) {
+            $detail_id = $request->get('detail_id');
+            $exist = Mau162::select("*")->where('detail_id', $detail_id)->exists();
+            if ($exist) {
+                Mau162::where('detail_id', $detail_id)
+                    ->update([
+                        'name_nha_thau' => $request->get('name_nha_thau'),
+                        'so_trich_yeu' => $request->get('so_trich_yeu'),
+                        'date' => $request->get('date'),
+                        'so_tien' => $request->get('so_tien'),
+                        'dateStart' => $request->get('dateStart'),
+                        'time' => $request->get('time'),
+                        'so_sua_doi' => $request->get('so_sua_doi'),
+                        'name_chuc_danh' => $request->get('name_chuc_danh'),
+                        'so_tien_giam_gia' => $request->get('so_tien_giam_gia'),
+                        'gia_tri_giam_gia' => $request->get('gia_tri_giam_gia'),
+                    ]);
+                $res = 'Đã cập nhật bản lưu';
+            } else {
+                Mau162::create([
+                    'detail_id' => $detail_id,
+                    'name_nha_thau' => $request->get('name_nha_thau'),
+                    'so_trich_yeu' => $request->get('so_trich_yeu'),
+                    'date' => $request->get('date'),
+                    'so_tien' => $request->get('so_tien'),
+                    'dateStart' => $request->get('dateStart'),
+                    'time' => $request->get('time'),
+                    'so_sua_doi' => $request->get('so_sua_doi'),
+                    'name_chuc_danh' => $request->get('name_chuc_danh'),
+                    'so_tien_giam_gia' => $request->get('so_tien_giam_gia'),
+                    'gia_tri_giam_gia' => $request->get('gia_tri_giam_gia'),
+                ]);
+                $res = 'Đã tạo bản lưu cho file';
+            }
+            echo json_encode($res);
+        }
+    }
+
+    public function store162(Request $request)
+    {
+        // return $request->all();
+        $date = $request->get('date');
+
+        $y = substr($date, 0, 4);
+        $m = substr($date, 5, 2);
+        $d = substr($date, 8, 2);
+        $new_date = $date != null ? $d . '/' . $m . '/' . $y : '__ [ghi ngày tháng năm ký đơn dự thầu]';
+
+        $dateStart = $request->get('dateStart');
+        $y = $dateStart != null ? substr($dateStart, 0, 4) : '___';
+        $m = $dateStart != null ? substr($dateStart, 5, 2) : '___';
+        $d = $dateStart != null ? substr($dateStart, 8, 2) : '___';
+
+        $templateProcessor = new TemplateProcessor('Mẫu 16 (b). ĐƠN DỰ THẦU (thuộc HSĐXTC).docx');
+        $file = 'Mẫu 16 (b). ĐƠN DỰ THẦU (thuộc HSĐXTC)_' . date("Y-m-d") . '.docx';
+
+        $templateProcessor->setValues(
+            array(
+                'date' => $new_date,
+                'name_goi_thau' => $request->get('name_goi_thau') ?? '__ [ghi tên gói thầu theo thông báo mời thầu]',
+                'name_du_an' => $request->get('name_du_an') ?? '__ [ghi tên dự án]',
+                'so_trich_yeu' => $request->get('so_trich_yeu') ?? '__[ghi số trích yếu của Thư mời thầu đối với đấu thầu hạn chế]',
+                'name_moi_thau' => $request->get('name_moi_thau') ?? '__ [ghi đầy đủ và chính xác tên của Bên mời thầu]',
+                'so_sua_doi' => $request->get('so_sua_doi') != '' ? 'và văn bản sửa đổi hồ sơ mời thầu số ' . $request->get('so_sua_doi') : '',
+                'so_tien' => $request->get('so_tien') ?? '____[ghi giá trị bằng số, bằng chữ và đồng tiền dự thầu]',
+                'time' => $request->get('time') ?? '_____',
+                'y' => $y,
+                'm' => $m,
+                'd' => $d,
+                'name_chuc_danh' => $request->get('name_chuc_danh') ?? '[ghi tên, chức danh, ký tên và đóng dấu]',
+                'name_nha_thau' => $request->get('name_nha_thau') ?? '____ [ghi tên nhà thầu]',
+                'so_tien_giam_gia' => $request->get('so_tien_giam_gia') ?? '____[ghi giá trị giảm giá bằng số, bằng chữ và đồng tiền]',
+                'gia_tri_giam_gia' => $request->get('gia_tri_giam_gia') ?? '_____[ ghi giá trị bằng số, bằng chữ và đồng tiền]'
+
+            )
+        );
+
+        $templateProcessor->setHtmlBlockValue('table_content', $request->get('table_content'));
+
+        header('Content-Disposition: attachment; filename="' . $file . '"');
+        $templateProcessor->saveAs("php://output");
     }
 
     //-------------------End Mẫu 16. ĐƠN DỰ THẦU (thuộc HSĐXTC)

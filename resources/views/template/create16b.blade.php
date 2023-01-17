@@ -25,14 +25,14 @@
         <div class="col-md-12">
             <div class="main-card mb-3 card">
                 <div class="card-body">
-                    <form action="./template/161" method="post">
+                    <form action="./template/162" method="post">
                         @csrf
                         <nav>
                             <div class="nav nav-tabs nav-fill" id="nav-tab" role="tablist">
                                 <a class="nav-item nav-link active p-2" id="nav-home-tab" data-toggle="tab"
                                     href="#nav-home" role="tab" aria-controls="nav-home" aria-selected="true">
                                     <i class="fas fa-clipboard p-2"></i>
-                                    Thông tin chung
+                                    Thông tin 1
                                 </a>
                                 {{-- <a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab"
                                     href="#nav-profile" role="tab" aria-controls="nav-profile"
@@ -40,7 +40,7 @@
                                 <a class="nav-item nav-link" id="nav-contact-tab" data-toggle="tab" href="#nav-contact"
                                     role="tab" aria-controls="nav-contact" aria-selected="false">
                                     <i class="fas fa-calendar-day p-2"></i>
-                                    Thông tin về đại diện hợp pháp của nhà thầu
+                                    Thông tin 2
                                 </a>
                             </div>
                         </nav>
@@ -57,7 +57,7 @@
                                         $temp != [] ? $temp->date : '' }}"
                                         name="date" id="date" class="form-control">
                                         <input type="hidden" value="{{ $detail_id }}" id="detail_id"
-                                            data-url="./template/161/save">
+                                            data-url="./template/162/save">
                                     </div>
                                 </div>
 
@@ -114,13 +114,6 @@
                                     </div>
                                 </div>
 
-                            </div>
-
-                            <div class="tab-pane fade" id="nav-contact" role="tabpanel"
-                                aria-labelledby="nav-contact-tab">
-
-
-
                                 <div class="row">
                                     <div class="col-md-3"></div>
                                     <div class="form-group col-md-6">
@@ -148,6 +141,33 @@
                                             tiền dự thầu):</label>
                                         <textarea name="so_tien" {{ $detail->enabled == '0' ? 'disabled' : '' }} class="form-control" id="so_tien_test" cols="30"
                                             rows="4">{{ $temp != [] ? $temp->so_tien : '' }}</textarea>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <div class="tab-pane fade" id="nav-contact" role="tabpanel"
+                                aria-labelledby="nav-contact-tab">
+
+                                <div class="row">
+                                    <div class="col-md-3"></div>
+                                    <div class="form-group col-md-6">
+                                        <label for="so_tien_giam_gia_test">Số tiền giảm giá (ghi giá trị bằng số, bằng
+                                            chữ và đồng
+                                            tiền dự thầu):</label>
+                                        <textarea name="so_tien_giam_gia" {{ $detail->enabled == '0' ? 'disabled' : '' }} class="form-control" id="so_tien_giam_gia_test" cols="30"
+                                            rows="4">{{ $temp != [] ? $temp->so_tien_giam_gia : '' }}</textarea>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-3"></div>
+                                    <div class="form-group col-md-6">
+                                        <label for="gia_tri_giam_gia_test">Giá trị giảm giá (ghi giá trị bằng số, bằng
+                                            chữ và đồng
+                                            tiền dự thầu):</label>
+                                        <textarea name="gia_tri_giam_gia" {{ $detail->enabled == '0' ? 'disabled' : '' }} class="form-control" id="gia_tri_giam_gia_test" cols="30"
+                                            rows="4">{{ $temp != [] ? $temp->gia_tri_giam_gia : '' }}</textarea>
                                     </div>
                                 </div>
 
@@ -213,12 +233,11 @@
                 <p class="MsoNormal" style="text-align: center; margin: 6.0pt 2.15pt .0001pt 0in;" align="center"><span
                         style="font-family: 'times new roman', times, serif; color: rgb(0, 0, 0);"><em
                             style="mso-bidi-font-style: normal;"><span style="mso-bidi-font-size: 12.0pt;">(&aacute;p
-                                dụng trong trường hợp nh&agrave; thầu kh&ocirc;ng c&oacute; đề xuất giảm gi&aacute; hoặc
-                                c&oacute; đề xuất giảm gi&aacute; trong thư giảm gi&aacute;
-                                ri&ecirc;ng)</span></em></span></p>
+                                dụng trong trường hợp nh&agrave; thầu c&oacute; đề xuất giảm gi&aacute; trong đơn dự
+                                thầu)</span></em></span></p>
                 <p class="MsoNormal" style="text-align: left; margin: 6.0pt 2.15pt .0001pt 0in;" align="left"><span
                         style="font-family: 'times new roman', times, serif; color: rgb(0, 0, 0);">Ng&agrave;y: <span
-                            style="background: yellow; mso-highlight: yellow;" id="date1">__[ghi ng&agrave;y th&aacute;ng năm k&yacute; đơn dự
+                            style="background: yellow; mso-highlight: yellow;" id="date1">__ [ghi ng&agrave;y th&aacute;ng năm k&yacute; đơn dự
                                 thầu]</span></span></p>
                 <p class="MsoNormal" style="text-align: left; margin: 6.0pt 2.15pt .0001pt 0in;" align="left"><span
                         style="font-family: 'times new roman', times, serif; color: rgb(0, 0, 0);">T&ecirc;n g&oacute;i
@@ -237,29 +256,42 @@
                 <p class="MsoNormal" style="text-align: left; margin: 6.0pt 2.15pt .0001pt 0in;" align="left"><span
                         style="font-family: 'times new roman', times, serif; color: rgb(0, 0, 0);">&nbsp;</span></p>
                 <p class="MsoNormal" style="text-align: left; margin: 6.0pt 2.15pt .0001pt 0in;" align="left"><span
-                        style="font-family: 'times new roman', times, serif; color: rgb(0, 0, 0);">K&iacute;nh gửi:
-                        <span
+                        style="font-family: 'times new roman', times, serif; color: rgb(0, 0, 0);">K&iacute;nh gửi: <span
                                 style="background: yellow; mso-highlight: yellow;" id="name_moi_thau1">__[ghi đầy đủ v&agrave; ch&iacute;nh
                                 x&aacute;c t&ecirc;n của B&ecirc;n mời thầu]</span></span></p>
                 <p class="MsoNormal" style="text-align: left; margin: 6.0pt 2.15pt .0001pt 0in;" align="left"><span
                         style="font-family: 'times new roman', times, serif; color: rgb(0, 0, 0);">Sau khi nghi&ecirc;n
-                        cứu hồ sơ mời thầu <span id="so_sua_doi">v&agrave; văn bản sửa đổi hồ sơ mời thầu số <span style="background: yellow; mso-highlight: yellow;" id="so_sua_doi1">____[ghi số của văn bản sửa đổi (nếu c&oacute;)]</span></span> m&agrave; ch&uacute;ng t&ocirc;i đ&atilde; nhận được,
-                        ch&uacute;ng t&ocirc;i, <span style="background: yellow; mso-highlight: yellow;" id="name_nha_thau1">____ [ghi t&ecirc;n nh&agrave; thầu]</span>, cam
-                        kết thực hiện g&oacute;i thầu <span style="background: yellow; mso-highlight: yellow;" id="name_goi_thau2">____[ghi t&ecirc;n g&oacute;i thầu]</span><em
-                            style="mso-bidi-font-style: normal;"> </em>theo đ&uacute;ng y&ecirc;u cầu của hồ sơ mời
-                        thầu. C&ugrave;ng với Hồ sơ đề xuất về kỹ thuật, ch&uacute;ng t&ocirc;i xin gửi k&egrave;m đơn
-                        n&agrave;y đề xuất về t&agrave;i ch&iacute;nh với tổng số tiền l&agrave; <em
-                            style="mso-bidi-font-style: normal;"><span
+                        cứu hồ sơ mời thầu <span id="so_sua_doi">v&agrave; văn bản sửa đổi hồ sơ mời thầu số <span
+                                style="background: yellow; mso-highlight: yellow;" id="so_sua_doi1">____[ghi số của văn bản sửa đổi (nếu
+                                c&oacute;)]</span></span> m&agrave; ch&uacute;ng t&ocirc;i đ&atilde; nhận được,
+                        ch&uacute;ng t&ocirc;i<em>, <span style="background: yellow; mso-highlight: yellow;" id="name_nha_thau1">____ [ghi
+                                t&ecirc;n nh&agrave; thầu]</span></em>, cam kết thực hiện g&oacute;i thầu <em><span
+                                style="background: yellow; mso-highlight: yellow;" id="name_goi_thau2">____[ghi t&ecirc;n g&oacute;i
+                                thầu]</span></em> theo đ&uacute;ng y&ecirc;u cầu của hồ sơ mời thầu. C&ugrave;ng với Hồ
+                        sơ đề xuất về kỹ thuật, ch&uacute;ng t&ocirc;i xin gửi k&egrave;m đơn n&agrave;y đề xuất về
+                        t&agrave;i ch&iacute;nh với tổng số tiền l&agrave; <em><span
                                 style="background: yellow; mso-highlight: yellow;" id="so_tien1">____[ghi gi&aacute; trị bằng số, bằng
                                 chữ v&agrave; đồng tiền dự thầu]</span></em> c&ugrave;ng với bảng tổng hợp gi&aacute; dự
-                        thầu k&egrave;m theo.</span></p>
+                        thầu k&egrave;m theo. </span></p>
+                <p class="MsoNormal" style="text-align: left; margin: 6.0pt 2.15pt .0001pt 0in;" align="left"><span
+                        style="font-family: 'times new roman', times, serif; color: rgb(0, 0, 0);">Ngo&agrave;i ra,
+                        ch&uacute;ng t&ocirc;i tự nguyện giảm gi&aacute; dự thầu với số tiền giảm gi&aacute;
+                        l&agrave;<span style="mso-bidi-font-style: italic;">:<em> <span
+                                    style="background: yellow; mso-highlight: yellow;" id="so_tien_giam_gia1">____[ghi gi&aacute; trị giảm
+                                    gi&aacute; bằng số, bằng chữ v&agrave; đồng tiền]</span></em></span>.</span></p>
+                <p class="MsoNormal" style="text-align: left; margin: 6.0pt 2.15pt .0001pt 0in;" align="left"><span
+                        style="font-family: 'times new roman', times, serif; color: rgb(0, 0, 0);">Gi&aacute; dự thầu
+                        sau khi trừ đi gi&aacute; trị giảm gi&aacute; l&agrave;<span
+                            style="mso-bidi-font-style: italic;">:<em> <span
+                                    style="background: yellow; mso-highlight: yellow;" id="gia_tri_giam_gia1">_____[ ghi gi&aacute; trị bằng
+                                    số, bằng chữ v&agrave; đồng tiền]</span>.</em></span></span></p>
                 <p class="MsoNormal" style="text-align: left; margin: 6.0pt 2.15pt .0001pt 0in;" align="left"><span
                         style="font-family: 'times new roman', times, serif; color: rgb(0, 0, 0);">Hồ sơ đề xuất về
                         t&agrave;i ch&iacute;nh n&agrave;y c&oacute; hiệu lực trong thời gian <span
-                            style="background: yellow; mso-highlight: yellow;" id="time1">___</span> ng&agrave;y, kể từ ng&agrave;y
+                            style="background: yellow; mso-highlight: yellow;" id="time1">____</span> ng&agrave;y, kể từ ng&agrave;y
                         <span style="background: yellow; mso-highlight: yellow;" id="d">___</span> th&aacute;ng <span
                             style="background: yellow; mso-highlight: yellow;" id="m">____</span> năm <span
-                            style="background: yellow; mso-highlight: yellow;" id="y">___</span>.</span></p>
+                            style="background: yellow; mso-highlight: yellow;" id="y">____</span>.</span></p>
                 <p class="MsoNormal" style="text-align: left; margin: 6.0pt 2.15pt .0001pt 0in;" align="left"><span
                         style="font-family: 'times new roman', times, serif; color: rgb(0, 0, 0);">&nbsp;</span></p>
                 <table class="MsoNormalTable"
@@ -299,7 +331,7 @@
 <!-- End Main -->
 @endsection
 @section('script')
-<script type="text/javascript" src="./dashboard/assets/scripts/create16a.js"></script>
+<script type="text/javascript" src="./dashboard/assets/scripts/create16b.js"></script>
 <script>
 
 </script>
