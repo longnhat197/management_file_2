@@ -138,4 +138,12 @@ class Detail extends Model
     {
         return $this->belongsTo(Mau172::class, 'detail_id', 'id');
     }
+    public function mau181()
+    {
+        return $this->belongsTo(Mau181::class, 'detail_id', 'id');
+    }
+    public function mau18()
+    {
+        return $this->belongsTo(Mau18::class, 'detail_id', 'id');
+    }
 }

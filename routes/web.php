@@ -208,4 +208,13 @@ Route::middleware('CheckLogin')->prefix('template')->group(function () {
     Route::get('172/{detail_id}',[\App\Http\Controllers\TemplateController::class, 'create172']);
     Route::post('172',[\App\Http\Controllers\TemplateController::class, 'store172']);
     Route::post('172/save',[\App\Http\Controllers\TemplateController::class, 'save172']);
+
+    //Template 18
+    Route::get('181/{detail_id}',[\App\Http\Controllers\TemplateController::class, 'create181']);
+    Route::post('181',[\App\Http\Controllers\TemplateController::class, 'store181']);
+    Route::post('181/save',[\App\Http\Controllers\TemplateController::class, 'save181']);
+
+    Route::get('18/{detail_id}',[\App\Http\Controllers\TemplateController::class, 'create18']);
+    Route::post('18',[\App\Http\Controllers\TemplateController::class, 'store18']);
+    Route::post('18/save',[\App\Http\Controllers\TemplateController::class, 'save18']);
 });

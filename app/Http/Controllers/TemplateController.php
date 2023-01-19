@@ -18,6 +18,8 @@ use App\Models\Mau162;
 use App\Models\Mau17;
 use App\Models\Mau171;
 use App\Models\Mau172;
+use App\Models\Mau18;
+use App\Models\Mau181;
 use App\Models\Mau2;
 use App\Models\Mau3;
 use App\Models\Mau4;
@@ -2314,4 +2316,106 @@ class TemplateController extends Controller
 
 
     //-------------------Start Mẫu 17. BẢNG TỔNG HỢP GIÁ DỰ THẦU
+
+    //-------------------Start Mẫu 18. Bảng kê khai
+    //18
+    public function create18($detail_id)
+    {
+        $detail = $this->detailService->find($detail_id);
+        $exist = Mau18::select("*")->where('detail_id', $detail_id)->exists();
+        if ($exist) {
+            $temp = Mau18::where('detail_id', $detail_id)->first();
+        } else {
+            $temp = [];
+        }
+        return view('template.create18', compact('temp', 'detail_id', 'detail'));
+    }
+
+    public function save18(Request $request)
+    {
+        if ($request->ajax()) {
+            $detail_id = $request->get('detail_id');
+            $exist = Mau18::select("*")->where('detail_id', $detail_id)->exists();
+            if ($exist) {
+                Mau18::where('detail_id', $detail_id)
+                    ->update([
+                        'table_content' => $request->get('table_content'),
+                        'name_chuc_danh' => $request->get('name_chuc_danh')
+                    ]);
+                $res = 'Đã cập nhật bản lưu';
+            } else {
+                Mau18::create([
+                    'detail_id' => $detail_id,
+                    'table_content' => $request->get('table_content'),
+                    'name_chuc_danh' => $request->get('name_chuc_danh')
+                ]);
+                $res = 'Đã tạo bản lưu cho file';
+            }
+            echo json_encode($res);
+        }
+    }
+
+    public function store18(Request $request)
+    {
+        $templateProcessor = new TemplateProcessor('Mẫu 18. BẢNG KÊ KHAI CHI PHÍ SẢN XUẤT TRONG NƯỚC ĐỐI VỚI HÀNG HÓA ƯU ĐÃI.docx');
+        $file = 'Mẫu 18. BẢNG KÊ KHAI CHI PHÍ SẢN XUẤT TRONG NƯỚC ĐỐI VỚI HÀNG HÓA ƯU ĐÃI_' . date("Y-m-d") . '.docx';
+
+        $templateProcessor->setValue('name_chuc_danh', $request->get('name_chuc_danh') ?? '[ghi tên, chức danh, ký tên và đóng dấu]');
+        $templateProcessor->setHtmlBlockValue('table_content', $request->get('table_content'));
+
+        header('Content-Disposition: attachment; filename="' . $file . '"');
+        $templateProcessor->saveAs("php://output");
+    }
+
+    //18a
+    public function create181($detail_id)
+    {
+        $detail = $this->detailService->find($detail_id);
+        $exist = Mau181::select("*")->where('detail_id', $detail_id)->exists();
+        if ($exist) {
+            $temp = Mau181::where('detail_id', $detail_id)->first();
+        } else {
+            $temp = [];
+        }
+        return view('template.create18a', compact('temp', 'detail_id', 'detail'));
+    }
+
+    public function save181(Request $request)
+    {
+        if ($request->ajax()) {
+            $detail_id = $request->get('detail_id');
+            $exist = Mau181::select("*")->where('detail_id', $detail_id)->exists();
+            if ($exist) {
+                Mau181::where('detail_id', $detail_id)
+                    ->update([
+                        'table_content' => $request->get('table_content'),
+                        'name_chuc_danh' => $request->get('name_chuc_danh')
+                    ]);
+                $res = 'Đã cập nhật bản lưu';
+            } else {
+                Mau181::create([
+                    'detail_id' => $detail_id,
+                    'table_content' => $request->get('table_content'),
+                    'name_chuc_danh' => $request->get('name_chuc_danh')
+                ]);
+                $res = 'Đã tạo bản lưu cho file';
+            }
+            echo json_encode($res);
+        }
+    }
+
+    public function store181(Request $request)
+    {
+        $templateProcessor = new TemplateProcessor('Mẫu 18 (a). BẢNG KÊ- DANH SÁCH CÁC LINH KIỆN, THIẾT BỊ, NGUYÊN LIỆU, VẬT LIỆU, VẬT TƯ,... CẤU THÀNH HÀNG HÓA.docx');
+        $file = 'Mẫu 18 (a). BẢNG KÊ- DANH SÁCH CÁC LINH KIỆN, THIẾT BỊ, NGUYÊN LIỆU, VẬT LIỆU, VẬT TƯ,... CẤU THÀNH HÀNG HÓA_' . date("Y-m-d") . '.docx';
+
+        $templateProcessor->setValue('name_chuc_danh', $request->get('name_chuc_danh') ?? '[ghi tên, chức danh, ký tên và đóng dấu]');
+        $templateProcessor->setHtmlBlockValue('table_content', $request->get('table_content'));
+
+        header('Content-Disposition: attachment; filename="' . $file . '"');
+        $templateProcessor->saveAs("php://output");
+    }
+
+    //-------------------End Mẫu 18. Bảng kê khai
+
 }
