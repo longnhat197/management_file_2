@@ -15,6 +15,9 @@ use App\Models\Mau152;
 use App\Models\Mau153;
 use App\Models\Mau161;
 use App\Models\Mau162;
+use App\Models\Mau17;
+use App\Models\Mau171;
+use App\Models\Mau172;
 use App\Models\Mau2;
 use App\Models\Mau3;
 use App\Models\Mau4;
@@ -2160,4 +2163,155 @@ class TemplateController extends Controller
     }
 
     //-------------------End Mẫu 16. ĐƠN DỰ THẦU (thuộc HSĐXTC)
+
+    //17
+    public function create17($detail_id)
+    {
+        $detail = $this->detailService->find($detail_id);
+        $exist = Mau17::select("*")->where('detail_id', $detail_id)->exists();
+        if ($exist) {
+            $temp = Mau17::where('detail_id', $detail_id)->first();
+        } else {
+            $temp = [];
+        }
+        return view('template.create17', compact('temp', 'detail_id', 'detail'));
+    }
+
+    public function save17(Request $request)
+    {
+        if ($request->ajax()) {
+            $detail_id = $request->get('detail_id');
+            $exist = Mau17::select("*")->where('detail_id', $detail_id)->exists();
+            if ($exist) {
+                Mau17::where('detail_id', $detail_id)
+                    ->update([
+                        'table_content' => $request->get('table_content'),
+                        'name_chuc_danh' => $request->get('name_chuc_danh')
+                    ]);
+                $res = 'Đã cập nhật bản lưu';
+            } else {
+                Mau17::create([
+                    'detail_id' => $detail_id,
+                    'table_content' => $request->get('table_content'),
+                    'name_chuc_danh' => $request->get('name_chuc_danh')
+                ]);
+                $res = 'Đã tạo bản lưu cho file';
+            }
+            echo json_encode($res);
+        }
+    }
+
+    public function store17(Request $request)
+    {
+        $templateProcessor = new TemplateProcessor('Mẫu 17. BẢNG TỔNG HỢP GIÁ DỰ THẦU.docx');
+        $file = 'Mẫu 17. BẢNG TỔNG HỢP GIÁ DỰ THẦU_' . date("Y-m-d") . '.docx';
+
+        $templateProcessor->setValue('name_chuc_danh', $request->get('name_chuc_danh') ?? '[ghi tên, chức danh, ký tên và đóng dấu]');
+        $templateProcessor->setHtmlBlockValue('table_content', $request->get('table_content'));
+
+        header('Content-Disposition: attachment; filename="' . $file . '"');
+        $templateProcessor->saveAs("php://output");
+    }
+
+    //17a
+    public function create171($detail_id)
+    {
+        $detail = $this->detailService->find($detail_id);
+        $exist = Mau171::select("*")->where('detail_id', $detail_id)->exists();
+        if ($exist) {
+            $temp = Mau171::where('detail_id', $detail_id)->first();
+        } else {
+            $temp = [];
+        }
+        return view('template.create17a', compact('temp', 'detail_id', 'detail'));
+    }
+
+    public function save171(Request $request)
+    {
+        if ($request->ajax()) {
+            $detail_id = $request->get('detail_id');
+            $exist = Mau171::select("*")->where('detail_id', $detail_id)->exists();
+            if ($exist) {
+                Mau171::where('detail_id', $detail_id)
+                    ->update([
+                        'table_content' => $request->get('table_content'),
+                        'name_chuc_danh' => $request->get('name_chuc_danh')
+                    ]);
+                $res = 'Đã cập nhật bản lưu';
+            } else {
+                Mau171::create([
+                    'detail_id' => $detail_id,
+                    'table_content' => $request->get('table_content'),
+                    'name_chuc_danh' => $request->get('name_chuc_danh')
+                ]);
+                $res = 'Đã tạo bản lưu cho file';
+            }
+            echo json_encode($res);
+        }
+    }
+
+    public function store171(Request $request)
+    {
+        $templateProcessor = new TemplateProcessor('Mẫu 17 (a). BẢNG GIÁ DỰ THẦU CỦA HÀNG HÓA.docx');
+        $file = 'Mẫu 17 (a). BẢNG GIÁ DỰ THẦU CỦA HÀNG HÓA_' . date("Y-m-d") . '.docx';
+
+        $templateProcessor->setValue('name_chuc_danh', $request->get('name_chuc_danh') ?? '[ghi tên, chức danh, ký tên và đóng dấu]');
+        $templateProcessor->setHtmlBlockValue('table_content', $request->get('table_content'));
+
+        header('Content-Disposition: attachment; filename="' . $file . '"');
+        $templateProcessor->saveAs("php://output");
+    }
+
+    //17b
+    public function create172($detail_id)
+    {
+        $detail = $this->detailService->find($detail_id);
+        $exist = Mau172::select("*")->where('detail_id', $detail_id)->exists();
+        if ($exist) {
+            $temp = Mau172::where('detail_id', $detail_id)->first();
+        } else {
+            $temp = [];
+        }
+        return view('template.create17b', compact('temp', 'detail_id', 'detail'));
+    }
+
+    public function save172(Request $request)
+    {
+        if ($request->ajax()) {
+            $detail_id = $request->get('detail_id');
+            $exist = Mau172::select("*")->where('detail_id', $detail_id)->exists();
+            if ($exist) {
+                Mau172::where('detail_id', $detail_id)
+                    ->update([
+                        'table_content' => $request->get('table_content'),
+                        'name_chuc_danh' => $request->get('name_chuc_danh')
+                    ]);
+                $res = 'Đã cập nhật bản lưu';
+            } else {
+                Mau172::create([
+                    'detail_id' => $detail_id,
+                    'table_content' => $request->get('table_content'),
+                    'name_chuc_danh' => $request->get('name_chuc_danh')
+                ]);
+                $res = 'Đã tạo bản lưu cho file';
+            }
+            echo json_encode($res);
+        }
+    }
+
+    public function store172(Request $request)
+    {
+        $templateProcessor = new TemplateProcessor('Mẫu 17 (b). BẢNG GIÁ DỰ THẦU CHO CÁC DỊCH VỤ LIÊN QUAN.docx');
+        $file = 'Mẫu 17 (b). BẢNG GIÁ DỰ THẦU CHO CÁC DỊCH VỤ LIÊN QUAN_' . date("Y-m-d") . '.docx';
+
+        $templateProcessor->setValue('name_chuc_danh', $request->get('name_chuc_danh') ?? '[ghi tên, chức danh, ký tên và đóng dấu]');
+        $templateProcessor->setHtmlBlockValue('table_content', $request->get('table_content'));
+
+        header('Content-Disposition: attachment; filename="' . $file . '"');
+        $templateProcessor->saveAs("php://output");
+    }
+
+
+
+    //-------------------Start Mẫu 17. BẢNG TỔNG HỢP GIÁ DỰ THẦU
 }
