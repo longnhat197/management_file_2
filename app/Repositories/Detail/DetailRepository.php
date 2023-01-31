@@ -420,7 +420,7 @@ class DetailRepository extends BaseRepository implements DetailRepositoryInterfa
                 });
         }
         $data = $query->orderBy('id', 'desc')
-            ->paginate($perPage)
+            ->paginate($perPage)->setPath('')
             ->appends(['search' => $search]);
         return $data;
     }
