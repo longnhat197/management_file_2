@@ -51,7 +51,7 @@
                                     <div class="form-group date-container col-md-6">
                                         <label for="date_test">Ngày tháng năm đăng ký đơn dự thầu:</label>
                                         <i class="date-icon date_ttld fas fa-calendar-alt" aria-hidden="true"></i>
-                                        <input class="form-control" type="text" {{ $detail->enabled == 0 || Auth::user()->level == 2 ? 'disabled'
+                                        <input class="form-control" type="text" {{ $detail->enabled == 0  ? 'disabled'
                                         : '' }} id="datePick">
                                         <input type="hidden" class="form-control"  value="{{ $temp != [] ? $temp->date_dang_ky : '' }}" id="date_test"
                                         name="date">
@@ -74,7 +74,7 @@
                                             </div>
                                         </div> --}}
                                         <input type="text" name="name_goi_thau" class="form-control" {{ $detail->enabled
-                                        == 0 || Auth::user()->level == 2 ? 'disabled' : '' }} id="name_goi_thau_test" value="{{
+                                        == 0  ? 'disabled' : '' }} id="name_goi_thau_test" value="{{
                                         $detail->name_goi_thau }}" >
                                     </div>
                                 </div>
@@ -93,7 +93,7 @@
                                             </div>
                                         </div> --}}
                                         <input type="text" name="name_du_an" class="form-control" {{ $detail->enabled ==
-                                        0 || Auth::user()->level == 2 ? 'disabled' : '' }} id="name_du_an_test" value="{{ $detail->name_du_an }}" >
+                                        0  ? 'disabled' : '' }} id="name_du_an_test" value="{{ $detail->name_du_an }}" >
                                     </div>
                                 </div>
                                 <div class="row">
@@ -102,7 +102,7 @@
                                         <label for="so_trich_yeu_test">Số trích yếu của Thư mời thầu đối với đấu thầu
                                             hạn
                                             chế:</label>
-                                        <input type="text" class="form-control" {{ $detail->enabled == 0 || Auth::user()->level == 2 ? 'disabled' :
+                                        <input type="text" class="form-control" {{ $detail->enabled == 0  ? 'disabled' :
                                         '' }} id="so_trich_yeu_test" value="{{ $temp != [] ? $temp->so_trich_yeu : ''
                                         }}" name="so_trich_yeu">
                                     </div>
@@ -122,7 +122,7 @@
                                             </div>
                                         </div> --}}
                                         <input type="text" name="name_moi_thau" class="form-control" {{ $detail->enabled
-                                        == 0 || Auth::user()->level == 2 ? 'disabled' : '' }} id="name_moi_thau_test" value="{{
+                                        == 0  ? 'disabled' : '' }} id="name_moi_thau_test" value="{{
                                         $detail->name_moi_thau }}" >
                                     </div>
                                 </div>
@@ -130,7 +130,7 @@
                                     <div class="col-md-3"></div>
                                     <div class="form-group col-md-6">
                                         <label for="so_sua_doi_test">Số của văn bản sửa đổi (nếu có):</label>
-                                        <input type="text" class="form-control" {{ $detail->enabled == 0 || Auth::user()->level == 2 ? 'disabled' :
+                                        <input type="text" class="form-control" {{ $detail->enabled == 0  ? 'disabled' :
                                         '' }} value="{{ $temp != [] ? $temp->so_sua_doi : '' }}" id="so_sua_doi_test"
                                         name="so_sua_doi">
                                     </div>
@@ -150,7 +150,7 @@
                                                 </select>
                                             </div>
                                         </div> --}}
-                                        <input type="text" class="form-control" {{ $detail->enabled == 0 || Auth::user()->level == 2 ? 'disabled' :
+                                        <input type="text" class="form-control" {{ $detail->enabled == 0  ? 'disabled' :
                                         '' }} id="name_nha_thau_test" value="{{ $temp != [] ? $temp->name_nha_thau : ''
                                         }}" name="name_nha_thau">
                                     </div>
@@ -166,7 +166,7 @@
                                             yêu cầu
                                             của
                                             gói thầu:</label>
-                                        <input type="text" class="form-control" {{ $detail->enabled == 0 || Auth::user()->level == 2 ? 'disabled' :
+                                        <input type="text" class="form-control" {{ $detail->enabled == 0  ? 'disabled' :
                                         '' }} id="date_thuc_hien_test" value="{{ $temp != [] ? $temp->time_thuc_hien :
                                         '' }}" name="date_thuc_hien">
                                     </div>
@@ -175,14 +175,14 @@
                                     <div class="col-md-3"></div>
                                     <div class="form-group col-md-3">
                                         <label for="time_test">Có hiệu lực trong thời gian:</label>
-                                        <input type="text" class="form-control" {{ $detail->enabled == 0 || Auth::user()->level == 2 ? 'disabled' :
+                                        <input type="text" class="form-control" {{ $detail->enabled == 0  ? 'disabled' :
                                         '' }} value="{{ $temp != [] ? $temp->time_hieu_luc : '' }}" id="time_test"
                                         name="time">
                                     </div>
                                     <div class="form-group date-container col-md-3">
                                         <label for="d_test">Kể từ ngày:</label>
                                         <i class="date-icon date_start fas fa-calendar-alt" aria-hidden="true"></i>
-                                        <input type="text" {{ $detail->enabled == 0 || Auth::user()->level == 2 ? 'disabled' : '' }}
+                                        <input type="text" {{ $detail->enabled == 0  ? 'disabled' : '' }}
                                         class="form-control" id="date_start">
                                         <input type="hidden" value="{{ $temp != [] ? $temp->date_start : '' }}" {{
                                             $detail->enabled == 0 ? 'disabled' : '' }} class="form-control" id="d_test"
@@ -198,7 +198,7 @@
                                         <label for="ten_chuc_danh_test">Ghi tên, chức danh:</label>
                                         {{-- <input type="text" class="form-control" id="ten_chuc_danh_test"
                                             name="ten_chuc_danh"> --}}
-                                        <textarea name="ten_chuc_danh" {{ $detail->enabled == 0 || Auth::user()->level == 2 ? 'disabled' : '' }}  class="form-control" id="ten_chuc_danh_test" cols="90"
+                                        <textarea name="ten_chuc_danh" {{ $detail->enabled == 0  ? 'disabled' : '' }}  class="form-control" id="ten_chuc_danh_test" cols="90"
                                             rows="5">{{ $temp != [] ? $temp->ten_chuc_danh : '' }}</textarea>
                                     </div>
                                 </div>
@@ -221,7 +221,7 @@
                             </div>
                             <div class="form-group col-md-2 text-right">
                                 {{-- <button type="submit" class="btn btn-primary">Export Word</button> --}}
-                                @if ($detail->enabled != 0 && Auth::user()->level != 2)
+                                @if ($detail->enabled != 0 )
                                 <a href="javascript:void(0)" id="save" class="btn btn-outline-primary">Lưu</a>
                                 @endif
 

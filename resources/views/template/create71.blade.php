@@ -54,7 +54,7 @@
 
                                         <input type="text" class="form-control" id="name_nha_thau_test" {{
                                             $detail->enabled
-                                        == 0 || Auth::user()->level == 2 ? 'disabled' : '' }}
+                                        == 0  ? 'disabled' : '' }}
                                         value="{{ $temp != [] ? $temp->name_nha_thau : '' }}" name="name_nha_thau">
                                     </div>
                                 </div>
@@ -64,7 +64,7 @@
                                     <div class="form-group date-container col-md-6">
                                         <label for="datePick">Ngày làm:</label>
                                         <i class="date-icon date_ttld fas fa-calendar-alt" aria-hidden="true"></i>
-                                        <input class="form-control" {{ $detail->enabled == 0 || Auth::user()->level == 2 ? 'disabled' : '' }} type="text" id="datePick">
+                                        <input class="form-control" {{ $detail->enabled == 0  ? 'disabled' : '' }} type="text" id="datePick">
                                         <input type="hidden"  value="{{
                                         $temp != [] ? $temp->ngay_lam_giay : '' }}"
                                         name="date" id="date" class="form-control">
@@ -78,7 +78,7 @@
                                     <div class="form-group col-md-6">
                                         <label for="name_thanh_vien_lien_danh_test">Tên thành viên của nhà thầu liên
                                             danh:</label>
-                                        <input type="text" name="name_thanh_vien_lien_danh" {{ $detail->enabled == '0' || Auth::user()->level == 2 ?
+                                        <input type="text" name="name_thanh_vien_lien_danh" {{ $detail->enabled == '0'  ?
                                         'disabled'
                                         : '' }}
                                         value="{{ $temp != [] ? $temp->name_thanh_vien_lien_danh : '' }}"
@@ -93,7 +93,7 @@
                                     <div class="col-md-6 form-group">
                                         <div class="form-check form-check-inline">
                                             <input class="form-check-input" name="check" type="radio" value="0" id="r1"
-                                                {{ $detail->enabled == '0' || Auth::user()->level == 2 ? 'disabled' : '' }}
+                                                {{ $detail->enabled == '0'  ? 'disabled' : '' }}
                                             @if ($temp != [])
                                             @if ($temp->check == 0)
                                             checked
@@ -106,7 +106,7 @@
                                         </div>
                                         <div class="form-check form-check-inline">
                                             <input class="form-check-input" name="check" type="radio" value="1" id="r2"
-                                                {{ $detail->enabled == '0' || Auth::user()->level == 2 ? 'disabled' : '' }}
+                                                {{ $detail->enabled == '0'  ? 'disabled' : '' }}
                                             @if ($temp != [])
                                             @if ($temp->check == 1)
                                             checked
@@ -132,7 +132,7 @@
                                     <div class="col-md-3"></div>
                                     <div class="form-group col-md-6">
                                         <textarea name="table_content"
-                                            class="{{ $detail->enabled == 0 || Auth::user()->level == 2 ? 'disabled' : '' }}" id="table_content">
+                                            class="{{ $detail->enabled == 0  ? 'disabled' : '' }}" id="table_content">
 
                                             @if ($temp == [] || $temp->table_content == '' )
                                             <table class="MsoNormalTable" style="width: 100%; border-collapse: collapse; border: none;" border="1" width="0" cellspacing="0" cellpadding="0">
@@ -201,7 +201,7 @@
                                 <button type="submit" class="btn btn-outline-primary">Export Word</button>
                             </div>
                             <div class="form-group col-md-3 text-right">
-                                @if ($detail->enabled != 0 && Auth::user()->level != 2)
+                                @if ($detail->enabled != 0 )
                                 <a href="javascript:void(0)" id="save" class="btn btn-outline-primary">Lưu</a>
                                 @endif
                             </div>

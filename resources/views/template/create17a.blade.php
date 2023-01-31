@@ -52,7 +52,7 @@
                                     <div class="col-md-3"></div>
                                     <div class="form-group col-md-6">
                                         <textarea name="table_content"
-                                            class="{{ $detail->enabled == 0 || Auth::user()->level == 2 ? 'disabled' : '' }}" id="table_content">
+                                            class="{{ $detail->enabled == 0  ? 'disabled' : '' }}" id="table_content">
 
                                             @if ($temp == []  || $temp->table_content == '')
                                             <table class="MsoNormalTable" style="border-collapse: collapse; width: 100%; border-width: 1pt; border-color: #000000;" border="1">
@@ -218,7 +218,7 @@
                                     <div class="col-md-3"></div>
                                     <div class="form-group col-md-6">
                                         <label for="name_chuc_danh_test">Đại diện hợp pháp của nhà thầu:</label>
-                                        <textarea name="name_chuc_danh" {{ $detail->enabled == '0' || Auth::user()->level == 2 ? 'disabled' : '' }} class="form-control" id="name_chuc_danh_test" cols="90"
+                                        <textarea name="name_chuc_danh" {{ $detail->enabled == '0'  ? 'disabled' : '' }} class="form-control" id="name_chuc_danh_test" cols="90"
                                             rows="5">{{ $temp != [] ? $temp->name_chuc_danh : '' }}</textarea>
                                     </div>
                                 </div>
@@ -235,7 +235,7 @@
                                 <button type="submit" class="btn btn-outline-primary">Export Word</button>
                             </div>
                             <div class="form-group col-md-3 text-right">
-                                @if ($detail->enabled != 0 && Auth::user()->level != 2)
+                                @if ($detail->enabled != 0 )
                                 <a href="javascript:void(0)" id="save" class="btn btn-outline-primary">Lưu</a>
                                 @endif
                             </div>

@@ -54,7 +54,7 @@
 
                                         <input type="text" class="form-control" id="name_nha_thau_test" {{
                                             $detail->enabled
-                                        == 0 || Auth::user()->level == 2 ? 'disabled' : '' }}
+                                        == 0  ? 'disabled' : '' }}
                                         value="{{ $temp != [] ? $temp->name_nha_thau : '' }}" name="name_nha_thau">
                                     </div>
                                 </div>
@@ -64,7 +64,7 @@
                                     <div class="form-group date-container col-md-6">
                                         <label for="datePick">Ngày làm:</label>
                                         <i class="date-icon date_ttld fas fa-calendar-alt" aria-hidden="true"></i>
-                                        <input class="form-control" {{ $detail->enabled == 0 || Auth::user()->level == 2 ? 'disabled' : '' }} type="text" id="datePick">
+                                        <input class="form-control" {{ $detail->enabled == 0  ? 'disabled' : '' }} type="text" id="datePick">
                                         <input type="hidden"  value="{{
                                         $temp != [] ? $temp->date : '' }}"
                                         name="date" id="date" class="form-control">
@@ -78,7 +78,7 @@
                                     <div class="col-md-3"></div>
                                     <div class="form-group col-md-6">
                                         <textarea name="table_content"
-                                            class="{{ $detail->enabled == 0 || Auth::user()->level == 2 ? 'disabled' : '' }}" id="table_content">
+                                            class="{{ $detail->enabled == 0  ? 'disabled' : '' }}" id="table_content">
 
                                             @if ($temp == []  || $temp->table_content == '')
                                             <table style="border-collapse: collapse; width: 100%; height: 335.859px;" border="1">
@@ -164,7 +164,7 @@
                                 <button type="submit" class="btn btn-outline-primary">Export Word</button>
                             </div>
                             <div class="form-group col-md-3 text-right">
-                                @if ($detail->enabled != 0 && Auth::user()->level != 2)
+                                @if ($detail->enabled != 0 )
                                 <a href="javascript:void(0)" id="save" class="btn btn-outline-primary">Lưu</a>
                                 @endif
                             </div>

@@ -69,4 +69,4 @@ RUN composer install
 # generate an APP_KEY
 RUN php artisan key:generate
 
-CMD php artisan serve --host=0.0.0.0 --port=$APP_PORT
+CMD php artisan serve --port=$APP_PORT

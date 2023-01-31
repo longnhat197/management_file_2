@@ -53,7 +53,7 @@
                                     <div class="form-group date-container col-md-6">
                                         <label for="ngay_ke_khai_test">Ngày kê khai:</label>
                                         <i class="date-icon date_ttld fas fa-calendar-alt" aria-hidden="true"></i>
-                                        <input class="form-control" {{ $detail->enabled == 0 || Auth::user()->level == 2 ? 'disabled' : '' }} type="text" id="datePick">
+                                        <input class="form-control" {{ $detail->enabled == 0  ? 'disabled' : '' }} type="text" id="datePick">
                                         <input type="hidden" class="form-control"
                                             value="{{ $temp != [] ? $temp->ngay_ke_khai : '' }}" id="ngay_ke_khai_test"
                                             name="ngay_ke_khai">
@@ -66,7 +66,7 @@
                                     <div class="col-md-3"></div>
                                     <div class="form-group col-md-6">
                                         <label for="so_hieu">Số hiệu</label>
-                                        <input type="text" {{ $detail->enabled == '0' || Auth::user()->level == 2 ? 'disabled' : '' }}
+                                        <input type="text" {{ $detail->enabled == '0'  ? 'disabled' : '' }}
                                         value="{{ $temp != [] ? $temp->so_hieu : '' }}"
                                         class="form-control"
                                         id="so_hieu_test" name="so_hieu">
@@ -77,7 +77,7 @@
                                     <div class="col-md-3"></div>
                                     <div class="form-group col-md-6">
                                         <label for="name_goi_thau_test">Tên gói thầu:</label>
-                                        <input type="text" {{ $detail->enabled == '0' || Auth::user()->level == 2 ? 'disabled' : '' }} value="{{
+                                        <input type="text" {{ $detail->enabled == '0'  ? 'disabled' : '' }} value="{{
                                         $detail->name_goi_thau }}" class="form-control" id="name_goi_thau_test"
                                         name="name_goi_thau">
                                     </div>
@@ -88,14 +88,14 @@
                                     <div class="form-group col-md-3">
                                         <label for="trang_test">Trang:</label>
                                         <input type="text" value="{{ $temp != [] ? $temp->trang : '' }}" {{
-                                            $detail->enabled == '0' || Auth::user()->level == 2 ? 'disabled' : '' }}
+                                            $detail->enabled == '0'  ? 'disabled' : '' }}
                                         class="form-control" id="trang_test" name="trang">
                                     </div>
 
                                     <div class="form-group date-container col-md-3">
                                         <label for="tren_trang_test">Trên số trang:</label>
                                         <input type="text" value="{{ $temp != [] ? $temp->tren_trang : '' }}" {{
-                                            $detail->enabled == '0' || Auth::user()->level == 2 ? 'disabled' : '' }}
+                                            $detail->enabled == '0'  ? 'disabled' : '' }}
                                         class="form-control" id="tren_trang_test" name="tren_trang">
                                     </div>
                                 </div>
@@ -104,7 +104,7 @@
                                     <div class="col-md-3"></div>
                                     <div class="form-group col-md-6">
                                         <label for="name_nha_thau_test">Tên nhà thầu</label>
-                                        <input type="text" name="name_nha_thau" {{ $detail->enabled == '0' || Auth::user()->level == 2 ? 'disabled'
+                                        <input type="text" name="name_nha_thau" {{ $detail->enabled == '0'  ? 'disabled'
                                         : '' }}
                                         value="{{ $temp != [] ? $temp->name_nha_thau : '' }}"
                                         class="form-control" id="name_nha_thau_test">
@@ -115,7 +115,7 @@
                                     <div class="col-md-3"></div>
                                     <div class="form-group col-md-6">
                                         <label for="dia_chi_dang_ky_test">Nơi nhà thầu đăng ký kinh doanh, hoạt động:</label>
-                                        <input type="text" name="dia_chi_dang_ky" {{ $detail->enabled == '0' || Auth::user()->level == 2 ?
+                                        <input type="text" name="dia_chi_dang_ky" {{ $detail->enabled == '0'  ?
                                         'disabled'
                                         : '' }}
                                         value="{{ $temp != [] ? $temp->dia_chi_dang_ky : '' }}"
@@ -127,7 +127,7 @@
                                     <div class="col-md-3"></div>
                                     <div class="form-group col-md-6">
                                         <label for="nam_thanh_lap_test">Năm thành lập công ty:</label>
-                                        <input type="text" name="nam_thanh_lap" {{ $detail->enabled == '0' || Auth::user()->level == 2 ? 'disabled'
+                                        <input type="text" name="nam_thanh_lap" {{ $detail->enabled == '0'  ? 'disabled'
                                         : '' }}
                                         value="{{ $temp != [] ? $temp->nam_thanh_lap : '' }}"
                                         class="form-control" id="nam_thanh_lap_test">
@@ -138,7 +138,7 @@
                                     <div class="col-md-3"></div>
                                     <div class="form-group col-md-6">
                                         <label for="dia_chi_hop_phap_test">Địa chỉ hợp pháp của nhà thầu:</label>
-                                        <input type="text" name="dia_chi_hop_phap" {{ $detail->enabled == '0' || Auth::user()->level == 2 ?
+                                        <input type="text" name="dia_chi_hop_phap" {{ $detail->enabled == '0'  ?
                                         'disabled'
                                         : '' }}
                                         value="{{ $temp != [] ? $temp->dia_chi_hop_phap : '' }}"
@@ -156,7 +156,7 @@
                                     <div class="col-md-3"></div>
                                     <div class="form-group col-md-6">
                                         <label for="name_test">Tên:</label>
-                                        <input type="text" name="name" {{ $detail->enabled == '0' || Auth::user()->level == 2 ?
+                                        <input type="text" name="name" {{ $detail->enabled == '0'  ?
                                         'disabled'
                                         : '' }}
                                         value="{{ $temp != [] ? $temp->name : '' }}"
@@ -168,7 +168,7 @@
                                     <div class="col-md-3"></div>
                                     <div class="form-group col-md-6">
                                         <label for="dia_chi_test">Địa chỉ:</label>
-                                        <input type="text" name="dia_chi" {{ $detail->enabled == '0' || Auth::user()->level == 2 ? 'disabled'
+                                        <input type="text" name="dia_chi" {{ $detail->enabled == '0'  ? 'disabled'
                                         : '' }}
                                         value="{{ $temp != [] ? $temp->dia_chi : '' }}"
                                         class="form-control" id="dia_chi_test">
@@ -179,7 +179,7 @@
                                     <div class="col-md-3"></div>
                                     <div class="form-group col-md-6">
                                         <label for="so_dien_thoai_test">Số điện thoại/fax:</label>
-                                        <input type="text" name="so_dien_thoai" {{ $detail->enabled == '0' || Auth::user()->level == 2 ? 'disabled'
+                                        <input type="text" name="so_dien_thoai" {{ $detail->enabled == '0'  ? 'disabled'
                                         : '' }}
                                         value="{{ $temp != [] ? $temp->so_dien_thoai : '' }}"
                                         class="form-control" id="so_dien_thoai_test">
@@ -190,7 +190,7 @@
                                     <div class="col-md-3"></div>
                                     <div class="form-group col-md-6">
                                         <label for="email_test">Địa chỉ email:</label>
-                                        <input type="email" name="email" {{ $detail->enabled == '0' || Auth::user()->level == 2 ? 'disabled' : '' }}
+                                        <input type="email" name="email" {{ $detail->enabled == '0'  ? 'disabled' : '' }}
                                         value="{{ $temp != [] ? $temp->email : '' }}"
                                         class="form-control" id="email_test">
                                     </div>
@@ -205,7 +205,7 @@
                                 <button type="submit" class="btn btn-outline-primary">Export Word</button>
                             </div>
                             <div class="form-group col-md-3 text-right">
-                                @if ($detail->enabled != 0 && Auth::user()->level != 2)
+                                @if ($detail->enabled != 0 )
                                 <a href="javascript:void(0)" id="save" class="btn btn-outline-primary">Lưu</a>
                                 @endif
                             </div>
