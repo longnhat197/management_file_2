@@ -1,5 +1,5 @@
 @extends('layout.master')
-@section('title','HỢP ĐỒNG KHÔNG HOÀN THÀNH TRONG QUÁ KHỨ DO LỖI CỦA NHÀ THẦU')
+@section('title','TÌNH HÌNH TÀI CHÍNH CỦA NHÀ THẦU')
 @section('my_style')
 <link rel="stylesheet" href="./dashboard/assets/css/input-date.css">
 @endsection
@@ -54,7 +54,7 @@
 
                                         <input type="text" class="form-control" id="name_nha_thau_test" {{
                                             $detail->enabled
-                                        == 0 ? 'disabled' : '' }}
+                                        == 0 || Auth::user()->level == 2 ? 'disabled' : '' }}
                                         value="{{ $temp != [] ? $temp->name_nha_thau : '' }}" name="name_nha_thau">
                                     </div>
                                 </div>
@@ -64,8 +64,8 @@
                                     <div class="form-group date-container col-md-6">
                                         <label for="datePick">Ngày làm:</label>
                                         <i class="date-icon date_ttld fas fa-calendar-alt" aria-hidden="true"></i>
-                                        <input class="form-control" type="text" id="datePick">
-                                        <input type="hidden" {{ $detail->enabled == 0 ? 'disabled' : '' }} value="{{
+                                        <input class="form-control" {{ $detail->enabled == 0 || Auth::user()->level == 2 ? 'disabled' : '' }} type="text" id="datePick">
+                                        <input type="hidden"  value="{{
                                         $temp != [] ? $temp->date : '' }}"
                                         name="date" id="date" class="form-control">
                                         <input type="hidden" value="{{ $detail_id }}" id="detail_id"
@@ -78,7 +78,7 @@
                                     <div class="form-group col-md-6">
                                         <label for="name_thanh_vien_lien_danh_test">Tên thành viên của nhà thầu liên
                                             danh:</label>
-                                        <input type="text" name="name_thanh_vien_lien_danh" {{ $detail->enabled == '0' ?
+                                        <input type="text" name="name_thanh_vien_lien_danh" {{ $detail->enabled == '0' || Auth::user()->level == 2 ?
                                         'disabled'
                                         : '' }}
                                         value="{{ $temp != [] ? $temp->name_thanh_vien_lien_danh : '' }}"
@@ -92,10 +92,10 @@
                                     <div class="col-md-3"></div>
                                     <div class="form-group col-md-6">
                                         <textarea name="table_content"
-                                            class="{{ $detail->enabled == 0 ? 'disabled' : '' }}" id="table_content">
+                                            class="{{ $detail->enabled == 0 || Auth::user()->level == 2 ? 'disabled' : '' }}" id="table_content">
 
                                             @if ($temp == []  || $temp->table_content == '')
-                                            <table style="border-collapse: collapse; width: 600px; height: 335.859px;" border="1">
+                                            <table style="border-collapse: collapse; width: 100%; height: 335.859px;" border="1">
                                                 <tbody>
                                                 <tr style="height: 44.7812px;">
                                                 <td style="width: 25%; border-top:1px solid white; border-left:1px solid white; border-bottom:1px solid rgb(255, 255, 255); border-right:1px solid rgb(0, 0, 0);height: 44.7812px; border-width: 1px; text-align: center; ">&nbsp;</td>
@@ -178,7 +178,7 @@
                                 <button type="submit" class="btn btn-outline-primary">Export Word</button>
                             </div>
                             <div class="form-group col-md-3 text-right">
-                                @if ($detail->enabled != 0)
+                                @if ($detail->enabled != 0 && Auth::user()->level != 2)
                                 <a href="javascript:void(0)" id="save" class="btn btn-outline-primary">Lưu</a>
                                 @endif
                             </div>

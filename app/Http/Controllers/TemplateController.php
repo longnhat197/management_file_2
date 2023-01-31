@@ -80,6 +80,46 @@ class TemplateController extends Controller
     //     return view('template.index',compact('tems'));
     // }
 
+    public function templateNoDelete(Request $request)
+    {
+        $detail_id = $request->get('detail_id');
+        try {
+            $detail_temps = DetailTemp::where('detail_id', $request->get('detail_id'))->get();
+            foreach ($detail_temps as $value) {
+                $array[] = $value->tem_id;
+            }
+            foreach ($request->get('list_tem') as $tem_id) {
+                if (!in_array($tem_id, $array)) {
+                    DetailTemp::create([
+                        'detail_id' => $request->get('detail_id'),
+                        'tem_id' => $tem_id,
+                        'type' => $request->get('type'),
+                    ]);
+                }
+            }
+            $arrayDelete = array_diff($array, $request->get('list_tem'));
+            foreach ($arrayDelete as $item) {
+                DetailTemp::where('detail_id', $detail_id)->where('tem_id',$item)->delete();
+                if ($request->get('type') == 0) {
+                    $this->detailService->deleteTem0($request->get('detail_id'), $item);
+                }
+                if ($request->get('type') == 1) {
+                    $this->detailService->deleteTem1($request->get('detail_id'), $item);
+                }
+            }
+        } catch (\Exception $err) {
+            return $err->getMessage();
+        }
+
+
+        $type = DetailTemp::where('detail_id', $detail_id)->first()->type;
+        if ($type == 0) {
+            $link = DetailTemp::where('detail_id', $detail_id)->first()->templates0->url . '/' . $detail_id;
+        } elseif ($type == 1) {
+            $link = DetailTemp::where('detail_id', $detail_id)->first()->templates1->url . '/' . $detail_id;
+        }
+        return redirect($link);
+    }
     public function test(Request $request)
     {
         try {

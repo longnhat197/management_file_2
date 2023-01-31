@@ -16,6 +16,13 @@ class DetailService extends BaseService implements DetailServiceInterface{
     public function deleteSave($id){
         return $this->repository->deleteSave($id);
     }
+    public function deleteTem0($id,$tem_id){
+        return $this->repository->deleteTem0($id,$tem_id);
+    }
+
+    public function deleteTem1($id,$tem_id){
+        return $this->repository->deleteTem1($id,$tem_id);
+    }
 
     public function searchActive($searches, $perPage){
         return $this->repository->searchActive($searches, $perPage);

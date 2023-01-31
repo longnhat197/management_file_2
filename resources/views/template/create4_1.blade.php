@@ -53,7 +53,7 @@
 
                                         <label for="thong_tin_moi_thau_test">Tên và địa chỉ của Bên mời thầu:</label>
                                         <textarea name="thong_tin_moi_thau" {{
-                                            $detail->enabled == '0' ? 'disabled' : '' }} class="form-control" id="thong_tin_moi_thau_test"
+                                            $detail->enabled == '0' || Auth::user()->level == 2 ? 'disabled' : '' }} class="form-control" id="thong_tin_moi_thau_test"
                                          cols="30" rows="5">{{ $temp != [] ? $temp->thong_tin_moi_thau : '' }}</textarea>
                                          <input type="hidden" id="detail_id" name="detail_id" value="{{ $detail_id }}"  data-url="./template/41/save">
 
@@ -65,7 +65,7 @@
                                     <div class="form-group date-container col-md-6">
                                         <label for="ngay_phat_hanh_test">Ngày phát hành bảo lãnh:</label>
                                         <i class="date-icon date_ttld fas fa-calendar-alt" aria-hidden="true"></i>
-                                        <input class="form-control" type="text" id="datePick">
+                                        <input class="form-control" {{ $detail->enabled == 0 || Auth::user()->level == 2 ? 'disabled' : '' }} type="text" id="datePick">
                                         <input type="hidden" class="form-control"
                                             value="{{ $temp != [] ? $temp->ngay_phat_hanh : '' }}"
                                             id="ngay_phat_hanh_test" name="ngay_phat_hanh">
@@ -77,7 +77,7 @@
                                     <div class="col-md-3"></div>
                                     <div class="form-group col-md-6">
                                         <label for="so_trich_yeu_test">Số trích yếu của Bảo lãnh dự thầu:</label>
-                                        <input type="text" class="form-control" {{ $detail->enabled == '0' ? 'disabled'
+                                        <input type="text" class="form-control" {{ $detail->enabled == '0' || Auth::user()->level == 2 ? 'disabled'
                                         : '' }}
                                         value="{{ $temp != [] ? $temp->so_trich_yeu : '' }}"
                                         id="so_trich_yeu_test" name="so_trich_yeu">
@@ -91,7 +91,7 @@
                                             trên
                                             tiêu đề):</label>
                                         <textarea name="thong_tin_phat_hanh" {{
-                                            $detail->enabled == '0' ? 'disabled' : '' }} id="thong_tin_phat_hanh_test" class="form-control"
+                                            $detail->enabled == '0' || Auth::user()->level == 2 ? 'disabled' : '' }} id="thong_tin_phat_hanh_test" class="form-control"
                                             cols="30" rows="4">{{ $temp != [] ? $temp->thong_tin_phat_hanh : '' }}</textarea>
 
                                     </div>
@@ -101,7 +101,7 @@
                                     <div class="col-md-3"></div>
                                     <div class="form-group col-md-6">
                                         <label for="name_nha_thau_test">Tên nhà thầu:</label>
-                                        <input type="text" {{ $detail->enabled == '0' ? 'disabled' : '' }}
+                                        <input type="text" {{ $detail->enabled == '0' || Auth::user()->level == 2 ? 'disabled' : '' }}
                                         value="{{ $temp != [] ? $temp->name_nha_thau : '' }}"
                                         class="form-control"
                                         id="name_nha_thau_test" name="name_nha_thau">
@@ -112,7 +112,7 @@
                                     <div class="col-md-3"></div>
                                     <div class="form-group col-md-6">
                                         <label for="name_goi_thau_test">Tên gói thầu:</label>
-                                        <input type="text" {{ $detail->enabled == '0' ? 'disabled' : '' }} value="{{
+                                        <input type="text" {{ $detail->enabled == '0' || Auth::user()->level == 2 ? 'disabled' : '' }} value="{{
                                         $detail->name_goi_thau }}" class="form-control" id="name_goi_thau_test"
                                         name="name_goi_thau">
                                     </div>
@@ -122,7 +122,7 @@
                                     <div class="col-md-3"></div>
                                     <div class="form-group col-md-6">
                                         <label for="name_du_an_test">Tên dự án:</label>
-                                        <input type="text" {{ $detail->enabled == '0' ? 'disabled' : '' }} value="{{
+                                        <input type="text" {{ $detail->enabled == '0' || Auth::user()->level == 2 ? 'disabled' : '' }} value="{{
                                         $detail->name_du_an }}" class="form-control" id="name_du_an_test"
                                         name="name_du_an">
                                     </div>
@@ -137,7 +137,7 @@
                                         <label for="so_trich_yeu1_test">Số trích yếu của Thư mời thầu/thông báo mời
                                             thầu:</label>
                                         <input type="text" class="form-control" id="so_trich_yeu1_test"
-                                        {{ $detail->enabled == '0' ? 'disabled' : '' }}
+                                        {{ $detail->enabled == '0' || Auth::user()->level == 2 ? 'disabled' : '' }}
                                         value="{{ $temp != [] ? $temp->so_trich_yeu1 : '' }}"
                                             name="so_trich_yeu1">
                                     </div>
@@ -148,7 +148,7 @@
                                     <div class="form-group col-md-6">
                                         <label for="so_tien_test">Số tiền bảo lãnh (ghi bằng chữ, số,đồng tiền sử
                                             dụng):</label>
-                                        <textarea name="so_tien" {{ $detail->enabled == '0' ? 'disabled' : '' }} class="form-control" id="so_tien_test" cols="30"
+                                        <textarea name="so_tien" {{ $detail->enabled == '0' || Auth::user()->level == 2 ? 'disabled' : '' }} class="form-control" id="so_tien_test" cols="30"
                                             rows="4">{{ $temp != [] ? $temp->so_tien_bl : '' }}</textarea>
                                     </div>
                                 </div>
@@ -158,13 +158,13 @@
                                     <div class="form-group col-md-2">
                                         <label for="time_test">Có hiệu lực trong số ngày:</label>
                                         <input type="text" value="{{ $temp != [] ? $temp->time : '' }}"
-                                        {{ $detail->enabled == '0' ? 'disabled' : '' }}
+                                        {{ $detail->enabled == 0 || Auth::user()->level == 2 ? 'disabled' : '' }}
                                         class="form-control" id="time_test" name="time">
                                     </div>
                                     <div class="form-group date-container col-md-4">
                                         <label for="date_test">Kể từ ngày:</label>
                                         <i class="date-icon date_start fas fa-calendar-alt" aria-hidden="true"></i>
-                                        <input class="form-control" {{ $detail->enabled == '0' ? 'disabled' : '' }} type="text" id="date_start">
+                                        <input class="form-control" {{ $detail->enabled == 0 || Auth::user()->level == 2 ? 'disabled' : '' }} type="text" id="date_start">
                                         <input type="hidden" class="form-control"
                                             value="{{ $temp != [] ? $temp->from_date : '' }}" id="date_test" name="date">
                                     </div>
@@ -174,7 +174,7 @@
                                     <div class="col-md-3"></div>
                                     <div class="form-group col-md-6">
                                         <label for="so_tien1_test">Số tiền thanh toán tối đa (ghi bằng chữ, số):</label>
-                                        <textarea name="so_tien1" {{ $detail->enabled == '0' ? 'disabled' : '' }} class="form-control" id="so_tien1_test" cols="30"
+                                        <textarea name="so_tien1" {{ $detail->enabled == 0 || Auth::user()->level == 2 ? 'disabled' : '' }} class="form-control" id="so_tien1_test" cols="30"
                                             rows="4">{{ $temp != [] ? $temp->so_tien_tt : '' }}</textarea>
                                     </div>
                                 </div>
@@ -183,7 +183,7 @@
                                     <div class="col-md-3"></div>
                                     <div class="form-group col-md-6">
                                         <label for="name_lien_danh_test">Tên đầy đủ nhà thầu liên danh</label>
-                                        <input type="text" name="name_lien_danh" {{ $detail->enabled == '0' ? 'disabled'
+                                        <input type="text" name="name_lien_danh" {{ $detail->enabled == '0' || Auth::user()->level == 2 ? 'disabled'
                                         : '' }}
                                         value="{{ $temp != [] ? $temp->name_lien_danh : '' }}"
                                         class="form-control" id="name_lien_danh_test">
@@ -196,7 +196,7 @@
                                         <label for="ten_chuc_danh_test">Ghi tên, chức danh:</label>
                                         {{-- <input type="text" class="form-control" id="ten_chuc_danh_test"
                                             name="ten_chuc_danh"> --}}
-                                        <textarea name="ten_chuc_danh" {{ $detail->enabled == '0' ? 'disabled' : '' }} class="form-control" id="ten_chuc_danh_test" cols="90"
+                                        <textarea name="ten_chuc_danh" {{ $detail->enabled == '0' || Auth::user()->level == 2 ? 'disabled' : '' }} class="form-control" id="ten_chuc_danh_test" cols="90"
                                             rows="5">{{ $temp != [] ? $temp->name_chuc_danh : '' }}</textarea>
                                     </div>
                                 </div>
@@ -212,7 +212,7 @@
                                 <button type="submit" class="btn btn-outline-primary">Export Word</button>
                             </div>
                             <div class="form-group col-md-3 text-right">
-                                @if ($detail->enabled != 0)
+                                @if ($detail->enabled != 0 && Auth::user()->level != 2)
                                 <a href="javascript:void(0)" id="save" class="btn btn-outline-primary">Lưu</a>
                                 @endif
                             </div>

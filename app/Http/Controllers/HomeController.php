@@ -78,8 +78,6 @@ class HomeController extends Controller
         $id = $request->get('id');
         $detail = $this->detailService->find($id);
 
-
-
         $data = [
             'name_goi_thau' => $request->get('name_goi_thau'),
             'name_du_an' => $request->get('name_du_an'),
@@ -91,25 +89,88 @@ class HomeController extends Controller
             'time_mo_thau' => $request->get('time_mo_thau'),
             'time_dong_thau' => $request->get('time_dong_thau'),
         ];
-        try {
-            $this->detailService->update($data, $id);
-            DetailTemp::where('detail_id', $id)->delete();
-            $this->detailService->deleteSave($id);
-            $uy_quyen = $this->detailService->find($id)->uy_quyen;
-            if ($detail->hinh_thuc_tham_du == 0) {
-                $type = 0;
-                $templates = Template0::all();
-                return view('template.update', compact('templates', 'id', 'type','uy_quyen'));
-            } else if ($detail->hinh_thuc_tham_du == 1) {
-                $type = 1;
-                $templates = Template1::all();
-                return view('template.update', compact('templates', 'id', 'type','uy_quyen'));
-            }
-            return back()->with('success', 'Cập nhật thành công');
-        } catch (\Exception $err) {
-            return back()->with('error', $err->getMessage());
+
+        switch ($request->input('action')) {
+            case 'update':
+                try {
+                    $this->detailService->update($data, $id);
+                    DetailTemp::where('detail_id', $id)->delete();
+                    $this->detailService->deleteSave($id);
+                    $uy_quyen = $this->detailService->find($id)->uy_quyen;
+                    if ($detail->hinh_thuc_tham_du == 0) {
+                        $type = 0;
+                        $templates = Template0::all();
+                        return view('template.update', compact('templates', 'id', 'type','uy_quyen'));
+                    } else if ($detail->hinh_thuc_tham_du == 1) {
+                        $type = 1;
+                        $templates = Template1::all();
+                        return view('template.update', compact('templates', 'id', 'type','uy_quyen'));
+                    }
+                } catch (\Exception $err) {
+                    return back()->with('error', $err->getMessage());
+                }
+
+                break;
+            case 'edit':
+                try {
+                    $this->detailService->update($data, $id);
+                    $uy_quyen = $this->detailService->find($id)->uy_quyen;
+                    $detail_temps = DetailTemp::where('detail_id', $id)->get();
+                    foreach ($detail_temps as $value){
+                        $array[] = $value->tem_id;
+                    }
+
+                    if ($detail->hinh_thuc_tham_du == 0) {
+                        $type = 0;
+                        $templates = Template0::all();
+                        return view('template.edit', compact('templates', 'id', 'type','uy_quyen','array'));
+                    } else if ($detail->hinh_thuc_tham_du == 1) {
+                        $type = 1;
+                        $templates = Template1::all();
+                        return view('template.edit', compact('templates', 'id', 'type','uy_quyen','array'));
+                    }
+                } catch (\Exception $err) {
+                    return back()->with('error', $err->getMessage());
+                }
+                break;
         }
+
+
+
     }
+
+    // public function editNotDelete(Request $request,$id){
+    //     $detail = $this->detailService->find($id);
+    //     $data = [
+    //         'name_goi_thau' => $request->get('name_goi_thau'),
+    //         'name_du_an' => $request->get('name_du_an'),
+    //         'customer' => $request->get('customer'),
+    //         'so_thong_bao' => $request->get('so_tbmt'),
+    //         'name_moi_thau' => $request->get('name_moi_thau'),
+    //         'address' => $request->get('address'),
+    //         'time_phat_hanh' => $request->get('time_phat_hanh'),
+    //         'time_mo_thau' => $request->get('time_mo_thau'),
+    //         'time_dong_thau' => $request->get('time_dong_thau'),
+    //     ];
+    //     return $data;
+    //     // try {
+    //     //     $this->detailService->update($data, $id);
+    //     //     $uy_quyen = $this->detailService->find($id)->uy_quyen;
+    //     //     if ($detail->hinh_thuc_tham_du == 0) {
+    //     //         $type = 0;
+    //     //         $templates = Template0::all();
+    //     //         return view('template.update', compact('templates', 'id', 'type','uy_quyen'));
+    //     //     } else if ($detail->hinh_thuc_tham_du == 1) {
+    //     //         $type = 1;
+    //     //         $templates = Template1::all();
+    //     //         return view('template.update', compact('templates', 'id', 'type','uy_quyen'));
+    //     //     }
+    //     // } catch (\Exception $err) {
+    //     //     return back()->with('error', $err->getMessage());
+    //     // }
+
+
+    // }
 
     public function delete($id)
     {

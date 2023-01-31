@@ -54,7 +54,7 @@
 
                                         <input type="text" class="form-control" id="name_nha_thau_test" {{
                                             $detail->enabled
-                                        == 0 ? 'disabled' : '' }}
+                                        == 0 || Auth::user()->level == 2 ? 'disabled' : '' }}
                                         value="{{ $temp != [] ? $temp->name_nha_thau : '' }}" name="name_nha_thau">
                                     </div>
                                 </div>
@@ -64,8 +64,8 @@
                                     <div class="form-group date-container col-md-6">
                                         <label for="datePick">Ngày làm:</label>
                                         <i class="date-icon date_ttld fas fa-calendar-alt" aria-hidden="true"></i>
-                                        <input class="form-control" type="text" id="datePick">
-                                        <input type="hidden" {{ $detail->enabled == 0 ? 'disabled' : '' }} value="{{
+                                        <input class="form-control" {{ $detail->enabled == 0 || Auth::user()->level == 2 ? 'disabled' : '' }} type="text" id="datePick">
+                                        <input type="hidden"  value="{{
                                         $temp != [] ? $temp->date : '' }}"
                                         name="date" id="date" class="form-control">
                                         <input type="hidden" value="{{ $detail_id }}" id="detail_id"
@@ -77,7 +77,7 @@
                                     <div class="col-md-3"></div>
                                     <div class="form-group col-md-6">
                                         <label for="address_test">Địa chỉ làm hợp đồng:</label>
-                                        <input type="text" name="address" {{ $detail->enabled == '0' ?
+                                        <input type="text" name="address" {{ $detail->enabled == '0' || Auth::user()->level == 2 ?
                                         'disabled'
                                         : '' }}
                                         value="{{ $temp != [] ? $temp->address : '' }}"
@@ -91,10 +91,10 @@
                                     <div class="col-md-3"></div>
                                     <div class="form-group col-md-6">
                                         <textarea name="table_content"
-                                            class="{{ $detail->enabled == 0 ? 'disabled' : '' }}" id="table_content">
+                                            class="{{ $detail->enabled == 0 || Auth::user()->level == 2 ? 'disabled' : '' }}" id="table_content">
 
                                             @if ($temp == []  || $temp->table_content == '')
-                                            <table class="MsoNormalTable" style="width: 600px; border-collapse: collapse; border: none; color: rgb(0, 0, 0); height: 590.203px;" border="1" width="0" cellspacing="0" cellpadding="0">
+                                            <table class="MsoNormalTable" style="width: 100%; border-collapse: collapse; border: none; color: rgb(0, 0, 0); height: 590.203px;" border="1" width="0" cellspacing="0" cellpadding="0">
                                                 <tbody>
                                                 <tr style="height: 30.3906px;">
                                                 <td style="width: 167.516px; border: 1pt solid windowtext; padding: 0in; height: 30.3906px;" width="184">
@@ -241,7 +241,7 @@
                                 <button type="submit" class="btn btn-outline-primary">Export Word</button>
                             </div>
                             <div class="form-group col-md-3 text-right">
-                                @if ($detail->enabled != 0)
+                                @if ($detail->enabled != 0 && Auth::user()->level != 2)
                                 <a href="javascript:void(0)" id="save" class="btn btn-outline-primary">Lưu</a>
                                 @endif
                             </div>

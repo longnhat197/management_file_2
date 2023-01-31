@@ -52,10 +52,10 @@
                                     <div class="col-md-3"></div>
                                     <div class="form-group col-md-6">
                                         <textarea name="table_content"
-                                            class="{{ $detail->enabled == 0 ? 'disabled' : '' }}" id="table_content">
+                                            class="{{ $detail->enabled == 0 || Auth::user()->level == 2 ? 'disabled' : '' }}" id="table_content">
 
                                             @if ($temp == []  || $temp->table_content == '')
-                                            <table class="MsoNormalTable" style="border-collapse: collapse; width: 600px; border: 1pt solid #000;" width="600">
+                                            <table class="MsoNormalTable" style="border-collapse: collapse; width: 100%; border: 1pt solid #000;" width="600">
                                                 <tbody>
                                                 <tr style="height: 47.5938px;">
                                                 <td style="width: 37.3pt; border: 1pt solid rgb(0, 0, 0); background: rgb(226, 239, 217); padding: 0in 5.4pt; height: 47.5938px;" width="50">
@@ -120,7 +120,7 @@
                                 <button type="submit" class="btn btn-outline-primary">Export Word</button>
                             </div>
                             <div class="form-group col-md-3 text-right">
-                                @if ($detail->enabled != 0)
+                                @if ($detail->enabled != 0 && Auth::user()->level != 2)
                                 <a href="javascript:void(0)" id="save" class="btn btn-outline-primary">Lưu</a>
                                 @endif
                             </div>

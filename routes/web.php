@@ -48,6 +48,7 @@ Route::middleware('CheckLogin')->group(function () {
     Route::get('home/add', [\App\Http\Controllers\HomeController::class, 'index']);
     Route::post('home/add', [\App\Http\Controllers\HomeController::class, 'create']);
     Route::get('home/show/n{id}/edit', [\App\Http\Controllers\HomeController::class, 'edit']);
+    Route::get('home/show/n{id}/editNotDelete', [\App\Http\Controllers\HomeController::class, 'editNotDelete']);
     Route::post('home/show/{id}/delete', [\App\Http\Controllers\HomeController::class, 'delete']);
     Route::get('template/show',[\App\Http\Controllers\HomeController::class, 'show']);
     Route::get('template/showHs',[\App\Http\Controllers\HomeController::class, 'showHs']);
@@ -61,6 +62,7 @@ Route::middleware('CheckLogin')->group(function () {
     // Route::resource('user', \App\Http\Controllers\ListUserController::class);
     Route::get('user/edit/{id}',[\App\Http\Controllers\UserController::class,'edit']);
     Route::post('user/edit/{id}',[\App\Http\Controllers\UserController::class,'editStore']);
+    Route::post('template1', [\App\Http\Controllers\TemplateController::class, 'templateNoDelete']);
 
 
 

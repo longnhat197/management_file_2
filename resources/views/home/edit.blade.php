@@ -255,11 +255,12 @@
 
                             </div>
                         </div> --}}
-                        <div class="row mt-4">
+                        <div class="row mt-2">
                             <div class="col-md-3"></div>
-                            <div class="form-group col-md-6">
-                                <a href="./home/show" class="btn btn-outline-primary mr-2">Back</a>
-                                <button type="submit" class="btn btn-outline-primary">Update</button>
+                            <div class="form-group col-md-6 d-flex justify-content-between">
+                                <a href="./template/show" class="btn btn-outline-primary mr-2">Back</a>
+                                <button type="submit" class="btn btn-outline-danger mr-2" name="action" value="update">Reset</button>
+                                <button type="submit" class="btn btn-outline-warning" name="action" value="edit">Update</button>
                             </div>
 
                         </div>
