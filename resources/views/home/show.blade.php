@@ -12,7 +12,7 @@
                 <div>
                     Danh sách dự án
                     <div class="page-title-subheading">
-                        View, create, update, delete and manage.
+                        Danh sách các dự án đang triển khai.
                     </div>
                 </div>
             </div>

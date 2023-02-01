@@ -53,7 +53,7 @@ class UserDetailController extends Controller
             ->join('users', 'user_details.user_id', '=', 'users.id')
             ->where('users.email', 'like', '%' . $search . '%')
             ->orderByDesc('created_at')
-            ->paginate(8);
+            ->paginate(8)->withPath('http://contract.ansv.vn/admin/home/userDetail');
         return view('admin.userDetail.index', compact('userDetails'));
     }
 

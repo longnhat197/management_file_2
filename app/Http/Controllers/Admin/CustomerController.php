@@ -19,7 +19,7 @@ class CustomerController extends Controller
      */
     public function index(Request $request)
     {
-        $customers = $this->customerService->searchAndPaginate('name', $request->get('search'), 10);
+        $customers = $this->customerService->searchAndPaginate('name', $request->get('search'), 10)->withPath('http://contract.ansv.vn/admin/home/customer');
         return view('admin.customer.index',compact('customers'));
     }
 

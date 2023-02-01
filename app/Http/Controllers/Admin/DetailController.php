@@ -20,7 +20,7 @@ class DetailController extends Controller
     }
     public function index(Request $request){
 
-        $details = $this->detailService->searchAdmin($request->get('search'),7);
+        $details = $this->detailService->searchAdmin($request->get('search'),7)->withPath('http://contract.ansv.vn/admin/home/detail');
         return view('admin.detail.index',compact('details'));
     }
 

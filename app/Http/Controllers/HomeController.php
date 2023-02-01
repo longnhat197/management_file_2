@@ -205,14 +205,14 @@ class HomeController extends Controller
 
     public function show(Request $request)
     {
-        $details = $this->detailService->searchActive($request->get('search'),5);
+        $details = $this->detailService->searchActive($request->get('search'),5)->withPath('http://contract.ansv.vn/template/show');
         return view('home.show', compact('details'));
     }
 
     public function showHs(Request $request)
     {
 
-        $details = $this->detailService->searchNoActive($request->get('search'),5);
+        $details = $this->detailService->searchNoActive($request->get('search'),5)->withPath('http://contract.ansv.vn/template/showHs');
         return view('home.showHs', compact('details'));
     }
 
