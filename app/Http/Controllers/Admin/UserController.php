@@ -18,7 +18,7 @@ class UserController extends Controller
 
     public function index(Request $request)
     {
-        $users = $this->userService->searchAndPaginate('name', $request->get('search'));
+        $users = $this->userService->searchAndPaginate('name', $request->get('search'))->withPath('http://contract.ansv.vn/admin/home/user');
         // return \App\Models\User::all();
         return view('admin.user.index', compact('users'));
     }
