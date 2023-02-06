@@ -161,7 +161,7 @@
                                         <div class="widget-content-wrapper">
                                             <div class="widget-content-left flex2">
 
-                                                <div class="widget-heading">{{ $detail->userDetails[0]->user->email }}
+                                                <div class="widget-heading">{{ $detail->user->email }}
                                                 </div>
                                             </div>
                                         </div>
