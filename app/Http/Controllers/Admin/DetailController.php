@@ -7,27 +7,43 @@ use App\Models\DetailTemp;
 use App\Models\UserDetail;
 use App\Services\Customer\CustomerServiceInterface;
 use App\Services\Detail\DetailServiceInterface;
+use App\Services\Login\LoginServiceInterface;
 use Illuminate\Http\Request;
 
 class DetailController extends Controller
 {
     private $detailService;
     private $customerService;
-    public function __construct(DetailServiceInterface $detailService, CustomerServiceInterface $customerService)
+    private $loginService;
+    public function __construct(DetailServiceInterface $detailService,
+    CustomerServiceInterface $customerService,
+    LoginServiceInterface $loginService)
     {
         $this->detailService = $detailService;
         $this->customerService = $customerService;
+        $this->loginService = $loginService;
     }
-    public function index(Request $request){
+    public function index(Request $request)
+    {
+        $this->loginService->checkOverTime();
 
-        $details = $this->detailService->searchAdmin($request->get('search'),7)->withPath('http://contract.ansv.vn/admin/home/detail');
-        return view('admin.detail.index',compact('details'));
+        $protocol = ((!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off') || $_SERVER['SERVER_PORT'] == 443) ? "https://" : "http://";
+        $CurPageURL = $protocol . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
+        $array = parse_url($CurPageURL);
+
+        if($array['host'] == '127.0.0.1'){
+            $details = $this->detailService->searchAdmin($request->get('search'), 7);
+        }elseif($array['host'] == 'contract.ansv.vn'){
+            $details = $this->detailService->searchAdmin($request->get('search'), 7)->withPath('http://contract.ansv.vn/admin/home/detail');
+        }
+        return view('admin.detail.index', compact('details'));
     }
 
-    public function edit($id){
+    public function edit($id)
+    {
         $customers = $this->customerService->all();
         $detail = $this->detailService->find($id);
-        return view('admin.detail.edit',compact('detail','customers'));
+        return view('admin.detail.edit', compact('detail', 'customers'));
     }
 
     public function editStore(Request $request)
@@ -52,13 +68,14 @@ class DetailController extends Controller
         }
     }
 
-    public function delete($id){
-        try{
-            UserDetail::where('detail_id',$id)->delete();
-            DetailTemp::where('detail_id',$id)->delete();
+    public function delete($id)
+    {
+        try {
+            UserDetail::where('detail_id', $id)->delete();
+            DetailTemp::where('detail_id', $id)->delete();
             $this->detailService->deleteSave($id);
             $this->detailService->delete($id);
-        }catch(\Exception $err){
+        } catch (\Exception $err) {
             return redirect('admin/home/detail')->with('error', $err->getMessage());
         }
         return redirect('admin/home/detail')->with('success', 'Đã xoá thành công');

@@ -20,6 +20,7 @@ class CustomerController extends Controller
      */
     public function index(Request $request)
     {
+
         $customers = $this->customerService->searchAndPaginate('name', $request->get('search'), 10);
         return view('customer.index', compact('customers'));
     }

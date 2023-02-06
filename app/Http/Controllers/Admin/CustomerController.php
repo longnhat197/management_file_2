@@ -19,7 +19,16 @@ class CustomerController extends Controller
      */
     public function index(Request $request)
     {
-        $customers = $this->customerService->searchAndPaginate('name', $request->get('search'), 10)->withPath('http://contract.ansv.vn/admin/home/customer');
+        $protocol = ((!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off') || $_SERVER['SERVER_PORT'] == 443) ? "https://" : "http://";
+        $CurPageURL = $protocol . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
+        $array = parse_url($CurPageURL);
+
+        if($array['host'] == '127.0.0.1'){
+            $customers = $this->customerService->searchAndPaginate('name', $request->get('search'), 10);
+        }elseif($array['host'] == 'contract.ansv.vn'){
+            $customers = $this->customerService->searchAndPaginate('name', $request->get('search'), 10)->withPath('http://contract.ansv.vn/admin/home/customer');
+        }
+
         return view('admin.customer.index',compact('customers'));
     }
 

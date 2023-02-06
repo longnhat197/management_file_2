@@ -29,11 +29,13 @@ class HomeController extends Controller
         if($request->get('email') == '' || $request->get('password') == ''){
             return back()->with('error','Không được để trống dữ liệu');
         }
+        $this->loginService->checkOverTime();
         return $this->loginService->loginAdmin($request);
     }
 
     public function logout(Request $request)
     {
+        $this->loginService->checkOverTime();
         Session::flush();
         Auth::logout();
         return redirect('admin/login');

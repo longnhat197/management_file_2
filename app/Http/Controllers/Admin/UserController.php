@@ -18,6 +18,7 @@ class UserController extends Controller
 
     public function index(Request $request)
     {
+
         $users = $this->userService->searchAndPaginate('name', $request->get('search'))->withPath('http://contract.ansv.vn/admin/home/user');
         // return \App\Models\User::all();
         return view('admin.user.index', compact('users'));
@@ -44,19 +45,19 @@ class UserController extends Controller
         }
     }
 
-    public function edit(User $user){
-        return view('admin.user.edit',compact('user'));
+    public function edit(User $user)
+    {
+        return view('admin.user.edit', compact('user'));
     }
 
-    public function editStore(Request $request,$id){
-        $data=$request->all();
-        try{
-            $this->userService->update($data,$id);
-        }catch(\Exception $err){
+    public function editStore(Request $request, $id)
+    {
+        $data = $request->all();
+        try {
+            $this->userService->update($data, $id);
+        } catch (\Exception $err) {
             return back()->with('error', $err->getMessage());
         }
         return redirect('admin/home/user')->with('success', 'Đã update thành công');
     }
-
-
 }

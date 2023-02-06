@@ -13,6 +13,8 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+
+
 Route::get('login', [App\Http\Controllers\HomeController::class, 'getLogin']);
 Route::post('login', [App\Http\Controllers\HomeController::class, 'postLogin']);
 Route::get('logout', [App\Http\Controllers\HomeController::class, 'logout']);

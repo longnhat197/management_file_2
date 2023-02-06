@@ -56,8 +56,8 @@ class HomeController extends Controller
     }
     public function postLogin(Request $request)
     {
-        if($request->get('email') == '' || $request->get('password') == ''){
-            return back()->with('error','Không được để trống dữ liệu');
+        if ($request->get('email') == '' || $request->get('password') == '') {
+            return back()->with('error', 'Không được để trống dữ liệu');
         }
         $this->loginService->checkOverTime();
         return $this->loginService->loginExpert($request);
@@ -70,7 +70,7 @@ class HomeController extends Controller
         $detail = $this->detailService->find($id);
         $customers = $this->customerService->all();
 
-        return view('home.edit', compact('detail','customers'));
+        return view('home.edit', compact('detail', 'customers'));
     }
 
     public function editStore(Request $request)
@@ -100,11 +100,11 @@ class HomeController extends Controller
                     if ($detail->hinh_thuc_tham_du == 0) {
                         $type = 0;
                         $templates = Template0::all();
-                        return view('template.update', compact('templates', 'id', 'type','uy_quyen'));
+                        return view('template.update', compact('templates', 'id', 'type', 'uy_quyen'));
                     } else if ($detail->hinh_thuc_tham_du == 1) {
                         $type = 1;
                         $templates = Template1::all();
-                        return view('template.update', compact('templates', 'id', 'type','uy_quyen'));
+                        return view('template.update', compact('templates', 'id', 'type', 'uy_quyen'));
                     }
                 } catch (\Exception $err) {
                     return back()->with('error', $err->getMessage());
@@ -116,27 +116,24 @@ class HomeController extends Controller
                     $this->detailService->update($data, $id);
                     $uy_quyen = $this->detailService->find($id)->uy_quyen;
                     $detail_temps = DetailTemp::where('detail_id', $id)->get();
-                    foreach ($detail_temps as $value){
+                    foreach ($detail_temps as $value) {
                         $array[] = $value->tem_id;
                     }
 
                     if ($detail->hinh_thuc_tham_du == 0) {
                         $type = 0;
                         $templates = Template0::all();
-                        return view('template.edit', compact('templates', 'id', 'type','uy_quyen','array'));
+                        return view('template.edit', compact('templates', 'id', 'type', 'uy_quyen', 'array'));
                     } else if ($detail->hinh_thuc_tham_du == 1) {
                         $type = 1;
                         $templates = Template1::all();
-                        return view('template.edit', compact('templates', 'id', 'type','uy_quyen','array'));
+                        return view('template.edit', compact('templates', 'id', 'type', 'uy_quyen', 'array'));
                     }
                 } catch (\Exception $err) {
                     return back()->with('error', $err->getMessage());
                 }
                 break;
         }
-
-
-
     }
 
     // public function editNotDelete(Request $request,$id){
@@ -188,6 +185,7 @@ class HomeController extends Controller
     public function logout()
     {
         Session::flush();
+        $this->loginService->checkOverTime();
         Auth::logout();
         return redirect('login');
     }
@@ -205,14 +203,33 @@ class HomeController extends Controller
 
     public function show(Request $request)
     {
-        $details = $this->detailService->searchActive($request->get('search'),5)->withPath('http://contract.ansv.vn/template/show');
+        $this->loginService->checkOverTime();
+        $protocol = ((!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off') || $_SERVER['SERVER_PORT'] == 443) ? "https://" : "http://";
+        $CurPageURL = $protocol . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
+        $array = parse_url($CurPageURL);
+
+        if($array['host'] == '127.0.0.1'){
+            $details = $this->detailService->searchActive($request->get('search'), 5);
+        }elseif($array['host'] == 'contract.ansv.vn'){
+            $details = $this->detailService->searchActive($request->get('search'), 5)->withPath('http://contract.ansv.vn/template/show');
+        }
+
         return view('home.show', compact('details'));
     }
 
     public function showHs(Request $request)
     {
+        $this->loginService->checkOverTime();
+        $protocol = ((!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off') || $_SERVER['SERVER_PORT'] == 443) ? "https://" : "http://";
+        $CurPageURL = $protocol . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
+        $array = parse_url($CurPageURL);
 
-        $details = $this->detailService->searchNoActive($request->get('search'),5)->withPath('http://contract.ansv.vn/template/showHs');
+        if($array['host'] == '127.0.0.1'){
+            $details = $this->detailService->searchNoActive($request->get('search'), 5);
+        }elseif($array['host'] == 'contract.ansv.vn'){
+            $details = $this->detailService->searchNoActive($request->get('search'), 5)->withPath('http://contract.ansv.vn/template/showHs');
+        }
+
         return view('home.showHs', compact('details'));
     }
 
@@ -254,7 +271,7 @@ class HomeController extends Controller
             'time_mo_thau' => $request->get('time_mo_thau'),
             'time_dong_thau' => $request->get('time_dong_thau'),
             'user_id' => $request->get('user_id'),
-            'enabled' =>1
+            'enabled' => 1
         ]);
         $id = $detail->id;
 
@@ -266,11 +283,13 @@ class HomeController extends Controller
         if ($request->get('hinh_thuc_tham_du') == 0) {
             $type = 0;
             $templates = Template0::all();
-            return view('template.index', compact('templates', 'id', 'type','uy_quyen'));
+            return view('template.index', compact('templates', 'id', 'type', 'uy_quyen'));
         } else if ($request->get('hinh_thuc_tham_du') == 1) {
             $type = 1;
             $templates = Template1::all();
-            return view('template.index', compact('templates', 'id', 'type','uy_quyen'));
+            return view('template.index', compact('templates', 'id', 'type', 'uy_quyen'));
         }
     }
+
+
 }
