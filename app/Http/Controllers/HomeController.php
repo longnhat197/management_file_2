@@ -210,11 +210,13 @@ class HomeController extends Controller
 
         if($array['host'] == '127.0.0.1'){
             $details = $this->detailService->searchActive($request->get('search'), 5);
+            return view('home.show', compact('details'));
         }elseif($array['host'] == 'contract.ansv.vn'){
             $details = $this->detailService->searchActive($request->get('search'), 5)->withPath('http://contract.ansv.vn/template/show');
+            return view('home.show', compact('details'));
         }
 
-        return view('home.show', compact('details'));
+
     }
 
     public function showHs(Request $request)
@@ -226,11 +228,13 @@ class HomeController extends Controller
 
         if($array['host'] == '127.0.0.1'){
             $details = $this->detailService->searchNoActive($request->get('search'), 5);
+            return view('home.showHs', compact('details'));
         }elseif($array['host'] == 'contract.ansv.vn'){
             $details = $this->detailService->searchNoActive($request->get('search'), 5)->withPath('http://contract.ansv.vn/template/showHs');
+            return view('home.showHs', compact('details'));
         }
 
-        return view('home.showHs', compact('details'));
+
     }
 
     public function create(Request $request)
