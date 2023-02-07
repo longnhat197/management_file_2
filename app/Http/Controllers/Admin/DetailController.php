@@ -15,10 +15,11 @@ class DetailController extends Controller
     private $detailService;
     private $customerService;
     private $loginService;
-    public function __construct(DetailServiceInterface $detailService,
-    CustomerServiceInterface $customerService,
-    LoginServiceInterface $loginService)
-    {
+    public function __construct(
+        DetailServiceInterface $detailService,
+        CustomerServiceInterface $customerService,
+        LoginServiceInterface $loginService
+    ) {
         $this->detailService = $detailService;
         $this->customerService = $customerService;
         $this->loginService = $loginService;
@@ -27,15 +28,8 @@ class DetailController extends Controller
     {
         $this->loginService->checkOverTime();
 
-        $protocol = ((!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off') || $_SERVER['SERVER_PORT'] == 443) ? "https://" : "http://";
-        $CurPageURL = $protocol . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
-        $array = parse_url($CurPageURL);
+        $details = $this->detailService->searchAdmin($request->get('search'), 7)->withPath('http://contract.ansv.vn/admin/home/detail');
 
-        if($array['host'] == '127.0.0.1'){
-            $details = $this->detailService->searchAdmin($request->get('search'), 7);
-        }elseif($array['host'] == 'contract.ansv.vn'){
-            $details = $this->detailService->searchAdmin($request->get('search'), 7)->withPath('http://contract.ansv.vn/admin/home/detail');
-        }
         return view('admin.detail.index', compact('details'));
     }
 

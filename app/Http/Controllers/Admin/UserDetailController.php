@@ -49,23 +49,15 @@ class UserDetailController extends Controller
     public function index(Request $request)
     {
         $search = $request->search ?? '';
-        $protocol = ((!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off') || $_SERVER['SERVER_PORT'] == 443) ? "https://" : "http://";
-        $CurPageURL = $protocol . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
-        $array = parse_url($CurPageURL);
 
-        if ($array['host'] == '127.0.0.1') {
-            $userDetails = UserDetail::select("user_details.*")
-                ->join('users', 'user_details.user_id', '=', 'users.id')
-                ->where('users.email', 'like', '%' . $search . '%')
-                ->orderByDesc('created_at')
-                ->paginate(8);
-        } elseif ($array['host'] == 'contract.ansv.vn') {
-            $userDetails = UserDetail::select("user_details.*")
-                ->join('users', 'user_details.user_id', '=', 'users.id')
-                ->where('users.email', 'like', '%' . $search . '%')
-                ->orderByDesc('created_at')
-                ->paginate(8)->withPath('http://contract.ansv.vn/admin/home/userDetail');
-        }
+
+
+        $userDetails = UserDetail::select("user_details.*")
+            ->join('users', 'user_details.user_id', '=', 'users.id')
+            ->where('users.email', 'like', '%' . $search . '%')
+            ->orderByDesc('created_at')
+            ->paginate(8)->withPath('http://contract.ansv.vn/admin/home/userDetail');
+
 
         return view('admin.userDetail.index', compact('userDetails'));
     }

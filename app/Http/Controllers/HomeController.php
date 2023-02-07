@@ -204,37 +204,17 @@ class HomeController extends Controller
     public function show(Request $request)
     {
         $this->loginService->checkOverTime();
-        $protocol = ((!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off') || $_SERVER['SERVER_PORT'] == 443) ? "https://" : "http://";
-        $CurPageURL = $protocol . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
-        $array = parse_url($CurPageURL);
 
-        if($array['host'] == '127.0.0.1'){
-            $details = $this->detailService->searchActive($request->get('search'), 5);
-            return view('home.show', compact('details'));
-        }elseif($array['host'] == 'contract.ansv.vn'){
-            $details = $this->detailService->searchActive($request->get('search'), 5)->withPath('http://contract.ansv.vn/template/show');
-            return view('home.show', compact('details'));
-        }
-
-
+        $details = $this->detailService->searchActive($request->get('search'), 5)->withPath('http://contract.ansv.vn/template/show');
+        return view('home.show', compact('details'));
     }
 
     public function showHs(Request $request)
     {
         $this->loginService->checkOverTime();
-        $protocol = ((!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off') || $_SERVER['SERVER_PORT'] == 443) ? "https://" : "http://";
-        $CurPageURL = $protocol . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
-        $array = parse_url($CurPageURL);
 
-        if($array['host'] == '127.0.0.1'){
-            $details = $this->detailService->searchNoActive($request->get('search'), 5);
-            return view('home.showHs', compact('details'));
-        }elseif($array['host'] == 'contract.ansv.vn'){
-            $details = $this->detailService->searchNoActive($request->get('search'), 5)->withPath('http://contract.ansv.vn/template/showHs');
-            return view('home.showHs', compact('details'));
-        }
-
-
+        $details = $this->detailService->searchNoActive($request->get('search'), 5)->withPath('http://contract.ansv.vn/template/showHs');
+        return view('home.showHs', compact('details'));
     }
 
     public function create(Request $request)
@@ -294,6 +274,4 @@ class HomeController extends Controller
             return view('template.index', compact('templates', 'id', 'type', 'uy_quyen'));
         }
     }
-
-
 }

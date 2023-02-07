@@ -9,7 +9,8 @@ use Illuminate\Http\Request;
 class CustomerController extends Controller
 {
     private $customerService;
-    public function __construct(CustomerServiceInterface $customerService){
+    public function __construct(CustomerServiceInterface $customerService)
+    {
         $this->customerService = $customerService;
     }
     /**
@@ -19,17 +20,10 @@ class CustomerController extends Controller
      */
     public function index(Request $request)
     {
-        $protocol = ((!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off') || $_SERVER['SERVER_PORT'] == 443) ? "https://" : "http://";
-        $CurPageURL = $protocol . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
-        $array = parse_url($CurPageURL);
 
-        if($array['host'] == '127.0.0.1'){
-            $customers = $this->customerService->searchAndPaginate('name', $request->get('search'), 10);
-        }elseif($array['host'] == 'contract.ansv.vn'){
-            $customers = $this->customerService->searchAndPaginate('name', $request->get('search'), 10)->withPath('http://contract.ansv.vn/admin/home/customer');
-        }
+        $customers = $this->customerService->searchAndPaginate('name', $request->get('search'), 10)->withPath('http://contract.ansv.vn/admin/home/customer');
 
-        return view('admin.customer.index',compact('customers'));
+        return view('admin.customer.index', compact('customers'));
     }
 
     /**
@@ -50,13 +44,13 @@ class CustomerController extends Controller
      */
     public function store(Request $request)
     {
-        try{
+        try {
             $data = $request->all();
             $this->customerService->create($data);
-        }catch (\Exception $err){
-            return redirect('admin/home/customer')->with('error',$err->getMessage());
+        } catch (\Exception $err) {
+            return redirect('admin/home/customer')->with('error', $err->getMessage());
         }
-        return redirect('admin/home/customer')->with('success','Thêm mới chủ đầu tư '. $request->get('name').' thành công');
+        return redirect('admin/home/customer')->with('success', 'Thêm mới chủ đầu tư ' . $request->get('name') . ' thành công');
     }
 
     /**
@@ -79,7 +73,7 @@ class CustomerController extends Controller
     public function edit($id)
     {
         $customer = $this->customerService->find($id);
-        return view('admin.customer.edit',compact('customer'));
+        return view('admin.customer.edit', compact('customer'));
     }
 
     /**
@@ -91,13 +85,13 @@ class CustomerController extends Controller
      */
     public function update(Request $request, $id)
     {
-        try{
+        try {
             $data = $request->all();
-            $this->customerService->update($data,$id);
-            }catch(\Exception $err){
-                return redirect('admin/home/customer')->with('error',$err->getMessage());
-            }
-            return redirect('admin/home/customer')->with('success','Update thành công');
+            $this->customerService->update($data, $id);
+        } catch (\Exception $err) {
+            return redirect('admin/home/customer')->with('error', $err->getMessage());
+        }
+        return redirect('admin/home/customer')->with('success', 'Update thành công');
     }
 
     /**
@@ -108,13 +102,13 @@ class CustomerController extends Controller
      */
     public function destroy($id)
     {
-        try{
+        try {
             $customer = $this->customerService->find($id);
             $this->customerService->delete($id);
-        }catch(\Exception $err){
-            return redirect('admin/home/customer')->with('error',$err->getMessage());
+        } catch (\Exception $err) {
+            return redirect('admin/home/customer')->with('error', $err->getMessage());
         }
 
-        return redirect('admin/home/customer')->with('success','Đã xoá thành công chủ đầu tư '. $customer->name);
+        return redirect('admin/home/customer')->with('success', 'Đã xoá thành công chủ đầu tư ' . $customer->name);
     }
 }
